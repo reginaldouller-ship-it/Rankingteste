@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-31T19:39:35.066165Z",
+  "generated_at": "2026-03-31T22:14:43.693132Z",
   "week_label": "Semana de 31/03/2026",
   "tracks": [
     {
@@ -14,8 +14,8 @@
       "in_both": true,
       "total_streams": 14674000,
       "rank": 1,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0251b22c9a616f49cb2e881f45",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0251b22c9a616f49cb2e881f45",
+      "genre": "funk"
     },
     {
       "artist": "PEDRO SAMPAIO",
@@ -30,7 +30,7 @@
       "total_streams": 14621825,
       "rank": 2,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02db856c80b9caed8d46a37436",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "DJ Gu",
@@ -44,8 +44,8 @@
       "in_both": true,
       "total_streams": 14420258,
       "rank": 3,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02602f97feddd13e75029f2b8f",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02602f97feddd13e75029f2b8f",
+      "genre": "funk"
     },
     {
       "artist": "BTS",
@@ -59,8 +59,8 @@
       "in_both": true,
       "total_streams": 14165123,
       "rank": 4,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
+      "genre": "pop"
     },
     {
       "artist": "Mc Jacaré",
@@ -74,8 +74,8 @@
       "in_both": true,
       "total_streams": 13872886,
       "rank": 5,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025c67607fd2c208c66670703e",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025c67607fd2c208c66670703e",
+      "genre": "funk"
     },
     {
       "artist": "DJ Japa NK",
@@ -89,8 +89,8 @@
       "in_both": true,
       "total_streams": 12244420,
       "rank": 6,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0210f008e8b5fda6a55bcb8cd7",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0210f008e8b5fda6a55bcb8cd7",
+      "genre": "funk"
     },
     {
       "artist": "Panda",
@@ -104,8 +104,8 @@
       "in_both": true,
       "total_streams": 9796670,
       "rank": 7,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ae0147d756dbb8f2f90d1d28",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ae0147d756dbb8f2f90d1d28",
+      "genre": "sertanejo"
     },
     {
       "artist": "Grupo Menos É Mais",
@@ -119,8 +119,8 @@
       "in_both": true,
       "total_streams": 9351688,
       "rank": 8,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023eb9bb75e0b5472777ba0291",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e023eb9bb75e0b5472777ba0291",
+      "genre": "pagode"
     },
     {
       "artist": "DJ Japa NK",
@@ -135,7 +135,7 @@
       "total_streams": 8849056,
       "rank": 9,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02bb2624be0c78ed088dd4d237",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Vitinho Imperador",
@@ -165,7 +165,7 @@
       "total_streams": 7880717,
       "rank": 11,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02cb98f69e53e890fd816e81f2",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Mc Lele JP",
@@ -180,7 +180,7 @@
       "total_streams": 7859427,
       "rank": 12,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0202eb05f642de3cbee085d811",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "BTS",
@@ -195,7 +195,7 @@
       "total_streams": 7483256,
       "rank": 13,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
-      "genre": "outros"
+      "genre": "pop"
     },
     {
       "artist": "DJ Japa NK",
@@ -210,7 +210,7 @@
       "total_streams": 7466522,
       "rank": 14,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f189a3108b6b63df5b34b22c",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "BTS",
@@ -225,7 +225,7 @@
       "total_streams": 7430403,
       "rank": 15,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
-      "genre": "outros"
+      "genre": "pop"
     },
     {
       "artist": "MC GP",
@@ -240,7 +240,7 @@
       "total_streams": 7156504,
       "rank": 16,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029977a75e107f54d30e904177",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Grupo Menos É Mais",
@@ -255,7 +255,7 @@
       "total_streams": 7145494,
       "rank": 17,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c89ff3434d85f33354c929b8",
-      "genre": "outros"
+      "genre": "pagode"
     },
     {
       "artist": "Dj Luan Gomes",
@@ -270,7 +270,7 @@
       "total_streams": 6813720,
       "rank": 18,
       "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ece7d3536bfbace45e8093d3",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "BTS",
@@ -285,7 +285,7 @@
       "total_streams": 6532880,
       "rank": 19,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
-      "genre": "outros"
+      "genre": "pop"
     },
     {
       "artist": "Oruam",
@@ -299,8 +299,8 @@
       "in_both": true,
       "total_streams": 6090259,
       "rank": 20,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02e527f3feda78b6dfec7be109",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e527f3feda78b6dfec7be109",
+      "genre": "funk"
     },
     {
       "artist": "MC Meno K",
@@ -315,7 +315,7 @@
       "total_streams": 5641700,
       "rank": 21,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020f9cfb57a699f3d2db9b5541",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Julliany Souza",
@@ -329,8 +329,8 @@
       "in_both": true,
       "total_streams": 5201779,
       "rank": 22,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e6a840b4d13f30e3e8e1c9b9",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02e6a840b4d13f30e3e8e1c9b9",
+      "genre": "gospel"
     },
     {
       "artist": "Felipe e Rodrigo",
@@ -344,8 +344,8 @@
       "in_both": true,
       "total_streams": 5118460,
       "rank": 23,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cb9206020cf3699906b706d5",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02cb9206020cf3699906b706d5",
+      "genre": "sertanejo"
     },
     {
       "artist": "Filho do Piseiro",
@@ -375,7 +375,7 @@
       "total_streams": 4864727,
       "rank": 25,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0202eb05f642de3cbee085d811",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Júnior e Cézar",
@@ -389,8 +389,8 @@
       "in_both": true,
       "total_streams": 4800795,
       "rank": 26,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022352886a6fab375db431d2a7",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022352886a6fab375db431d2a7",
+      "genre": "sertanejo"
     },
     {
       "artist": "Felipe Rodrigues",
@@ -404,8 +404,8 @@
       "in_both": true,
       "total_streams": 4677557,
       "rank": 27,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02aedf2bb1081cd9f3e9fe985c",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02aedf2bb1081cd9f3e9fe985c",
+      "genre": "gospel"
     },
     {
       "artist": "Murilo Huff",
@@ -464,7 +464,7 @@
       "in_both": false,
       "total_streams": 4463679,
       "rank": 31,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
       "genre": "outros"
     },
     {
@@ -494,8 +494,8 @@
       "in_both": true,
       "total_streams": 4359008,
       "rank": 33,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029af91331280cf2dfb0eab351",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029af91331280cf2dfb0eab351",
+      "genre": "funk"
     },
     {
       "artist": "BTS",
@@ -539,7 +539,7 @@
       "in_both": true,
       "total_streams": 4183257,
       "rank": 36,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e024dee64ae7ed8d46b9406a3c5",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e024dee64ae7ed8d46b9406a3c5",
       "genre": "outros"
     },
     {
@@ -584,8 +584,8 @@
       "in_both": true,
       "total_streams": 4150903,
       "rank": 39,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02af84ece25c75658c8c74ad17",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02af84ece25c75658c8c74ad17",
+      "genre": "funk"
     },
     {
       "artist": "BTS",
@@ -614,7 +614,7 @@
       "in_both": true,
       "total_streams": 4018202,
       "rank": 41,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02bde3897aae673f657b6a622a",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02bde3897aae673f657b6a622a",
       "genre": "outros"
     },
     {
@@ -630,7 +630,7 @@
       "total_streams": 3901527,
       "rank": 42,
       "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02459936b34c47a0d6ba53b0ac",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Panda",
@@ -644,7 +644,7 @@
       "in_both": true,
       "total_streams": 3891445,
       "rank": 43,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0241f166032f17817683c63acb",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0241f166032f17817683c63acb",
       "genre": "outros"
     },
     {
@@ -660,7 +660,7 @@
       "total_streams": 3884229,
       "rank": 44,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0223a6f949748bea5edfe1d91d",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Filho do Piseiro",
@@ -689,7 +689,7 @@
       "in_both": true,
       "total_streams": 3828231,
       "rank": 46,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025729faf96431459c2750896f",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025729faf96431459c2750896f",
       "genre": "outros"
     },
     {
@@ -704,7 +704,7 @@
       "in_both": false,
       "total_streams": 3821343,
       "rank": 47,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cc07fab36cc6cfdfc415fbb3",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02cc07fab36cc6cfdfc415fbb3",
       "genre": "outros"
     },
     {
@@ -719,7 +719,7 @@
       "in_both": false,
       "total_streams": 3789483,
       "rank": 48,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c7b2b714340ce4e69cabefb5",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c7b2b714340ce4e69cabefb5",
       "genre": "outros"
     },
     {
@@ -764,7 +764,7 @@
       "in_both": false,
       "total_streams": 3649666,
       "rank": 51,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022774b00531d558bc19e12a24",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022774b00531d558bc19e12a24",
       "genre": "outros"
     },
     {
@@ -794,7 +794,7 @@
       "in_both": true,
       "total_streams": 3512699,
       "rank": 53,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02f8fc839361eacee6af4af11a",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f8fc839361eacee6af4af11a",
       "genre": "outros"
     },
     {
@@ -809,7 +809,7 @@
       "in_both": true,
       "total_streams": 3483958,
       "rank": 54,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c33c011434a5dfeb74bdcc7a",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c33c011434a5dfeb74bdcc7a",
       "genre": "outros"
     },
     {
@@ -830,8 +830,8 @@
     {
       "artist": "Netto Brito",
       "title": "A Cena",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0tknpW7YK6NVtiiLSZQZnG",
+      "spotify_id": "0tknpW7YK6NVtiiLSZQZnG",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 13,
@@ -884,7 +884,7 @@
       "in_both": false,
       "total_streams": 3393211,
       "rank": 59,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02dfa17fad7f190c901603270e",
       "genre": "outros"
     },
     {
@@ -899,7 +899,7 @@
       "in_both": false,
       "total_streams": 3219237,
       "rank": 60,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022a782c4b71f69b28a3b8d355",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022a782c4b71f69b28a3b8d355",
       "genre": "outros"
     },
     {
@@ -929,7 +929,7 @@
       "in_both": true,
       "total_streams": 3176799,
       "rank": 62,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02986844db25ce9aea2267e3ae",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02986844db25ce9aea2267e3ae",
       "genre": "outros"
     },
     {
@@ -945,7 +945,7 @@
       "total_streams": 3108703,
       "rank": 63,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02118ee259740a273083255f75",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Get Worship",
@@ -989,7 +989,7 @@
       "in_both": false,
       "total_streams": 3014793,
       "rank": 66,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02b6e7e3c36da82692dca0217f",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b6e7e3c36da82692dca0217f",
       "genre": "outros"
     },
     {
@@ -1004,7 +1004,7 @@
       "in_both": true,
       "total_streams": 3009944,
       "rank": 67,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02819cfce6a65f58d4ad29bed3",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02819cfce6a65f58d4ad29bed3",
       "genre": "outros"
     },
     {
@@ -1020,7 +1020,7 @@
       "total_streams": 3000655,
       "rank": 68,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0247955b951c6a89e1e5a6777a",
-      "genre": "outros"
+      "genre": "pagode"
     },
     {
       "artist": "Luan Santana",
@@ -1034,7 +1034,7 @@
       "in_both": false,
       "total_streams": 2970608,
       "rank": 69,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e021063e4a2b6e169864183b897",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021063e4a2b6e169864183b897",
       "genre": "outros"
     },
     {
@@ -1049,7 +1049,7 @@
       "in_both": false,
       "total_streams": 2963376,
       "rank": 70,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02528a05e536843c12583b60b7",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02528a05e536843c12583b60b7",
       "genre": "outros"
     },
     {
@@ -1064,7 +1064,7 @@
       "in_both": false,
       "total_streams": 2926594,
       "rank": 71,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b21bebf4df8085accf3bd88c",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02b21bebf4df8085accf3bd88c",
       "genre": "outros"
     },
     {
@@ -1095,13 +1095,13 @@
       "total_streams": 2740145,
       "rank": 73,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f92f8fff9e2e5fe2c68fbe41",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Netto Brito",
       "title": "Body Splash(Live)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/3NHfW4gFVdWSZZXhVH4Gc3",
+      "spotify_id": "3NHfW4gFVdWSZZXhVH4Gc3",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 24,
@@ -1115,8 +1115,8 @@
     {
       "artist": "Henrique & Juliano",
       "title": "Amor Dos Outros (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/48RQfxFa4BY4jmAhJBQZPQ",
+      "spotify_id": "48RQfxFa4BY4jmAhJBQZPQ",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 25,
@@ -1139,8 +1139,8 @@
       "in_both": false,
       "total_streams": 2657738,
       "rank": 76,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0295615fab0b775890670668ee",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0295615fab0b775890670668ee",
+      "genre": "funk"
     },
     {
       "artist": "Guns N' Roses",
@@ -1154,7 +1154,7 @@
       "in_both": true,
       "total_streams": 2656000,
       "rank": 77,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0221ebf49b3292c3f0f575f0f5",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0221ebf49b3292c3f0f575f0f5",
       "genre": "outros"
     },
     {
@@ -1169,7 +1169,7 @@
       "in_both": true,
       "total_streams": 2609867,
       "rank": 78,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027ae4d78852e406eff2f4eef6",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027ae4d78852e406eff2f4eef6",
       "genre": "outros"
     },
     {
@@ -1184,8 +1184,8 @@
       "in_both": false,
       "total_streams": 2598021,
       "rank": 79,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02f7bd4008ce03446119f4b9a2",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f7bd4008ce03446119f4b9a2",
+      "genre": "funk"
     },
     {
       "artist": "Grupo Menos É Mais",
@@ -1199,7 +1199,7 @@
       "in_both": false,
       "total_streams": 2534959,
       "rank": 80,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025645e61562deebdda78755b6",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025645e61562deebdda78755b6",
       "genre": "outros"
     },
     {
@@ -1229,7 +1229,7 @@
       "in_both": false,
       "total_streams": 2508253,
       "rank": 82,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fbbcdc1d9d247f1ee19c524a",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fbbcdc1d9d247f1ee19c524a",
       "genre": "outros"
     },
     {
@@ -1250,8 +1250,8 @@
     {
       "artist": "Henrique & Juliano",
       "title": "Até Você Voltar (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4ksSf8cL3VlUvQSkFcRHy3",
+      "spotify_id": "4ksSf8cL3VlUvQSkFcRHy3",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 27,
@@ -1265,8 +1265,8 @@
     {
       "artist": "ZXKAI",
       "title": "NO BATIDÃO",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/7vg9noSnFEyPfwLiaCW4vi",
+      "spotify_id": "7vg9noSnFEyPfwLiaCW4vi",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 28,
@@ -1319,7 +1319,7 @@
       "in_both": false,
       "total_streams": 2395411,
       "rank": 88,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0239ccc143fa0c800fd90cdf48",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0239ccc143fa0c800fd90cdf48",
       "genre": "outros"
     },
     {
@@ -1334,7 +1334,7 @@
       "in_both": false,
       "total_streams": 2395205,
       "rank": 89,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020d5f00c853be5debb5eba851",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020d5f00c853be5debb5eba851",
       "genre": "outros"
     },
     {
@@ -1349,8 +1349,8 @@
       "in_both": true,
       "total_streams": 2370028,
       "rank": 90,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02253f9d582bd52ce3797f0f16",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02253f9d582bd52ce3797f0f16",
+      "genre": "funk"
     },
     {
       "artist": "Luísa Sonza",
@@ -1364,7 +1364,7 @@
       "in_both": false,
       "total_streams": 2355020,
       "rank": 91,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ca8e4f4d127e4b0ebc956dcc",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ca8e4f4d127e4b0ebc956dcc",
       "genre": "outros"
     },
     {
@@ -1410,13 +1410,13 @@
       "total_streams": 2331181,
       "rank": 94,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fc6baf33e9b4350854185475",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Natanzinho Lima",
       "title": "Me Apaixonei Nessa Morena (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/7MfEQMX2QHxcchBJ5c3IQB",
+      "spotify_id": "7MfEQMX2QHxcchBJ5c3IQB",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 32,
@@ -1439,14 +1439,14 @@
       "in_both": false,
       "total_streams": 2175019,
       "rank": 96,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029276a996605bd1a9fcdd1563",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029276a996605bd1a9fcdd1563",
       "genre": "outros"
     },
     {
       "artist": "Andrielly Souza",
       "title": "Déjà Vu (Live)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/1RfmWFk8CxkOXgD03M5gzu",
+      "spotify_id": "1RfmWFk8CxkOXgD03M5gzu",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 33,
@@ -1460,8 +1460,8 @@
     {
       "artist": "Toque Dez",
       "title": "Um Centímetro (feat. Juninho Moraes)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/2ZGgLZZMkiMf58nKFHN5W4",
+      "spotify_id": "2ZGgLZZMkiMf58nKFHN5W4",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 34,
@@ -1470,7 +1470,7 @@
       "total_streams": 2148528,
       "rank": 98,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "rap"
     },
     {
       "artist": "Clayton & Romário",
@@ -1484,14 +1484,14 @@
       "in_both": false,
       "total_streams": 2132626,
       "rank": 99,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02895043849e01b7e582a1343f",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02895043849e01b7e582a1343f",
       "genre": "outros"
     },
     {
       "artist": "Void",
       "title": "Brega Funk dos Rosa (feat. Katlen & Leozinn)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/6bMl4MSED0kQi9liOmhWQD",
+      "spotify_id": "6bMl4MSED0kQi9liOmhWQD",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 36,
@@ -1500,7 +1500,7 @@
       "total_streams": 2102027,
       "rank": 100,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "rap"
     },
     {
       "artist": "Fernando & Sorocaba",
@@ -1514,7 +1514,7 @@
       "in_both": false,
       "total_streams": 2092417,
       "rank": 101,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d414884237372b01fa29bca7",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d414884237372b01fa29bca7",
       "genre": "outros"
     },
     {
@@ -1529,14 +1529,14 @@
       "in_both": false,
       "total_streams": 2080827,
       "rank": 102,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02eba409657c9ae5d8e1c821d6",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02eba409657c9ae5d8e1c821d6",
       "genre": "outros"
     },
     {
       "artist": "Oruam",
       "title": "10 Minutos de Freestyle",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4iMbKRl0zrkAGUCfzJMBpL",
+      "spotify_id": "4iMbKRl0zrkAGUCfzJMBpL",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 37,
@@ -1565,8 +1565,8 @@
     {
       "artist": "Felipe Rodrigues",
       "title": "Primeira Essência (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/70xQV1aVgHLZCo8D9iTaSh",
+      "spotify_id": "70xQV1aVgHLZCo8D9iTaSh",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 39,
@@ -1605,7 +1605,7 @@
       "total_streams": 1997583,
       "rank": 107,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02a9a95c2c1cdf65c0225be992",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Diego & Victor Hugo",
@@ -1619,7 +1619,7 @@
       "in_both": false,
       "total_streams": 1991117,
       "rank": 108,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f6963058335b04664d89f1d4",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02f6963058335b04664d89f1d4",
       "genre": "outros"
     },
     {
@@ -1634,7 +1634,7 @@
       "in_both": false,
       "total_streams": 1940181,
       "rank": 109,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027ea581f6963d14d477207234",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027ea581f6963d14d477207234",
       "genre": "outros"
     },
     {
@@ -1649,7 +1649,7 @@
       "in_both": false,
       "total_streams": 1923842,
       "rank": 110,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02deb164b57dd85d716ba3f252",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02deb164b57dd85d716ba3f252",
       "genre": "outros"
     },
     {
@@ -1670,8 +1670,8 @@
     {
       "artist": "cjnobeat",
       "title": "Até Quebrar a Cama 2.0",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/7aOv4uSAmiB9XKnkibqSdo",
+      "spotify_id": "7aOv4uSAmiB9XKnkibqSdo",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 43,
@@ -1685,8 +1685,8 @@
     {
       "artist": "Henrique & Juliano",
       "title": "Mudando de Assunto (En Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/2AQJRDfQJbfgmTf5e62Czl",
+      "spotify_id": "2AQJRDfQJbfgmTf5e62Czl",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 44,
@@ -1700,8 +1700,8 @@
     {
       "artist": "MC Leozinho ZS",
       "title": "História de um Amigo Meu (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/7li7X9DcLDPJ7srJusQnvI",
+      "spotify_id": "7li7X9DcLDPJ7srJusQnvI",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 45,
@@ -1710,7 +1710,7 @@
       "total_streams": 1808848,
       "rank": 114,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Diego & Arnaldo",
@@ -1755,7 +1755,7 @@
       "total_streams": 1786619,
       "rank": 117,
       "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0214564c5d5987242d4bc3b41a",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Jorge & Mateus",
@@ -1784,7 +1784,7 @@
       "in_both": false,
       "total_streams": 1723973,
       "rank": 119,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023cd9d90704e7851e5e87cc4f",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e023cd9d90704e7851e5e87cc4f",
       "genre": "outros"
     },
     {
@@ -1799,14 +1799,14 @@
       "in_both": false,
       "total_streams": 1708071,
       "rank": 120,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0252ae193e416c6c9d974aa11a",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0252ae193e416c6c9d974aa11a",
       "genre": "outros"
     },
     {
       "artist": "MC Menor MT",
       "title": "VEM CAVALGANDO VAI CAVALONA",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4EgmDb4tXeICXOeVnfgd4u",
+      "spotify_id": "4EgmDb4tXeICXOeVnfgd4u",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 49,
@@ -1815,7 +1815,7 @@
       "total_streams": 1704594,
       "rank": 121,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Legião Urbana",
@@ -1829,7 +1829,7 @@
       "in_both": false,
       "total_streams": 1704064,
       "rank": 122,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021eb5e996639036a49b09f1e5",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e021eb5e996639036a49b09f1e5",
       "genre": "outros"
     },
     {
@@ -1844,14 +1844,14 @@
       "in_both": false,
       "total_streams": 1688013,
       "rank": 123,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029feb75257028a22d90f18489",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029feb75257028a22d90f18489",
+      "genre": "funk"
     },
     {
       "artist": "Kew",
       "title": "Resenha Na Laje",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/3EJ78dvkCtcUmydRkulQMl",
+      "spotify_id": "3EJ78dvkCtcUmydRkulQMl",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 50,
@@ -1905,7 +1905,7 @@
       "total_streams": 1658816,
       "rank": 127,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ea190554a8e581839a4d00fa",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Panda",
@@ -1919,7 +1919,7 @@
       "in_both": false,
       "total_streams": 1654576,
       "rank": 128,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0272686b4ebe10115c9faea962",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0272686b4ebe10115c9faea962",
       "genre": "outros"
     },
     {
@@ -1955,8 +1955,8 @@
     {
       "artist": "Mundo Torajo",
       "title": "Estranhos",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0LxKFyxo9M4JelvLTY1r0c",
+      "spotify_id": "0LxKFyxo9M4JelvLTY1r0c",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 51,
@@ -1985,8 +1985,8 @@
     {
       "artist": "Priscila Senna",
       "title": "Não Me Faça Chorar (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0gmqVZqYdO0VeVvPD6Xosa",
+      "spotify_id": "0gmqVZqYdO0VeVvPD6Xosa",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 53,
@@ -2030,8 +2030,8 @@
     {
       "artist": "Rey Vaqueiro",
       "title": "Estrela (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0prxUAg6p0Qey4lJnzFsTT",
+      "spotify_id": "0prxUAg6p0Qey4lJnzFsTT",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 54,
@@ -2099,7 +2099,7 @@
       "in_both": false,
       "total_streams": 1535869,
       "rank": 140,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02aef93f26690acf0bb34d1111",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02aef93f26690acf0bb34d1111",
       "genre": "outros"
     },
     {
@@ -2114,7 +2114,7 @@
       "in_both": false,
       "total_streams": 1533088,
       "rank": 141,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020bbc0f9c2c078ad5570bcf79",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020bbc0f9c2c078ad5570bcf79",
       "genre": "outros"
     },
     {
@@ -2159,14 +2159,14 @@
       "in_both": false,
       "total_streams": 1528517,
       "rank": 144,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0250ff0f63e65c6eac6e7a5b97",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0250ff0f63e65c6eac6e7a5b97",
       "genre": "outros"
     },
     {
       "artist": "Danado do Recife",
       "title": "Xota, Agua, Xau, Bom Dia",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/49I2hNnUxBRQulhfbhv0cE",
+      "spotify_id": "49I2hNnUxBRQulhfbhv0cE",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 55,
@@ -2204,14 +2204,14 @@
       "in_both": false,
       "total_streams": 1516053,
       "rank": 147,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02017db730b5c9adf3247b0144",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02017db730b5c9adf3247b0144",
       "genre": "outros"
     },
     {
       "artist": "Valesca Mayssa",
       "title": "Não Me Deixe Esquecer (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/5l8vkQjZJz8EXmo28YoaPr",
+      "spotify_id": "5l8vkQjZJz8EXmo28YoaPr",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 56,
@@ -2234,7 +2234,7 @@
       "in_both": false,
       "total_streams": 1497279,
       "rank": 149,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fddfffec51b4580acae727c1",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fddfffec51b4580acae727c1",
       "genre": "outros"
     },
     {
@@ -2249,7 +2249,7 @@
       "in_both": false,
       "total_streams": 1497113,
       "rank": 150,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0299c540c0f78793fcea84a920",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0299c540c0f78793fcea84a920",
       "genre": "outros"
     },
     {
@@ -2295,7 +2295,7 @@
       "total_streams": 1484268,
       "rank": 153,
       "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025b3aec5b060c124f3624baaf",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Guilherme & Benuto",
@@ -2330,8 +2330,8 @@
     {
       "artist": "Rey Vaqueiro",
       "title": "Nome Proibido",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/7sdgiLMSno2s4fOYdKOTLW",
+      "spotify_id": "7sdgiLMSno2s4fOYdKOTLW",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 59,
@@ -2354,7 +2354,7 @@
       "in_both": false,
       "total_streams": 1452273,
       "rank": 157,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0287a7cb5d32898f799107755c",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0287a7cb5d32898f799107755c",
       "genre": "outros"
     },
     {
@@ -2370,13 +2370,13 @@
       "total_streams": 1450642,
       "rank": 158,
       "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020016df79925e37aa15afee93",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Eduardinho dos Teclados",
       "title": "BAILE DO VJ",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/49umiLGXIVXqpjtR6ne2Pv",
+      "spotify_id": "49umiLGXIVXqpjtR6ne2Pv",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 61,
@@ -2444,7 +2444,7 @@
       "in_both": false,
       "total_streams": 1407689,
       "rank": 163,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028d18d73bbfc8985d52865edf",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e028d18d73bbfc8985d52865edf",
       "genre": "outros"
     },
     {
@@ -2459,14 +2459,14 @@
       "in_both": false,
       "total_streams": 1396254,
       "rank": 164,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fd8d7a8d96871e791cb1f626",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fd8d7a8d96871e791cb1f626",
       "genre": "outros"
     },
     {
       "artist": "Marília Mendonça",
       "title": "Troca de Calçada",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4AAIAVjSyiq1N7SXKkwXZe",
+      "spotify_id": "4AAIAVjSyiq1N7SXKkwXZe",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 63,
@@ -2489,7 +2489,7 @@
       "in_both": false,
       "total_streams": 1390926,
       "rank": 166,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02cc8ede763dd33229b1feed9e",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cc8ede763dd33229b1feed9e",
       "genre": "outros"
     },
     {
@@ -2525,8 +2525,8 @@
     {
       "artist": "Gabriela Gomes",
       "title": "Deus Proverá",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/1XGPIdV19Qp3p7aBGhP6EQ",
+      "spotify_id": "1XGPIdV19Qp3p7aBGhP6EQ",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 65,
@@ -2555,8 +2555,8 @@
     {
       "artist": "Aurelina Dourado",
       "title": "A Vitória Chegou",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0McSPomzSJmikLJaN7vmPb",
+      "spotify_id": "0McSPomzSJmikLJaN7vmPb",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 66,
@@ -2595,7 +2595,7 @@
       "total_streams": 1361089,
       "rank": 173,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021934ec8e48237e1fe26c866b",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "fhop music",
@@ -2609,7 +2609,7 @@
       "in_both": false,
       "total_streams": 1360351,
       "rank": 174,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02945c72e1a8123c6d1717afe6",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02945c72e1a8123c6d1717afe6",
       "genre": "outros"
     },
     {
@@ -2624,8 +2624,8 @@
       "in_both": false,
       "total_streams": 1349504,
       "rank": 175,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0201003c234f677e043968fafb",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0201003c234f677e043968fafb",
+      "genre": "funk"
     },
     {
       "artist": "Hugo & Guilherme",
@@ -2639,7 +2639,7 @@
       "in_both": false,
       "total_streams": 1346942,
       "rank": 176,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e295ee75598a12d933800298",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02e295ee75598a12d933800298",
       "genre": "outros"
     },
     {
@@ -2654,8 +2654,8 @@
       "in_both": false,
       "total_streams": 1342289,
       "rank": 177,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023df8232aa6c7f8f7a51da985",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e023df8232aa6c7f8f7a51da985",
+      "genre": "funk"
     },
     {
       "artist": "Charlie Brown Jr.",
@@ -2699,7 +2699,7 @@
       "in_both": false,
       "total_streams": 1337331,
       "rank": 180,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cd23f7020644b08d306d7ea2",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02cd23f7020644b08d306d7ea2",
       "genre": "outros"
     },
     {
@@ -2714,8 +2714,8 @@
       "in_both": false,
       "total_streams": 1335694,
       "rank": 181,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02497e68476e7062b1bf5ea83f",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02497e68476e7062b1bf5ea83f",
+      "genre": "funk"
     },
     {
       "artist": "Hugo Henrique",
@@ -2744,7 +2744,7 @@
       "in_both": false,
       "total_streams": 1325182,
       "rank": 183,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0260ef106d975679382d18f5a4",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0260ef106d975679382d18f5a4",
       "genre": "outros"
     },
     {
@@ -2759,7 +2759,7 @@
       "in_both": false,
       "total_streams": 1314732,
       "rank": 184,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02f5b0d511b5c1669f800c88fe",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f5b0d511b5c1669f800c88fe",
       "genre": "outros"
     },
     {
@@ -2804,7 +2804,7 @@
       "in_both": false,
       "total_streams": 1298879,
       "rank": 187,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025f46bc8a4692e3d7d356181e",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025f46bc8a4692e3d7d356181e",
       "genre": "outros"
     },
     {
@@ -2834,7 +2834,7 @@
       "in_both": false,
       "total_streams": 1292867,
       "rank": 189,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0247cbd521916fc422be1a5c9a",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0247cbd521916fc422be1a5c9a",
       "genre": "outros"
     },
     {
@@ -2849,7 +2849,7 @@
       "in_both": false,
       "total_streams": 1291426,
       "rank": 190,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c8e97cafeb2acb85b21a777e",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c8e97cafeb2acb85b21a777e",
       "genre": "outros"
     },
     {
@@ -2865,7 +2865,7 @@
       "total_streams": 1291053,
       "rank": 191,
       "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029fe1c4dea8fdbb452b66b271",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "The Goo Goo Dolls",
@@ -2879,7 +2879,7 @@
       "in_both": false,
       "total_streams": 1287435,
       "rank": 192,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02eda9478c39a21e1cdc6609ca",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02eda9478c39a21e1cdc6609ca",
       "genre": "outros"
     },
     {
@@ -2894,7 +2894,7 @@
       "in_both": false,
       "total_streams": 1282245,
       "rank": 193,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02b1e8a9fa2c21159ea637b766",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b1e8a9fa2c21159ea637b766",
       "genre": "outros"
     },
     {
@@ -2969,7 +2969,7 @@
       "in_both": false,
       "total_streams": 1266885,
       "rank": 198,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b79f3c0a62d3c71aea3b344b",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02b79f3c0a62d3c71aea3b344b",
       "genre": "outros"
     },
     {
@@ -2984,7 +2984,7 @@
       "in_both": false,
       "total_streams": 1266850,
       "rank": 199,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0299c540c0f78793fcea84a920",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0299c540c0f78793fcea84a920",
       "genre": "outros"
     },
     {
@@ -2999,7 +2999,7 @@
       "in_both": false,
       "total_streams": 1262847,
       "rank": 200,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0282ea2e9e1858aa012c57cd45",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0282ea2e9e1858aa012c57cd45",
       "genre": "outros"
     },
     {
@@ -3030,7 +3030,7 @@
       "total_streams": 1260215,
       "rank": 202,
       "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02bb2624be0c78ed088dd4d237",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Henry Freitas",
@@ -3059,7 +3059,7 @@
       "in_both": false,
       "total_streams": 1254640,
       "rank": 204,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020f91729d8550f80bccccdd5a",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020f91729d8550f80bccccdd5a",
       "genre": "outros"
     },
     {
@@ -3074,14 +3074,14 @@
       "in_both": false,
       "total_streams": 1253589,
       "rank": 205,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e026871f3c5c8238f18a9ba88f7",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026871f3c5c8238f18a9ba88f7",
       "genre": "outros"
     },
     {
       "artist": "Preto no Branco",
       "title": "Ninguém Explica Deus (Ao Vivo) (feat. Gabriela Rocha)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/682XjN6L1Qhs5rXbuGSQKK",
+      "spotify_id": "682XjN6L1Qhs5rXbuGSQKK",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 72,
@@ -3090,7 +3090,7 @@
       "total_streams": 1245228,
       "rank": 206,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "rap"
     },
     {
       "artist": "Linkin Park",
@@ -3134,7 +3134,7 @@
       "in_both": false,
       "total_streams": 1241811,
       "rank": 209,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025bb6668a856035550a66fc31",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025bb6668a856035550a66fc31",
       "genre": "outros"
     },
     {
@@ -3149,7 +3149,7 @@
       "in_both": false,
       "total_streams": 1235966,
       "rank": 210,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027ae4d78852e406eff2f4eef6",
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027ae4d78852e406eff2f4eef6",
       "genre": "outros"
     },
     {
@@ -3164,14 +3164,14 @@
       "in_both": false,
       "total_streams": 1231397,
       "rank": 211,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021381f350c5f7f620ee69a622",
-      "genre": "outros"
+      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e021381f350c5f7f620ee69a622",
+      "genre": "funk"
     },
     {
       "artist": "Netto Brito",
       "title": "Biometria",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/5pvdcmTIx3tFUFY95BoPgi",
+      "spotify_id": "5pvdcmTIx3tFUFY95BoPgi",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 73,
@@ -3230,8 +3230,8 @@
     {
       "artist": "DJ KN DE VILA VELHA",
       "title": "Calafrio",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/3Vlb046ateZv3zatIqMm5P",
+      "spotify_id": "3Vlb046ateZv3zatIqMm5P",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 74,
@@ -3240,7 +3240,7 @@
       "total_streams": 1213186,
       "rank": 216,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Henry Freitas",
@@ -3335,8 +3335,8 @@
     {
       "artist": "ATLXS",
       "title": "MONTAGEM REBOLA",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/1W9VNBag0ffSt4oPixJqj3",
+      "spotify_id": "1W9VNBag0ffSt4oPixJqj3",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 75,
@@ -3374,7 +3374,7 @@
       "in_both": false,
       "total_streams": 1185497,
       "rank": 225,
-      "thumbnail_url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02908c9364b91953b3d9a8a4b7",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02908c9364b91953b3d9a8a4b7",
       "genre": "outros"
     },
     {
@@ -3389,7 +3389,7 @@
       "in_both": false,
       "total_streams": 1175286,
       "rank": 226,
-      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029276a996605bd1a9fcdd1563",
+      "thumbnail_url": "",
       "genre": "outros"
     },
     {
@@ -3404,14 +3404,14 @@
       "in_both": false,
       "total_streams": 1174919,
       "rank": 227,
-      "thumbnail_url": "",
+      "thumbnail_url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029135c41b1da1eecd682c4dc6",
       "genre": "outros"
     },
     {
       "artist": "Orgânico",
       "title": "Dizeres",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4HQ4VFKOJRnTGZlYOOgrr6",
+      "spotify_id": "4HQ4VFKOJRnTGZlYOOgrr6",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 77,
@@ -3470,8 +3470,8 @@
     {
       "artist": "Desejo de Menina",
       "title": "Nada É para Sempre",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/1hVxFIV7ragWvy5Wiaw94O",
+      "spotify_id": "1hVxFIV7ragWvy5Wiaw94O",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 79,
@@ -3485,8 +3485,8 @@
     {
       "artist": "DJ NATHI",
       "title": "Baile do Dj Japa Nk e Dj Nathi",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/2HPVeFHwVjYU9i12CPFA0v",
+      "spotify_id": "2HPVeFHwVjYU9i12CPFA0v",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 80,
@@ -3495,13 +3495,13 @@
       "total_streams": 1141786,
       "rank": 233,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Natanzinho Lima",
       "title": "Um Beijo por Minuto (25 Milhões) (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0s7tYdoQoRJBEuuVz1qFGZ",
+      "spotify_id": "0s7tYdoQoRJBEuuVz1qFGZ",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 85,
@@ -3515,8 +3515,8 @@
     {
       "artist": "Pelé MilFlows",
       "title": "Vem Cá",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/6hiKXxS7pgPKnKfCU7UJ6O",
+      "spotify_id": "6hiKXxS7pgPKnKfCU7UJ6O",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 86,
@@ -3530,8 +3530,8 @@
     {
       "artist": "Marília Tavares",
       "title": "Quero Ser o Seu Amor",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/1ir8ABEHT52sUQ5IiRYIWZ",
+      "spotify_id": "1ir8ABEHT52sUQ5IiRYIWZ",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 87,
@@ -3545,8 +3545,8 @@
     {
       "artist": "DJ SLK Sucessada",
       "title": "Melô De Poucas Ideias (Reggae Funk)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4f6FcFtp2R5laib20lY51l",
+      "spotify_id": "4f6FcFtp2R5laib20lY51l",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 88,
@@ -3555,13 +3555,13 @@
       "total_streams": 1120086,
       "rank": 237,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Angélica Azevedo",
       "title": "Ore Mais",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/2e4F0eA2CZXgQHvh5gBeqD",
+      "spotify_id": "2e4F0eA2CZXgQHvh5gBeqD",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 89,
@@ -3575,8 +3575,8 @@
     {
       "artist": "DJ Asul",
       "title": "MATADORA",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/7jqxHXlu3Ya7WF7lD7tIXj",
+      "spotify_id": "7jqxHXlu3Ya7WF7lD7tIXj",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 90,
@@ -3585,13 +3585,13 @@
       "total_streams": 1091608,
       "rank": 239,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Sarah Beatriz",
       "title": "O Maior Vilão Sou Eu",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0satRlTjJoDmTqOl8mmmy0",
+      "spotify_id": "0satRlTjJoDmTqOl8mmmy0",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 91,
@@ -3605,8 +3605,8 @@
     {
       "artist": "MC Leléto",
       "title": "Treme o Bumbum",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4FhcXIwLE370GCMWe0FL0g",
+      "spotify_id": "4FhcXIwLE370GCMWe0FL0g",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 93,
@@ -3615,13 +3615,13 @@
       "total_streams": 1077963,
       "rank": 241,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Henrique & Juliano",
       "title": "Quem Ama Sempre Entende (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/2JGI42JhPCML6thLHjABF2",
+      "spotify_id": "2JGI42JhPCML6thLHjABF2",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 95,
@@ -3635,8 +3635,8 @@
     {
       "artist": "MC IG",
       "title": "400K 2",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0GKWB02lWvDAHLZIKuPrr2",
+      "spotify_id": "0GKWB02lWvDAHLZIKuPrr2",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 96,
@@ -3645,13 +3645,13 @@
       "total_streams": 1045776,
       "rank": 243,
       "thumbnail_url": "",
-      "genre": "outros"
+      "genre": "funk"
     },
     {
       "artist": "Yago Oproprio",
       "title": "Imprevisto",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/0gaZCBbtjEyTLhJrjnPbt5",
+      "spotify_id": "0gaZCBbtjEyTLhJrjnPbt5",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 98,
@@ -3665,8 +3665,8 @@
     {
       "artist": "Ministério Pra Tua Glória",
       "title": "Me Refaz (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/6BvZEYMISk5T5FpfepYA72",
+      "spotify_id": "6BvZEYMISk5T5FpfepYA72",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 99,
@@ -3680,8 +3680,8 @@
     {
       "artist": "Kailane Frauches",
       "title": "Eu Vou Fazer (Ao Vivo)",
-      "spotify_url": "",
-      "spotify_id": "",
+      "spotify_url": "https://open.spotify.com/track/4xrPTTStNmUyjpuI5bVRxy",
+      "spotify_id": "4xrPTTStNmUyjpuI5bVRxy",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 100,
