@@ -1,0 +1,46 @@
+name: Atualizar Ranking Semanal
+
+on:
+  schedule:
+    # Toda sexta-feira às 13:00 UTC = 10:00 Brasília (horário de verão)
+    - cron: "0 13 * * 5"
+  workflow_dispatch:  # permite rodar manualmente também
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install requests beautifulsoup4
+
+      - name: Rodar scraper
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+        run: python scraper.py
+
+      - name: Commit e push do ranking.json
+        run: |
+          git config user.name "Ranking Bot"
+          git config user.email "bot@ranking-brasil.com"
+          git add data/ranking.json
+          git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
+          git push
+
+      - name: Deploy GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          exclude_assets: ".github,scraper.py,requirements.txt,.gitignore"
