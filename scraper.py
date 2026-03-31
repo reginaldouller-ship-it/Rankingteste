@@ -69,11 +69,27 @@ def get_thumbnail(spotify_id):
         return ""
 
 
+_YT_SUFFIX_RE = re.compile(
+    r"\s*[\(\[]\s*(ao vivo|live|acústico|acustico|clipe oficial|official|"
+    r"official video|official music video|lyric video|visualizer|"
+    r"part\.|feat\.|ft\.)[^\)\]]*[\)\]]",
+    re.IGNORECASE,
+)
+
+
+def _clean_yt_title(title):
+    """Remove sufixos comuns de títulos do YouTube para melhorar busca no Spotify."""
+    cleaned = _YT_SUFFIX_RE.sub("", title).strip()
+    cleaned = re.sub(r"\s*[-–]\s*(ao vivo|live|acústico|acustico)\s*$", "", cleaned, flags=re.IGNORECASE).strip()
+    return cleaned or title
+
+
 def search_spotify_track(artist, title, token):
     if not token:
         return "", "", ""
     try:
-        q = f"{artist} {title}"
+        clean_title = _clean_yt_title(title)
+        q = f"{artist} {clean_title}"
         r = requests.get(
             "https://api.spotify.com/v1/search",
             params={"q": q, "type": "track", "market": "BR", "limit": 1},
@@ -94,9 +110,67 @@ def search_spotify_track(artist, title, token):
         return "", "", ""
 
 
+_GENRE_MAP = [
+    ("funk", "funk"),
+    ("brega", "funk"),
+    ("baile funk", "funk"),
+    ("sertanejo", "sertanejo"),
+    ("pagode", "pagode"),
+    ("samba", "pagode"),
+    ("forro", "forró"),
+    ("forró", "forró"),
+    ("xote", "forró"),
+    ("baião", "forró"),
+    ("axé", "axé"),
+    ("axe", "axé"),
+    ("gospel", "gospel"),
+    ("ccm", "gospel"),
+    ("rap", "rap"),
+    ("hip hop", "rap"),
+    ("trap", "rap"),
+    ("mpb", "mpb"),
+    ("rock", "rock"),
+    ("pop", "pop"),
+    ("eletrônica", "eletrônica"),
+    ("electronic", "eletrônica"),
+    ("dance", "eletrônica"),
+]
+
+
+def normalize_genre(genre_str):
+    """Mapeia gênero granular do Spotify para categoria brasileira ampla."""
+    g = genre_str.lower()
+    for keyword, category in _GENRE_MAP:
+        if keyword in g:
+            return category
+    return "outros"
+
+
+def guess_genre(artist, title):
+    """Infere gênero por palavras-chave no artista/título quando sem dados Spotify."""
+    text = (artist + " " + title).lower()
+    if re.search(r"\bmc\b|\bmc\.", text) or text.startswith("mc "):
+        return "funk"
+    if re.search(r"\bdj\b", text) and "sertanejo" not in text:
+        return "funk"
+    if "sertanejo" in text:
+        return "sertanejo"
+    if re.search(r"\bpagode\b|\bsamba\b", text):
+        return "pagode"
+    if re.search(r"\bforró\b|\bforro\b|\bxote\b", text):
+        return "forró"
+    if re.search(r"\baxé\b|\baxe\b", text):
+        return "axé"
+    if re.search(r"\bgospel\b|\blouvor\b|\badoração\b", text):
+        return "gospel"
+    if re.search(r"\brap\b|\brap\b|\bfeat\b", text):
+        return "rap"
+    return "outros"
+
+
 def get_genre(spotify_id, token):
     if not spotify_id or not token:
-        return "outros"
+        return None
     try:
         r = requests.get(
             f"https://api.spotify.com/v1/tracks/{spotify_id}",
@@ -107,7 +181,7 @@ def get_genre(spotify_id, token):
         r.raise_for_status()
         artists = r.json().get("artists", [])
         if not artists:
-            return "outros"
+            return None
         artist_id = artists[0]["id"]
 
         r2 = requests.get(
@@ -118,9 +192,11 @@ def get_genre(spotify_id, token):
         r2.encoding = "utf-8"
         r2.raise_for_status()
         genres = r2.json().get("genres", [])
-        return genres[0] if genres else "outros"
+        if not genres:
+            return None
+        return normalize_genre(genres[0])
     except Exception:
-        return "outros"
+        return None
 
 
 def scrape_spotify():
@@ -202,7 +278,7 @@ def scrape_youtube():
 
 def normalize(text):
     text = text.lower().strip()
-    text = re.sub(r"\(.*?\)", "", text)   # remove parênteses
+    text = re.sub(r"\(.*?\)", "", text)
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
@@ -334,11 +410,14 @@ def run():
             }
             for future in concurrent.futures.as_completed(genre_futures):
                 entry = genre_futures[future]
-                entry["genre"] = future.result()
+                result = future.result()
+                if result is not None:
+                    entry["genre"] = result
 
-    # Tracks sem spotify_id ficam com "outros"
+    # Fallback: usar palavras-chave para tracks sem gênero da API
     for e in ranking:
-        e.setdefault("genre", "outros")
+        if not e.get("genre"):
+            e["genre"] = guess_genre(e.get("artist", ""), e.get("title", ""))
 
     output = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
