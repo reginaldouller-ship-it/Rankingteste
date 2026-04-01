@@ -35,16 +35,19 @@ jobs:
         run: |
           git config user.name "Ranking Bot"
           git config user.email "bot@ranking-brasil.com"
-          for attempt in 1 2 3; do
-            git stash
-            git pull --rebase origin main
-            git stash pop
-            git add data/ranking.json data/ranking_history.json
-            git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
-            git push && break
-            echo "Tentativa $attempt falhou, tentando novamente..."
-            git reset HEAD~1 2>/dev/null || true
-          done
+          # Salvar arquivos gerados pelo scraper antes de sincronizar com o remote
+          cp data/ranking.json /tmp/ranking.json
+          cp data/ranking_history.json /tmp/ranking_history.json 2>/dev/null || true
+          # Sincronizar com o estado mais recente do remote (evita conflitos)
+          git fetch origin main
+          git reset --hard origin/main
+          # Restaurar arquivos gerados
+          cp /tmp/ranking.json data/ranking.json
+          cp /tmp/ranking_history.json data/ranking_history.json 2>/dev/null || true
+          # Commitar e fazer push
+          git add data/ranking.json data/ranking_history.json
+          git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
+          git push origin main
 
       - name: Deploy GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
