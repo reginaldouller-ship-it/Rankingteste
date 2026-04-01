@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão de Gêneros — RankingBR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sp: #1DB954;
+      --accent: #6C63FF;
+      --bg: #0d0d0f;
+      --surface: #16161a;
+      --surface2: #1e1e24;
+      --surface3: #26262e;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.14);
+      --text: #f0f0f4;
+      --muted: #7a7a8c;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; }
+    .logo span { color: var(--accent); }
+    .back-link {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 5px; transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--text); }
+    .layout {
+      display: flex; flex: 1; overflow: hidden;
+      height: calc(100vh - 57px);
+    }
+    .sidebar {
+      width: 260px; flex-shrink: 0;
+      background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sidebar-title {
+      padding: 1rem 1.25rem 0.5rem;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .genre-list { flex: 1; overflow-y: auto; padding: 0.25rem 0.75rem; }
+    .genre-chip {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 10px; border-radius: 8px; margin-bottom: 3px;
+      transition: background 0.1s;
+    }
+    .genre-chip:hover { background: var(--surface2); }
+    .genre-chip-name { font-size: 13px; font-weight: 500; }
+    .genre-chip-count {
+      font-size: 11px; color: var(--muted);
+      background: var(--surface2); padding: 2px 7px; border-radius: 10px;
+    }
+    .sidebar-add {
+      padding: 0.75rem; border-top: 1px solid var(--border);
+      display: flex; gap: 6px;
+    }
+    .sidebar-add input {
+      flex: 1; background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      padding: 7px 10px; outline: none; transition: border-color 0.15s;
+    }
+    .sidebar-add input:focus { border-color: var(--accent); }
+    .sidebar-add input::placeholder { color: var(--muted); }
+    .btn-add-genre {
+      background: var(--accent); border: none; border-radius: 8px;
+      color: #fff; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 600; padding: 7px 14px;
+      cursor: pointer; transition: opacity 0.15s; white-space: nowrap;
+    }
+    .btn-add-genre:hover { opacity: 0.85; }
+    .btn-add-genre:disabled { opacity: 0.4; cursor: default; }
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .error-banner {
+      background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35);
+      border-radius: 8px; color: var(--danger); font-size: 13px;
+      padding: 10px 14px; margin: 0.75rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .error-banner.hidden { display: none; }
+    .error-banner button { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; }
+    .filter-bar {
+      padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex-shrink: 0;
+    }
+    .filter-toggle { display: flex; gap: 4px; }
+    .ftoggle-btn {
+      padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border2);
+      background: transparent; color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .ftoggle-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+    .ftoggle-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .search-wrap { flex: 1; min-width: 180px; position: relative; }
+    .search-wrap svg {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      width: 14px; height: 14px; fill: var(--muted); pointer-events: none;
+    }
+    .search-input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      padding: 7px 10px 7px 30px; outline: none; transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+    .artist-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .table-wrap { flex: 1; overflow-y: auto; padding: 0.5rem 0; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 8px 1.25rem; font-size: 11px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.5px; text-align: left;
+      border-bottom: 1px solid var(--border); background: var(--surface);
+      position: sticky; top: 0; z-index: 2;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    tbody tr:hover { background: var(--surface2); }
+    tbody td { padding: 10px 1.25rem; font-size: 13px; vertical-align: middle; }
+    .td-artist { font-weight: 500; }
+    .td-count { color: var(--muted); font-size: 12px; }
+    .td-genres { min-width: 180px; }
+    .genre-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.3);
+      padding: 2px 8px; border-radius: 4px; margin: 2px 3px 2px 0;
+    }
+    .no-genre { font-size: 11px; color: var(--muted); font-style: italic; }
+    .td-actions { white-space: nowrap; }
+    .btn-edit {
+      padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border2);
+      background: transparent; color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-edit:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+    .edit-row td { background: var(--surface2); padding: 12px 1.25rem; }
+    .edit-row-inner { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .edit-label { font-size: 12px; color: var(--muted); padding-top: 6px; white-space: nowrap; }
+    .genre-checkboxes { display: flex; flex-wrap: wrap; gap: 6px; }
+    .genre-check-label {
+      display: flex; align-items: center; gap: 5px; padding: 4px 10px;
+      border-radius: 6px; border: 1px solid var(--border2);
+      cursor: pointer; font-size: 12px; color: var(--muted);
+      transition: all 0.15s; user-select: none;
+    }
+    .genre-check-label:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+    .genre-check-label.checked {
+      background: rgba(108,99,255,0.15); border-color: rgba(108,99,255,0.5); color: var(--text);
+    }
+    .genre-check-label input { display: none; }
+    .edit-actions { display: flex; gap: 6px; margin-top: 2px; }
+    .btn-save {
+      padding: 5px 14px; border-radius: 6px; border: none;
+      background: var(--accent); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-save:hover { opacity: 0.85; }
+    .btn-cancel {
+      padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border2);
+      background: transparent; color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-cancel:hover { color: var(--text); }
+    .btn-remove {
+      padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(239,68,68,0.3);
+      background: transparent; color: var(--danger);
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-remove:hover { background: rgba(239,68,68,0.1); }
+    .state-msg { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 13px; }
+    @media (max-width: 680px) {
+      .layout { height: auto; flex-direction: column; }
+      .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+      .genre-list { max-height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Ranking<span>BR</span> — Gêneros</div>
+  <a class="back-link" href="index.html">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Voltar ao ranking
+  </a>
+</header>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-title">Gêneros</div>
+    <div class="genre-list" id="genre-list">
+      <div class="state-msg">Carregando...</div>
+    </div>
+    <div class="sidebar-add">
+      <input type="text" id="new-genre-input" placeholder="Novo gênero..." maxlength="40" autocomplete="off" />
+      <button class="btn-add-genre" id="btn-add-genre" disabled>Adicionar</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div id="error-banner" class="error-banner hidden">
+      <span id="error-msg"></span>
+      <button onclick="dismissError()">✕</button>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-toggle">
+        <button class="ftoggle-btn active" data-view="all">Todos</button>
+        <button class="ftoggle-btn" data-view="unclassified">Sem gênero</button>
+      </div>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Buscar artista..." autocomplete="off" />
+      </div>
+      <span class="artist-count" id="artist-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Artista</th><th>Músicas</th><th>Gêneros</th><th>Ação</th></tr>
+        </thead>
+        <tbody id="artist-tbody">
+          <tr><td colspan="4" class="state-msg">Carregando artistas...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ── Config Supabase ────────────────────────────────────────────────────────────
+const SUPABASE_URL    = "https://suzcbyzidnzzahwrkveh.supabase.co";
+const SUPABASE_ANON   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
+
+const HEADERS = {
+  "Content-Type":  "application/json",
+  "apikey":        SUPABASE_ANON,
+  "Authorization": `Bearer ${SUPABASE_ANON}`,
+  "Prefer":        "return=representation",
+};
+
+async function sbGet(path) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: HEADERS });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+  return r.json();
+}
+
+async function sbPost(path, body) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    method: "POST", headers: HEADERS, body: JSON.stringify(body),
+  });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+  return r.json();
+}
+
+async function sbRpc(fn, params) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: "POST", headers: HEADERS, body: JSON.stringify(params),
+  });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+  const txt = await r.text();
+  return txt ? JSON.parse(txt) : null;
+}
+
+async function sbDelete(path) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { method: "DELETE", headers: HEADERS });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+}
+
+// ── Estado ─────────────────────────────────────────────────────────────────────
+let allArtists  = [];
+let allGenres   = [];
+let genreCounts = {};
+let currentView = "all";
+let searchTerm  = "";
+let editingArtist = null;
+
+// ── Erros ──────────────────────────────────────────────────────────────────────
+function showError(msg) {
+  document.getElementById("error-msg").textContent = msg;
+  document.getElementById("error-banner").classList.remove("hidden");
+}
+window.dismissError = () => document.getElementById("error-banner").classList.add("hidden");
+
+// ── Carregamento inicial ───────────────────────────────────────────────────────
+async function loadAll() {
+  try {
+    const [genresData, artistsData] = await Promise.all([
+      sbGet("genres?select=name&order=name"),
+      sbGet("artists_with_genres?select=name,track_count,genres&order=name"),
+    ]);
+    allGenres  = genresData.map(r => r.name);
+    allArtists = artistsData.map(r => ({
+      artist:      r.name,
+      track_count: r.track_count,
+      genres:      r.genres || [],
+    }));
+    computeGenreCounts();
+    renderSidebar();
+    renderTable();
+  } catch (e) {
+    showError(`Falha ao carregar dados: ${e.message}`);
+    document.getElementById("genre-list").innerHTML  = '<div class="state-msg">Erro ao carregar</div>';
+    document.getElementById("artist-tbody").innerHTML = '<tr><td colspan="4" class="state-msg">Erro ao conectar ao Supabase.</td></tr>';
+  }
+}
+
+function computeGenreCounts() {
+  genreCounts = {};
+  for (const a of allArtists)
+    for (const g of a.genres)
+      genreCounts[g] = (genreCounts[g] || 0) + 1;
+}
+
+// ── Sidebar ────────────────────────────────────────────────────────────────────
+function renderSidebar() {
+  const list = document.getElementById("genre-list");
+  if (!allGenres.length) { list.innerHTML = '<div class="state-msg">Nenhum gênero</div>'; return; }
+  list.innerHTML = allGenres.map(g => `
+    <div class="genre-chip">
+      <span class="genre-chip-name">${esc(g)}</span>
+      <span class="genre-chip-count">${genreCounts[g] || 0}</span>
+    </div>`).join("");
+}
+
+// ── Tabela ─────────────────────────────────────────────────────────────────────
+function filteredArtists() {
+  let list = allArtists;
+  if (currentView === "unclassified") list = list.filter(a => !a.genres.length);
+  if (searchTerm) { const q = searchTerm.toLowerCase(); list = list.filter(a => a.artist.toLowerCase().includes(q)); }
+  return list;
+}
+
+function renderTable() {
+  const tbody = document.getElementById("artist-tbody");
+  const list  = filteredArtists();
+  document.getElementById("artist-count").textContent = `${list.length} artista${list.length !== 1 ? "s" : ""}`;
+
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="4" class="state-msg">Nenhum artista encontrado.</td></tr>'; return; }
+
+  tbody.innerHTML = list.map(a => {
+    const isEditing = editingArtist === a.artist;
+    const genresCurrent = a.genres.length
+      ? a.genres.map(g => `<span class="genre-tag">${esc(g)}</span>`).join("")
+      : '<span class="no-genre">sem gênero</span>';
+
+    const mainRow = `
+      <tr>
+        <td class="td-artist">${esc(a.artist)}</td>
+        <td class="td-count">${a.track_count}</td>
+        <td class="td-genres">${genresCurrent}</td>
+        <td class="td-actions">
+          <button class="btn-edit" onclick="startEdit(${JSON.stringify(a.artist)})">${isEditing ? "Editando…" : "Editar"}</button>
+        </td>
+      </tr>`;
+
+    if (!isEditing) return mainRow;
+
+    const checkboxes = allGenres.map(g => {
+      const checked = a.genres.includes(g);
+      return `<label class="genre-check-label${checked ? " checked" : ""}" data-genre="${esc(g)}">
+        <input type="checkbox" value="${esc(g)}"${checked ? " checked" : ""} onchange="this.closest('label').classList.toggle('checked',this.checked)">
+        ${esc(g)}</label>`;
+    }).join("");
+
+    const editRow = `
+      <tr class="edit-row">
+        <td colspan="4">
+          <div class="edit-row-inner">
+            <span class="edit-label">Gêneros:</span>
+            <div class="genre-checkboxes" id="check-${esc(a.artist)}">${checkboxes}</div>
+            <div class="edit-actions">
+              <button class="btn-save"   onclick="saveArtist(${JSON.stringify(a.artist)})">Salvar</button>
+              <button class="btn-cancel" onclick="cancelEdit()">Cancelar</button>
+              <button class="btn-remove" onclick="removeArtist(${JSON.stringify(a.artist)})">Remover vínculo</button>
+            </div>
+          </div>
+        </td>
+      </tr>`;
+    return mainRow + editRow;
+  }).join("");
+}
+
+// ── Ações de edição ────────────────────────────────────────────────────────────
+window.startEdit = artist => { editingArtist = artist; renderTable(); document.querySelector(".edit-row")?.scrollIntoView({ block: "nearest" }); };
+window.cancelEdit = () => { editingArtist = null; renderTable(); };
+
+window.saveArtist = async artist => {
+  const container = document.getElementById(`check-${artist}`);
+  const checked   = [...container.querySelectorAll("input:checked")].map(i => i.value);
+  try {
+    await sbRpc("set_artist_genres", { p_artist_name: artist, p_genre_names: checked });
+    const a = allArtists.find(x => x.artist === artist);
+    if (a) a.genres = checked;
+    editingArtist = null;
+    computeGenreCounts();
+    renderSidebar();
+    renderTable();
+  } catch(e) { showError(`Erro ao salvar: ${e.message}`); }
+};
+
+window.removeArtist = async artist => {
+  try {
+    await sbRpc("set_artist_genres", { p_artist_name: artist, p_genre_names: [] });
+    const a = allArtists.find(x => x.artist === artist);
+    if (a) a.genres = [];
+    editingArtist = null;
+    computeGenreCounts();
+    renderSidebar();
+    renderTable();
+  } catch(e) { showError(`Erro ao remover: ${e.message}`); }
+};
+
+// ── Criar gênero ───────────────────────────────────────────────────────────────
+const newGenreInput = document.getElementById("new-genre-input");
+const btnAddGenre   = document.getElementById("btn-add-genre");
+
+newGenreInput.addEventListener("input",   () => { btnAddGenre.disabled = !newGenreInput.value.trim(); });
+newGenreInput.addEventListener("keydown", e  => { if (e.key === "Enter" && !btnAddGenre.disabled) addGenre(); });
+btnAddGenre.addEventListener("click", addGenre);
+
+async function addGenre() {
+  const genre = newGenreInput.value.trim();
+  if (!genre) return;
+  btnAddGenre.disabled = true;
+  try {
+    await sbPost("genres?on_conflict=name", { name: genre });
+    if (!allGenres.includes(genre)) allGenres.push(genre);
+    newGenreInput.value = "";
+    renderSidebar();
+    renderTable();
+  } catch(e) { showError(`Erro ao criar gênero: ${e.message}`); }
+  finally { btnAddGenre.disabled = !newGenreInput.value.trim(); }
+}
+
+// ── Filtros ────────────────────────────────────────────────────────────────────
+document.querySelector(".filter-toggle").addEventListener("click", e => {
+  const btn = e.target.closest(".ftoggle-btn");
+  if (!btn) return;
+  document.querySelectorAll(".ftoggle-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  currentView   = btn.dataset.view;
+  editingArtist = null;
+  renderTable();
+});
+
+document.getElementById("search-input").addEventListener("input", e => {
+  searchTerm    = e.target.value;
+  editingArtist = null;
+  renderTable();
+});
+
+// ── Utilitários ────────────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+loadAll();
+</script>
+</body>
+</html>
