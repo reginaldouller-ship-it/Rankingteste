@@ -2,9 +2,8 @@ name: Atualizar Ranking Semanal
 
 on:
   schedule:
-    # Toda sexta-feira às 13:00 UTC = 10:00 Brasília (horário de verão)
     - cron: "0 13 * * 5"
-  workflow_dispatch:  # permite rodar manualmente também
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -35,7 +34,9 @@ jobs:
           git config user.name "Ranking Bot"
           git config user.email "bot@ranking-brasil.com"
           for attempt in 1 2 3; do
+            git stash
             git pull --rebase origin main
+            git stash pop
             git add data/ranking.json
             git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
             git push && break
