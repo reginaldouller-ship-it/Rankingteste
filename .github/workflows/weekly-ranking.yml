@@ -21,12 +21,14 @@ jobs:
           python-version: "3.11"
 
       - name: Instalar dependências
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 supabase
 
       - name: Rodar scraper
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python scraper.py
 
       - name: Commit e push do ranking.json
@@ -37,7 +39,7 @@ jobs:
             git stash
             git pull --rebase origin main
             git stash pop
-            git add data/ranking.json
+            git add data/ranking.json data/ranking_history.json
             git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
             git push && break
             echo "Tentativa $attempt falhou, tentando novamente..."

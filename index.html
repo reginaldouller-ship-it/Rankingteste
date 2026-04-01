@@ -349,7 +349,8 @@
 <footer>
   Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank">kworb Spotify BR</a> +
   <a href="https://kworb.net/youtube/insights/br.html" target="_blank">kworb YouTube BR</a> •
-  Atualizado toda sexta-feira
+  Atualizado toda sexta-feira •
+  <a href="genres.html">Gerenciar gêneros</a>
 </footer>
 
 <script>
@@ -448,6 +449,15 @@ function render() {
 
     const bothTag = t.in_both ? `<span class="tag-both">✦ nas duas</span>` : "";
 
+    const trendBadge = (() => {
+      if (!t.trend || t.trend === "same") return "";
+      if (t.trend === "new")    return `<span class="trend-new">NOVO</span>`;
+      if (t.trend === "return") return `<span class="trend-new">RETORNO</span>`;
+      if (t.trend.startsWith("up:"))   return `<span class="trend-up">▲${t.trend.split(":")[1]}</span>`;
+      if (t.trend.startsWith("down:")) return `<span class="trend-down">▼${t.trend.split(":")[1]}</span>`;
+      return "";
+    })();
+
     const spRow = t.streams_spotify
       ? `<div class="plat-row"><span class="plat-dot" style="background:var(--sp)"></span>#${t.pos_spotify ?? "—"} · ${fmt(t.streams_spotify)}</div>`
       : "";
@@ -461,8 +471,9 @@ function render() {
       <div class="track-thumb">${thumbContent}</div>
       <div class="track-info">
         <div class="track-title">${t.title}</div>
-        <div class="track-artist">${t.artist}</div>
+        <div class="track-artist">${(t.artists && t.artists.length > 1) ? t.artists.join(", ") : (t.artist || "")}</div>
         <div class="track-tags">
+          ${trendBadge}
           ${bothTag}
           ${spButtons}
         </div>
@@ -484,8 +495,39 @@ function refreshGenreFilters() {
   buildGenreFilters();
 }
 
+const SUPABASE_URL  = "https://suzcbyzidnzzahwrkveh.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
+const SB_HEADERS    = { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${SUPABASE_ANON}` };
+
 async function loadRanking() {
   const list = document.getElementById("track-list");
+  try {
+    // Tenta Supabase primeiro (latest_ranking view = semana mais recente)
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/latest_ranking?select=*&order=rank`,
+      { headers: SB_HEADERS }
+    );
+    if (res.ok) {
+      const tracks = await res.json();
+      if (tracks && tracks.length > 0) {
+        allTracks = tracks;
+        // Buscar week_label da semana mais recente
+        const weekRes = await fetch(
+          `${SUPABASE_URL}/rest/v1/ranking_weeks?select=week_label&order=generated_at.desc&limit=1`,
+          { headers: SB_HEADERS }
+        );
+        if (weekRes.ok) {
+          const weeks = await weekRes.json();
+          document.getElementById("week-badge").textContent = weeks[0]?.week_label || "";
+        }
+        buildGenreFilters();
+        render();
+        return;
+      }
+    }
+  } catch (_) { /* fallback abaixo */ }
+
+  // Fallback: ranking.json local (GitHub Pages estático)
   try {
     const res = await fetch("data/ranking.json");
     if (!res.ok) throw new Error("Arquivo não encontrado");
