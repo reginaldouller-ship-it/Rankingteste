@@ -47,10 +47,14 @@
       display: flex; align-items: center; gap: 5px; transition: color 0.15s;
     }
     .back-link:hover { color: var(--text); }
+
+    /* ── Layout ── */
     .layout {
       display: flex; flex: 1; overflow: hidden;
       height: calc(100vh - 57px);
     }
+
+    /* ── Sidebar ── */
     .sidebar {
       width: 260px; flex-shrink: 0;
       background: var(--surface); border-right: 1px solid var(--border);
@@ -61,38 +65,46 @@
       font-size: 11px; font-weight: 600; color: var(--muted);
       text-transform: uppercase; letter-spacing: 0.8px;
     }
-    .genre-list { flex: 1; overflow-y: auto; padding: 0.25rem 0.75rem; }
+    .genre-list { flex: 1; overflow-y: auto; padding: 0.25rem 0.75rem 0.75rem; }
     .genre-chip {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 7px 10px; border-radius: 8px; margin-bottom: 3px;
-      transition: background 0.1s;
+      padding: 6px 8px; border-radius: 8px; margin-bottom: 3px;
+      transition: background 0.1s; gap: 6px;
     }
     .genre-chip:hover { background: var(--surface2); }
-    .genre-chip-name { font-size: 13px; font-weight: 500; }
+    .genre-chip:hover .genre-chip-btns { opacity: 1; }
+    .genre-chip-name { font-size: 13px; font-weight: 500; flex: 1; min-width: 0; truncate: ellipsis; overflow: hidden; white-space: nowrap; }
+    .genre-chip-right {
+      display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+    }
     .genre-chip-count {
       font-size: 11px; color: var(--muted);
       background: var(--surface2); padding: 2px 7px; border-radius: 10px;
     }
-    .sidebar-add {
-      padding: 0.75rem; border-top: 1px solid var(--border);
-      display: flex; gap: 6px;
+    .genre-chip-btns {
+      display: flex; gap: 2px;
+      opacity: 0; transition: opacity 0.1s;
     }
-    .sidebar-add input {
-      flex: 1; background: var(--surface2); border: 1px solid var(--border2);
-      border-radius: 8px; color: var(--text);
-      font-family: 'DM Sans', sans-serif; font-size: 13px;
-      padding: 7px 10px; outline: none; transition: border-color 0.15s;
+    .btn-icon {
+      background: none; border: none; cursor: pointer;
+      padding: 3px 5px; border-radius: 4px;
+      font-size: 12px; line-height: 1;
+      color: var(--muted); transition: background 0.1s, color 0.1s;
     }
-    .sidebar-add input:focus { border-color: var(--accent); }
-    .sidebar-add input::placeholder { color: var(--muted); }
-    .btn-add-genre {
-      background: var(--accent); border: none; border-radius: 8px;
-      color: #fff; font-family: 'DM Sans', sans-serif;
-      font-size: 13px; font-weight: 600; padding: 7px 14px;
-      cursor: pointer; transition: opacity 0.15s; white-space: nowrap;
+    .btn-icon:hover { background: var(--surface3); color: var(--text); }
+    .btn-icon.danger:hover { background: rgba(239,68,68,0.15); color: var(--danger); }
+    /* Edit state in sidebar */
+    .genre-chip.editing { background: var(--surface2); }
+    .genre-chip.editing:hover { background: var(--surface2); }
+    .genre-edit-input {
+      flex: 1; background: var(--surface3);
+      border: 1px solid var(--accent); border-radius: 6px;
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: 12px; padding: 3px 7px; outline: none; min-width: 0;
     }
-    .btn-add-genre:hover { opacity: 0.85; }
-    .btn-add-genre:disabled { opacity: 0.4; cursor: default; }
+    .genre-chip.editing .genre-chip-btns { opacity: 1; }
+
+    /* ── Main panel ── */
     .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     .error-banner {
       background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35);
@@ -102,8 +114,40 @@
     }
     .error-banner.hidden { display: none; }
     .error-banner button { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; }
+
+    /* ── Toolbar (Criar Gênero — topo esquerdo) ── */
+    .toolbar {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .toolbar-label {
+      font-size: 12px; color: var(--muted); white-space: nowrap; font-weight: 500;
+    }
+    .toolbar-input {
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      padding: 6px 10px; outline: none; transition: border-color 0.15s;
+      width: 200px;
+    }
+    .toolbar-input:focus { border-color: var(--accent); }
+    .toolbar-input::placeholder { color: var(--muted); }
+    .btn-create-genre {
+      background: var(--accent); border: none; border-radius: 8px;
+      color: #fff; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 600; padding: 6px 14px;
+      cursor: pointer; transition: opacity 0.15s; white-space: nowrap;
+    }
+    .btn-create-genre:hover { opacity: 0.85; }
+    .btn-create-genre:disabled { opacity: 0.4; cursor: default; }
+
+    /* ── Filter bar ── */
     .filter-bar {
-      padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex-shrink: 0;
     }
     .filter-toggle { display: flex; gap: 4px; }
@@ -129,6 +173,8 @@
     .search-input:focus { border-color: var(--accent); }
     .search-input::placeholder { color: var(--muted); }
     .artist-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+    /* ── Table ── */
     .table-wrap { flex: 1; overflow-y: auto; padding: 0.5rem 0; }
     table { width: 100%; border-collapse: collapse; }
     thead th {
@@ -161,7 +207,7 @@
     .edit-row td { background: var(--surface2); padding: 12px 1.25rem; }
     .edit-row-inner { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
     .edit-label { font-size: 12px; color: var(--muted); padding-top: 6px; white-space: nowrap; }
-    .genre-checkboxes { display: flex; flex-wrap: wrap; gap: 6px; }
+    .genre-checkboxes { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
     .genre-check-label {
       display: flex; align-items: center; gap: 5px; padding: 4px 10px;
       border-radius: 6px; border: 1px solid var(--border2);
@@ -172,8 +218,12 @@
     .genre-check-label.checked {
       background: rgba(108,99,255,0.15); border-color: rgba(108,99,255,0.5); color: var(--text);
     }
-    .genre-check-label input { display: none; }
-    .edit-actions { display: flex; gap: 6px; margin-top: 2px; }
+    /* Checkbox visível mas pequeno para acessibilidade */
+    .genre-check-label input[type="checkbox"] {
+      width: 13px; height: 13px; accent-color: var(--accent);
+      cursor: pointer; flex-shrink: 0;
+    }
+    .edit-actions { display: flex; gap: 6px; margin-top: 2px; align-items: flex-start; }
     .btn-save {
       padding: 5px 14px; border-radius: 6px; border: none;
       background: var(--accent); color: #fff;
@@ -181,6 +231,7 @@
       cursor: pointer; transition: opacity 0.15s;
     }
     .btn-save:hover { opacity: 0.85; }
+    .btn-save:disabled { opacity: 0.5; cursor: default; }
     .btn-cancel {
       padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border2);
       background: transparent; color: var(--muted);
@@ -196,10 +247,14 @@
     }
     .btn-remove:hover { background: rgba(239,68,68,0.1); }
     .state-msg { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 13px; }
+
     @media (max-width: 680px) {
       .layout { height: auto; flex-direction: column; }
       .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
       .genre-list { max-height: 180px; }
+      .genre-chip-btns { opacity: 1; }
+      .toolbar { flex-wrap: wrap; }
+      .toolbar-input { width: 100%; }
     }
   </style>
 </head>
@@ -214,22 +269,28 @@
 </header>
 
 <div class="layout">
+  <!-- ── Sidebar: lista de gêneros com editar/excluir ── -->
   <div class="sidebar">
     <div class="sidebar-title">Gêneros</div>
     <div class="genre-list" id="genre-list">
       <div class="state-msg">Carregando...</div>
     </div>
-    <div class="sidebar-add">
-      <input type="text" id="new-genre-input" placeholder="Novo gênero..." maxlength="40" autocomplete="off" />
-      <button class="btn-add-genre" id="btn-add-genre" disabled>Adicionar</button>
-    </div>
   </div>
 
+  <!-- ── Painel principal ── -->
   <div class="main">
     <div id="error-banner" class="error-banner hidden">
       <span id="error-msg"></span>
       <button onclick="dismissError()">✕</button>
     </div>
+
+    <!-- Criar Gênero — topo esquerdo -->
+    <div class="toolbar">
+      <span class="toolbar-label">Criar gênero:</span>
+      <input type="text" class="toolbar-input" id="new-genre-input" placeholder="Nome do gênero..." maxlength="40" autocomplete="off" />
+      <button class="btn-create-genre" id="btn-add-genre" disabled>+ Criar</button>
+    </div>
+
     <div class="filter-bar">
       <div class="filter-toggle">
         <button class="ftoggle-btn active" data-view="all">Todos</button>
@@ -241,6 +302,7 @@
       </div>
       <span class="artist-count" id="artist-count"></span>
     </div>
+
     <div class="table-wrap">
       <table>
         <thead>
@@ -256,8 +318,8 @@
 
 <script type="module">
 // ── Config Supabase ────────────────────────────────────────────────────────────
-const SUPABASE_URL    = "https://suzcbyzidnzzahwrkveh.supabase.co";
-const SUPABASE_ANON   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
+const SUPABASE_URL  = "https://suzcbyzidnzzahwrkveh.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
 
 const HEADERS = {
   "Content-Type":  "application/json",
@@ -271,7 +333,6 @@ async function sbGet(path) {
   if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
   return r.json();
 }
-
 async function sbPost(path, body) {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     method: "POST", headers: HEADERS, body: JSON.stringify(body),
@@ -279,7 +340,17 @@ async function sbPost(path, body) {
   if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
   return r.json();
 }
-
+async function sbPatch(path, body) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    method: "PATCH", headers: HEADERS, body: JSON.stringify(body),
+  });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+  return r.json();
+}
+async function sbDelete(path) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { method: "DELETE", headers: HEADERS });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+}
 async function sbRpc(fn, params) {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
     method: "POST", headers: HEADERS, body: JSON.stringify(params),
@@ -289,18 +360,14 @@ async function sbRpc(fn, params) {
   return txt ? JSON.parse(txt) : null;
 }
 
-async function sbDelete(path) {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { method: "DELETE", headers: HEADERS });
-  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
-}
-
 // ── Estado ─────────────────────────────────────────────────────────────────────
-let allArtists  = [];
-let allGenres   = [];
-let genreCounts = {};
-let currentView = "all";
-let searchTerm  = "";
+let allArtists    = [];
+let allGenres     = [];  // [{id: number, name: string}]
+let genreCounts   = {};
+let currentView   = "all";
+let searchTerm    = "";
 let editingArtist = null;
+let editingGenreId = null;  // ID do gênero em edição inline na sidebar
 
 // ── Erros ──────────────────────────────────────────────────────────────────────
 function showError(msg) {
@@ -313,21 +380,21 @@ window.dismissError = () => document.getElementById("error-banner").classList.ad
 async function loadAll() {
   try {
     const [genresData, artistsData] = await Promise.all([
-      sbGet("genres?select=name&order=name"),
+      sbGet("genres?select=id,name&order=name"),
       sbGet("artists_with_genres?select=name,track_count,genres&order=name"),
     ]);
-    allGenres  = genresData.map(r => r.name);
+    allGenres  = genresData;  // [{id, name}]
     allArtists = artistsData.map(r => ({
       artist:      r.name,
       track_count: r.track_count,
-      genres:      r.genres || [],
+      genres:      r.genres || [],   // array de nomes (string[])
     }));
     computeGenreCounts();
     renderSidebar();
     renderTable();
   } catch (e) {
     showError(`Falha ao carregar dados: ${e.message}`);
-    document.getElementById("genre-list").innerHTML  = '<div class="state-msg">Erro ao carregar</div>';
+    document.getElementById("genre-list").innerHTML   = '<div class="state-msg">Erro ao carregar</div>';
     document.getElementById("artist-tbody").innerHTML = '<tr><td colspan="4" class="state-msg">Erro ao conectar ao Supabase.</td></tr>';
   }
 }
@@ -342,28 +409,145 @@ function computeGenreCounts() {
 // ── Sidebar ────────────────────────────────────────────────────────────────────
 function renderSidebar() {
   const list = document.getElementById("genre-list");
-  if (!allGenres.length) { list.innerHTML = '<div class="state-msg">Nenhum gênero</div>'; return; }
-  list.innerHTML = allGenres.map(g => `
-    <div class="genre-chip">
-      <span class="genre-chip-name">${esc(g)}</span>
-      <span class="genre-chip-count">${genreCounts[g] || 0}</span>
-    </div>`).join("");
+  if (!allGenres.length) {
+    list.innerHTML = '<div class="state-msg">Nenhum gênero</div>';
+    return;
+  }
+  list.innerHTML = allGenres.map(g => {
+    if (editingGenreId === g.id) {
+      // Modo de edição inline
+      return `<div class="genre-chip editing">
+        <input class="genre-edit-input"
+               data-genre-id="${g.id}"
+               value="${esc(g.name)}"
+               maxlength="40"
+               autocomplete="off" />
+        <div class="genre-chip-btns" style="opacity:1">
+          <button class="btn-icon" data-action="save-genre" data-genre-id="${g.id}" title="Salvar">✓</button>
+          <button class="btn-icon" data-action="cancel-genre" title="Cancelar">✕</button>
+        </div>
+      </div>`;
+    }
+    const count = genreCounts[g.name] || 0;
+    return `<div class="genre-chip">
+      <span class="genre-chip-name">${esc(g.name)}</span>
+      <div class="genre-chip-right">
+        <span class="genre-chip-count">${count}</span>
+        <div class="genre-chip-btns">
+          <button class="btn-icon" data-action="edit-genre" data-genre-id="${g.id}" data-genre-name="${esc(g.name)}" title="Renomear">✎</button>
+          <button class="btn-icon danger" data-action="delete-genre" data-genre-id="${g.id}" data-genre-name="${esc(g.name)}" title="Excluir">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
 }
 
-// ── Tabela ─────────────────────────────────────────────────────────────────────
+// ── Delegação de eventos da sidebar (editar/excluir gênero) ───────────────────
+document.getElementById("genre-list").addEventListener("click", async e => {
+  const btn = e.target.closest("[data-action]");
+  if (!btn) return;
+  const action   = btn.dataset.action;
+  const genreId  = parseInt(btn.dataset.genreId, 10);
+
+  if (action === "edit-genre") {
+    editingGenreId = genreId;
+    renderSidebar();
+    document.querySelector(".genre-edit-input")?.focus();
+    return;
+  }
+
+  if (action === "cancel-genre") {
+    editingGenreId = null;
+    renderSidebar();
+    return;
+  }
+
+  if (action === "save-genre") {
+    const input   = document.querySelector(`.genre-edit-input[data-genre-id="${genreId}"]`);
+    const newName = input?.value.trim();
+    if (!newName) return;
+    const g = allGenres.find(x => x.id === genreId);
+    if (g && newName === g.name) { editingGenreId = null; renderSidebar(); return; }
+    btn.disabled = true;
+    try {
+      await sbPatch(`genres?id=eq.${genreId}`, { name: newName });
+      if (g) {
+        const oldName = g.name;
+        g.name = newName;
+        // Atualiza arrays de gêneros dos artistas em memória
+        for (const a of allArtists) {
+          const idx = a.genres.indexOf(oldName);
+          if (idx !== -1) a.genres[idx] = newName;
+        }
+        // Atualiza chaves no genreCounts
+        if (oldName in genreCounts) {
+          genreCounts[newName] = genreCounts[oldName];
+          delete genreCounts[oldName];
+        }
+      }
+      editingGenreId = null;
+      renderSidebar();
+      renderTable();
+    } catch (err) { showError(`Erro ao renomear: ${err.message}`); btn.disabled = false; }
+    return;
+  }
+
+  if (action === "delete-genre") {
+    const genreName = btn.dataset.genreName;
+    const count     = genreCounts[genreName] || 0;
+    const msg = count > 0
+      ? `Excluir o gênero "${genreName}"?\n\nEle está vinculado a ${count} artista${count !== 1 ? "s" : ""}. Os vínculos serão removidos automaticamente.`
+      : `Excluir o gênero "${genreName}"?`;
+    if (!confirm(msg)) return;
+    btn.disabled = true;
+    try {
+      await sbDelete(`genres?id=eq.${genreId}`);
+      allGenres = allGenres.filter(x => x.id !== genreId);
+      for (const a of allArtists) {
+        a.genres = a.genres.filter(x => x !== genreName);
+      }
+      delete genreCounts[genreName];
+      if (editingGenreId === genreId) editingGenreId = null;
+      renderSidebar();
+      renderTable();
+    } catch (err) { showError(`Erro ao excluir: ${err.message}`); btn.disabled = false; }
+  }
+});
+
+// Enter/Escape no input inline da sidebar
+document.getElementById("genre-list").addEventListener("keydown", e => {
+  if (!e.target.classList.contains("genre-edit-input")) return;
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.querySelector(`[data-action="save-genre"][data-genre-id="${editingGenreId}"]`)?.click();
+  }
+  if (e.key === "Escape") {
+    editingGenreId = null;
+    renderSidebar();
+  }
+});
+
+// ── Tabela de artistas ─────────────────────────────────────────────────────────
 function filteredArtists() {
   let list = allArtists;
   if (currentView === "unclassified") list = list.filter(a => !a.genres.length);
-  if (searchTerm) { const q = searchTerm.toLowerCase(); list = list.filter(a => a.artist.toLowerCase().includes(q)); }
+  if (searchTerm) {
+    const q = searchTerm.toLowerCase();
+    list = list.filter(a => a.artist.toLowerCase().includes(q));
+  }
   return list;
 }
 
 function renderTable() {
   const tbody = document.getElementById("artist-tbody");
   const list  = filteredArtists();
-  document.getElementById("artist-count").textContent = `${list.length} artista${list.length !== 1 ? "s" : ""}`;
+  document.getElementById("artist-count").textContent =
+    `${list.length} artista${list.length !== 1 ? "s" : ""}`;
 
-  if (!list.length) { tbody.innerHTML = '<tr><td colspan="4" class="state-msg">Nenhum artista encontrado.</td></tr>'; return; }
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="4" class="state-msg">Nenhum artista encontrado.</td></tr>';
+    return;
+  }
 
   tbody.innerHTML = list.map(a => {
     const isEditing = editingArtist === a.artist;
@@ -371,24 +555,27 @@ function renderTable() {
       ? a.genres.map(g => `<span class="genre-tag">${esc(g)}</span>`).join("")
       : '<span class="no-genre">sem gênero</span>';
 
-    // Usar data-artist em vez de onclick para evitar quebra de aspas no HTML
     const mainRow = `
       <tr>
         <td class="td-artist">${esc(a.artist)}</td>
         <td class="td-count">${a.track_count}</td>
         <td class="td-genres">${genresCurrent}</td>
         <td class="td-actions">
-          <button class="btn-edit" data-action="edit" data-artist="${esc(a.artist)}">${isEditing ? "Editando…" : "Editar"}</button>
+          <button class="btn-edit" data-action="edit" data-artist="${esc(a.artist)}">
+            ${isEditing ? "Editando…" : "Editar"}
+          </button>
         </td>
       </tr>`;
 
     if (!isEditing) return mainRow;
 
+    // Linha de edição com checkboxes — input visível para permitir toggle nativo
     const checkboxes = allGenres.map(g => {
-      const checked = a.genres.includes(g);
+      const checked = a.genres.includes(g.name);
       return `<label class="genre-check-label${checked ? " checked" : ""}">
-        <input type="checkbox" value="${esc(g)}"${checked ? " checked" : ""}>
-        ${esc(g)}</label>`;
+        <input type="checkbox" value="${esc(g.name)}"${checked ? " checked" : ""}>
+        ${esc(g.name)}
+      </label>`;
     }).join("");
 
     const editRow = `
@@ -400,7 +587,7 @@ function renderTable() {
             <div class="edit-actions">
               <button class="btn-save"   data-action="save"   data-artist="${esc(a.artist)}">Salvar</button>
               <button class="btn-cancel" data-action="cancel">Cancelar</button>
-              <button class="btn-remove" data-action="remove" data-artist="${esc(a.artist)}">Remover vínculo</button>
+              <button class="btn-remove" data-action="remove" data-artist="${esc(a.artist)}">Remover vínculos</button>
             </div>
           </div>
         </td>
@@ -409,22 +596,22 @@ function renderTable() {
   }).join("");
 }
 
-// ── Event delegation para todas as ações da tabela ─────────────────────────────
-// (um único listener no tbody — funciona mesmo após re-renders do innerHTML)
-document.getElementById("artist-tbody").addEventListener("click", async e => {
-  // Toggle visual do checkbox
-  const lbl = e.target.closest(".genre-check-label");
-  if (lbl) {
-    const cb = lbl.querySelector("input[type=checkbox]");
-    if (e.target !== cb) { cb.checked = !cb.checked; }
-    lbl.classList.toggle("checked", cb.checked);
-    return;
-  }
+// ── Event delegation — tabela de artistas ─────────────────────────────────────
+const artistTbody = document.getElementById("artist-tbody");
 
+// FIX: usa "change" em vez de "click" para sincronizar classe visual dos checkboxes.
+// O browser já faz o toggle do checkbox ao clicar no label — não precisamos repetir.
+artistTbody.addEventListener("change", e => {
+  if (e.target.type === "checkbox") {
+    e.target.closest(".genre-check-label")?.classList.toggle("checked", e.target.checked);
+  }
+});
+
+artistTbody.addEventListener("click", async e => {
   const btn = e.target.closest("[data-action]");
   if (!btn) return;
   const action = btn.dataset.action;
-  const artist = btn.dataset.artist; // valor seguro, vindo do data attribute
+  const artist = btn.dataset.artist;
 
   if (action === "edit") {
     editingArtist = artist;
@@ -440,7 +627,6 @@ document.getElementById("artist-tbody").addEventListener("click", async e => {
   }
 
   if (action === "save") {
-    // Encontrar checkboxes da linha de edição aberta (sempre única)
     const container = document.querySelector(".edit-row .genre-checkboxes");
     const checked   = [...container.querySelectorAll("input:checked")].map(i => i.value);
     btn.disabled = true;
@@ -452,7 +638,7 @@ document.getElementById("artist-tbody").addEventListener("click", async e => {
       computeGenreCounts();
       renderSidebar();
       renderTable();
-    } catch(err) { showError(`Erro ao salvar: ${err.message}`); btn.disabled = false; }
+    } catch (err) { showError(`Erro ao salvar: ${err.message}`); btn.disabled = false; }
     return;
   }
 
@@ -466,7 +652,7 @@ document.getElementById("artist-tbody").addEventListener("click", async e => {
       computeGenreCounts();
       renderSidebar();
       renderTable();
-    } catch(err) { showError(`Erro ao remover: ${err.message}`); btn.disabled = false; }
+    } catch (err) { showError(`Erro ao remover: ${err.message}`); btn.disabled = false; }
   }
 });
 
@@ -483,12 +669,16 @@ async function addGenre() {
   if (!genre) return;
   btnAddGenre.disabled = true;
   try {
-    await sbPost("genres?on_conflict=name", { name: genre });
-    if (!allGenres.includes(genre)) allGenres.push(genre);
+    const result = await sbPost("genres?on_conflict=name", { name: genre });
+    const newG   = Array.isArray(result) ? result[0] : result;
+    if (newG && !allGenres.find(x => x.id === newG.id)) {
+      allGenres.push({ id: newG.id, name: newG.name });
+      allGenres.sort((a, b) => a.name.localeCompare(b.name));
+    }
     newGenreInput.value = "";
     renderSidebar();
     renderTable();
-  } catch(e) { showError(`Erro ao criar gênero: ${e.message}`); }
+  } catch (e) { showError(`Erro ao criar gênero: ${e.message}`); }
   finally { btnAddGenre.disabled = !newGenreInput.value.trim(); }
 }
 
@@ -511,7 +701,11 @@ document.getElementById("search-input").addEventListener("input", e => {
 
 // ── Utilitários ────────────────────────────────────────────────────────────────
 function esc(str) {
-  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 loadAll();
