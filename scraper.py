@@ -11,7 +11,6 @@ from datetime import datetime
 import re
 import time
 import os
-import concurrent.futures
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; RankingBrasilBot/1.0)",
@@ -23,6 +22,8 @@ YOUTUBE_URL = "https://kworb.net/youtube/insights/br.html"
 
 SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "")
 SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "")
+
+_token_cache = {"token": None, "expires_at": 0}
 
 
 def fetch(url):
@@ -38,7 +39,10 @@ def parse_streams(text):
 
 
 def get_spotify_token():
+    if _token_cache["token"] and time.time() < _token_cache["expires_at"]:
+        return _token_cache["token"]
     if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
+        print("⚠️  SPOTIFY_CLIENT_ID/SPOTIFY_CLIENT_SECRET não configurados")
         return None
     try:
         r = requests.post(
@@ -48,25 +52,99 @@ def get_spotify_token():
             timeout=10,
         )
         r.raise_for_status()
-        return r.json()["access_token"]
-    except Exception:
+        data = r.json()
+        token = data["access_token"]
+        _token_cache["token"] = token
+        _token_cache["expires_at"] = time.time() + data.get("expires_in", 3600) - 60
+        print(f"🔑 Token Spotify obtido com sucesso (expira em {data.get('expires_in', 3600)}s)")
+        return token
+    except Exception as e:
+        print(f"❌ Falha ao obter token Spotify: {e}")
         return None
 
 
-def get_thumbnail(spotify_id):
-    if not spotify_id:
-        return ""
-    try:
-        r = requests.get(
-            f"https://open.spotify.com/oembed?url=https://open.spotify.com/track/{spotify_id}",
-            headers=HEADERS,
-            timeout=10,
-        )
-        r.encoding = "utf-8"
-        r.raise_for_status()
-        return r.json().get("thumbnail_url", "")
-    except Exception:
-        return ""
+def _spotify_get(url, token, params=None, max_retries=3):
+    """GET autenticado com tratamento de 429 e backoff exponencial."""
+    headers = {"Authorization": f"Bearer {token}"}
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(url, headers=headers, params=params, timeout=10)
+            if r.status_code == 429:
+                wait = int(r.headers.get("Retry-After", 2 ** (attempt + 1)))
+                print(f"⏳ Rate limited ({url.split('/')[-1].split('?')[0]}), aguardando {wait}s...")
+                time.sleep(wait)
+                continue
+            r.raise_for_status()
+            return r
+        except requests.exceptions.RequestException as e:
+            if attempt == max_retries - 1:
+                print(f"⚠️  API error [{url}]: {e}")
+                raise
+            time.sleep(2 ** attempt)
+    return None
+
+
+def enrich_with_spotify_api(ranking, token):
+    """Enriquece o ranking com thumbnails e gêneros via endpoints batch do Spotify."""
+    if not token:
+        return
+
+    # Fase 1: batch fetch de tracks (thumbnails + artist_ids)
+    track_ids = [e["spotify_id"] for e in ranking if e.get("spotify_id")]
+    track_data = {}  # spotify_id -> {"thumbnail": str, "artist_id": str}
+    print(f"🖼  Buscando thumbnails/artistas para {len(track_ids)} músicas (batch)...")
+    for i in range(0, len(track_ids), 50):
+        batch = track_ids[i:i + 50]
+        try:
+            r = _spotify_get(
+                "https://api.spotify.com/v1/tracks",
+                token,
+                {"ids": ",".join(batch), "market": "BR"},
+            )
+            for track in r.json().get("tracks", []):
+                if track:
+                    images = track.get("album", {}).get("images", [])
+                    thumbnail = images[0]["url"] if images else ""
+                    artist_id = track["artists"][0]["id"] if track.get("artists") else ""
+                    track_data[track["id"]] = {"thumbnail": thumbnail, "artist_id": artist_id}
+        except Exception as e:
+            print(f"⚠️  Erro no batch de tracks (i={i}): {e}")
+        time.sleep(0.1)
+
+    # Fase 2: batch fetch de artistas (gêneros)
+    artist_ids = list({v["artist_id"] for v in track_data.values() if v["artist_id"]})
+    artist_genres = {}  # artist_id -> gênero normalizado
+    print(f"🎼 Buscando gêneros para {len(artist_ids)} artistas (batch)...")
+    for i in range(0, len(artist_ids), 50):
+        batch = artist_ids[i:i + 50]
+        try:
+            r = _spotify_get(
+                "https://api.spotify.com/v1/artists",
+                token,
+                {"ids": ",".join(batch)},
+            )
+            for artist in r.json().get("artists", []):
+                if artist:
+                    genres = artist.get("genres", [])
+                    artist_genres[artist["id"]] = normalize_genre(genres[0]) if genres else None
+        except Exception as e:
+            print(f"⚠️  Erro no batch de artistas (i={i}): {e}")
+        time.sleep(0.1)
+
+    # Fase 3: aplicar ao ranking
+    enriched_thumb = 0
+    enriched_genre = 0
+    for e in ranking:
+        sid = e.get("spotify_id")
+        if sid and sid in track_data:
+            e["thumbnail_url"] = track_data[sid]["thumbnail"]
+            if track_data[sid]["thumbnail"]:
+                enriched_thumb += 1
+            aid = track_data[sid]["artist_id"]
+            if aid and aid in artist_genres and artist_genres[aid]:
+                e["genre"] = artist_genres[aid]
+                enriched_genre += 1
+    print(f"  ✅ {enriched_thumb} thumbnails, {enriched_genre} gêneros via API")
 
 
 _YT_SUFFIX_RE = re.compile(
@@ -85,29 +163,34 @@ def _clean_yt_title(title):
 
 
 def search_spotify_track(artist, title, token):
+    """Busca uma faixa no Spotify tentando múltiplas estratégias de query.
+    Retorna (spotify_id, spotify_url, thumbnail_url) ou ("", "", "").
+    """
     if not token:
         return "", "", ""
-    try:
-        clean_title = _clean_yt_title(title)
-        q = f"{artist} {clean_title}"
-        r = requests.get(
-            "https://api.spotify.com/v1/search",
-            params={"q": q, "type": "track", "market": "BR", "limit": 1},
-            headers={"Authorization": f"Bearer {token}"},
-            timeout=10,
-        )
-        r.encoding = "utf-8"
-        r.raise_for_status()
-        items = r.json().get("tracks", {}).get("items", [])
-        if not items:
-            return "", "", ""
-        track = items[0]
-        spotify_id = track["id"]
-        spotify_url = f"https://open.spotify.com/track/{spotify_id}"
-        thumbnail_url = get_thumbnail(spotify_id)
-        return spotify_id, spotify_url, thumbnail_url
-    except Exception:
-        return "", "", ""
+    clean_title = _clean_yt_title(title)
+    queries = [
+        f'artist:"{artist}" track:"{clean_title}"',
+        f"{artist} {clean_title}",
+        clean_title,
+    ]
+    for q in queries:
+        try:
+            r = _spotify_get(
+                "https://api.spotify.com/v1/search",
+                token,
+                {"q": q, "type": "track", "market": "BR", "limit": 1},
+            )
+            items = r.json().get("tracks", {}).get("items", [])
+            if items:
+                track = items[0]
+                spotify_id = track["id"]
+                images = track.get("album", {}).get("images", [])
+                thumbnail = images[0]["url"] if images else ""
+                return spotify_id, f"https://open.spotify.com/track/{spotify_id}", thumbnail
+        except Exception as e:
+            print(f"⚠️  Search falhou para '{q}': {e}")
+    return "", "", ""
 
 
 _GENRE_MAP = [
@@ -166,37 +249,6 @@ def guess_genre(artist, title):
     if re.search(r"\brap\b|\brap\b|\bfeat\b", text):
         return "rap"
     return "outros"
-
-
-def get_genre(spotify_id, token):
-    if not spotify_id or not token:
-        return None
-    try:
-        r = requests.get(
-            f"https://api.spotify.com/v1/tracks/{spotify_id}",
-            headers={"Authorization": f"Bearer {token}"},
-            timeout=10,
-        )
-        r.encoding = "utf-8"
-        r.raise_for_status()
-        artists = r.json().get("artists", [])
-        if not artists:
-            return None
-        artist_id = artists[0]["id"]
-
-        r2 = requests.get(
-            f"https://api.spotify.com/v1/artists/{artist_id}",
-            headers={"Authorization": f"Bearer {token}"},
-            timeout=10,
-        )
-        r2.encoding = "utf-8"
-        r2.raise_for_status()
-        genres = r2.json().get("genres", [])
-        if not genres:
-            return None
-        return normalize_genre(genres[0])
-    except Exception:
-        return None
 
 
 def scrape_spotify():
@@ -361,58 +413,30 @@ def run():
     ranking = match_tracks(spotify_tracks, youtube_tracks)
 
     token = get_spotify_token()
-    if token:
-        print("🔑 Token Spotify obtido com sucesso")
-    else:
+    if not token:
         print("⚠️  Sem credenciais Spotify — thumbnails e gêneros serão limitados")
 
-    # Passo 5a: thumbnails para tracks do Spotify chart
-    spotify_chart_tracks = [e for e in ranking if e["spotify_id"]]
-    print(f"🖼  Buscando thumbnails para {len(spotify_chart_tracks)} músicas do Spotify...")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
-        thumb_futures = {pool.submit(get_thumbnail, e["spotify_id"]): e for e in spotify_chart_tracks}
-        for future in concurrent.futures.as_completed(thumb_futures):
-            entry = thumb_futures[future]
-            entry["thumbnail_url"] = future.result()
-
-    # Passo 5b: buscar Spotify para tracks só no YouTube
+    # Passo 5: buscar Spotify para tracks só no YouTube
     yt_only_tracks = [e for e in ranking if not e["in_both"] and e["pos_spotify"] is None]
     if token and yt_only_tracks:
         print(f"🔍 Buscando links Spotify para {len(yt_only_tracks)} músicas só no YouTube...")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
-            search_futures = {
-                pool.submit(search_spotify_track, e["artist"], e["title"], token): e
-                for e in yt_only_tracks
-            }
-            for future in concurrent.futures.as_completed(search_futures):
-                entry = search_futures[future]
-                spotify_id, spotify_url, thumbnail_url = future.result()
-                entry["spotify_id"] = spotify_id
-                entry["spotify_url"] = spotify_url
-                entry["thumbnail_url"] = thumbnail_url
+        for e in yt_only_tracks:
+            spotify_id, spotify_url, thumbnail_url = search_spotify_track(
+                e["artist"], e["title"], token
+            )
+            e["spotify_id"] = spotify_id
+            e["spotify_url"] = spotify_url
+            e["thumbnail_url"] = thumbnail_url
     else:
         for e in yt_only_tracks:
-            if "thumbnail_url" not in e:
-                e["thumbnail_url"] = ""
+            e.setdefault("thumbnail_url", "")
 
-    # Garantir thumbnail_url em todos os entries sem ele
+    # Passo 6: enriquecer com thumbnails e gêneros via batch API
+    enrich_with_spotify_api(ranking, token)
+
+    # Garantir thumbnail_url em todos os entries
     for e in ranking:
         e.setdefault("thumbnail_url", "")
-
-    # Passo 6: buscar gêneros para todos os tracks com spotify_id
-    tracks_with_id = [e for e in ranking if e.get("spotify_id")]
-    if token and tracks_with_id:
-        print(f"🎼 Buscando gêneros para {len(tracks_with_id)} músicas...")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
-            genre_futures = {
-                pool.submit(get_genre, e["spotify_id"], token): e
-                for e in tracks_with_id
-            }
-            for future in concurrent.futures.as_completed(genre_futures):
-                entry = genre_futures[future]
-                result = future.result()
-                if result is not None:
-                    entry["genre"] = result
 
     # Fallback: usar palavras-chave para tracks sem gênero da API
     for e in ranking:
