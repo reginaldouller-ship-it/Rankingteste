@@ -306,6 +306,18 @@
       margin-top: 2rem;
     }
     footer a { color: var(--muted); }
+    .btn-manage-genres {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: .85rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-manage-genres:hover { opacity: .85; }
 
     @media (max-width: 520px) {
       .track { grid-template-columns: 28px 40px 1fr auto; gap: 8px; }
@@ -328,6 +340,7 @@
       <div class="pill"><span class="dot" style="background:var(--sp)"></span>Spotify</div>
       <div class="pill"><span class="dot" style="background:var(--yt)"></span>YouTube</div>
     </div>
+    <a href="genres.html" class="btn-manage-genres">Gerenciar Gêneros</a>
   </div>
 </header>
 
@@ -349,8 +362,7 @@
 <footer>
   Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank">kworb Spotify BR</a> +
   <a href="https://kworb.net/youtube/insights/br.html" target="_blank">kworb YouTube BR</a> •
-  Atualizado toda sexta-feira •
-  <a href="genres.html">Gerenciar gêneros</a>
+  Atualizado toda sexta-feira
 </footer>
 
 <script>

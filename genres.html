@@ -371,13 +371,14 @@ function renderTable() {
       ? a.genres.map(g => `<span class="genre-tag">${esc(g)}</span>`).join("")
       : '<span class="no-genre">sem gênero</span>';
 
+    // Usar data-artist em vez de onclick para evitar quebra de aspas no HTML
     const mainRow = `
       <tr>
         <td class="td-artist">${esc(a.artist)}</td>
         <td class="td-count">${a.track_count}</td>
         <td class="td-genres">${genresCurrent}</td>
         <td class="td-actions">
-          <button class="btn-edit" onclick="startEdit(${JSON.stringify(a.artist)})">${isEditing ? "Editando…" : "Editar"}</button>
+          <button class="btn-edit" data-action="edit" data-artist="${esc(a.artist)}">${isEditing ? "Editando…" : "Editar"}</button>
         </td>
       </tr>`;
 
@@ -385,8 +386,8 @@ function renderTable() {
 
     const checkboxes = allGenres.map(g => {
       const checked = a.genres.includes(g);
-      return `<label class="genre-check-label${checked ? " checked" : ""}" data-genre="${esc(g)}">
-        <input type="checkbox" value="${esc(g)}"${checked ? " checked" : ""} onchange="this.closest('label').classList.toggle('checked',this.checked)">
+      return `<label class="genre-check-label${checked ? " checked" : ""}">
+        <input type="checkbox" value="${esc(g)}"${checked ? " checked" : ""}>
         ${esc(g)}</label>`;
     }).join("");
 
@@ -395,11 +396,11 @@ function renderTable() {
         <td colspan="4">
           <div class="edit-row-inner">
             <span class="edit-label">Gêneros:</span>
-            <div class="genre-checkboxes" id="check-${esc(a.artist)}">${checkboxes}</div>
+            <div class="genre-checkboxes">${checkboxes}</div>
             <div class="edit-actions">
-              <button class="btn-save"   onclick="saveArtist(${JSON.stringify(a.artist)})">Salvar</button>
-              <button class="btn-cancel" onclick="cancelEdit()">Cancelar</button>
-              <button class="btn-remove" onclick="removeArtist(${JSON.stringify(a.artist)})">Remover vínculo</button>
+              <button class="btn-save"   data-action="save"   data-artist="${esc(a.artist)}">Salvar</button>
+              <button class="btn-cancel" data-action="cancel">Cancelar</button>
+              <button class="btn-remove" data-action="remove" data-artist="${esc(a.artist)}">Remover vínculo</button>
             </div>
           </div>
         </td>
@@ -408,35 +409,66 @@ function renderTable() {
   }).join("");
 }
 
-// ── Ações de edição ────────────────────────────────────────────────────────────
-window.startEdit = artist => { editingArtist = artist; renderTable(); document.querySelector(".edit-row")?.scrollIntoView({ block: "nearest" }); };
-window.cancelEdit = () => { editingArtist = null; renderTable(); };
+// ── Event delegation para todas as ações da tabela ─────────────────────────────
+// (um único listener no tbody — funciona mesmo após re-renders do innerHTML)
+document.getElementById("artist-tbody").addEventListener("click", async e => {
+  // Toggle visual do checkbox
+  const lbl = e.target.closest(".genre-check-label");
+  if (lbl) {
+    const cb = lbl.querySelector("input[type=checkbox]");
+    if (e.target !== cb) { cb.checked = !cb.checked; }
+    lbl.classList.toggle("checked", cb.checked);
+    return;
+  }
 
-window.saveArtist = async artist => {
-  const container = document.getElementById(`check-${artist}`);
-  const checked   = [...container.querySelectorAll("input:checked")].map(i => i.value);
-  try {
-    await sbRpc("set_artist_genres", { p_artist_name: artist, p_genre_names: checked });
-    const a = allArtists.find(x => x.artist === artist);
-    if (a) a.genres = checked;
-    editingArtist = null;
-    computeGenreCounts();
-    renderSidebar();
-    renderTable();
-  } catch(e) { showError(`Erro ao salvar: ${e.message}`); }
-};
+  const btn = e.target.closest("[data-action]");
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const artist = btn.dataset.artist; // valor seguro, vindo do data attribute
 
-window.removeArtist = async artist => {
-  try {
-    await sbRpc("set_artist_genres", { p_artist_name: artist, p_genre_names: [] });
-    const a = allArtists.find(x => x.artist === artist);
-    if (a) a.genres = [];
-    editingArtist = null;
-    computeGenreCounts();
-    renderSidebar();
+  if (action === "edit") {
+    editingArtist = artist;
     renderTable();
-  } catch(e) { showError(`Erro ao remover: ${e.message}`); }
-};
+    document.querySelector(".edit-row")?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+
+  if (action === "cancel") {
+    editingArtist = null;
+    renderTable();
+    return;
+  }
+
+  if (action === "save") {
+    // Encontrar checkboxes da linha de edição aberta (sempre única)
+    const container = document.querySelector(".edit-row .genre-checkboxes");
+    const checked   = [...container.querySelectorAll("input:checked")].map(i => i.value);
+    btn.disabled = true;
+    try {
+      await sbRpc("set_artist_genres", { p_artist_name: artist, p_genre_names: checked });
+      const a = allArtists.find(x => x.artist === artist);
+      if (a) a.genres = checked;
+      editingArtist = null;
+      computeGenreCounts();
+      renderSidebar();
+      renderTable();
+    } catch(err) { showError(`Erro ao salvar: ${err.message}`); btn.disabled = false; }
+    return;
+  }
+
+  if (action === "remove") {
+    btn.disabled = true;
+    try {
+      await sbRpc("set_artist_genres", { p_artist_name: artist, p_genre_names: [] });
+      const a = allArtists.find(x => x.artist === artist);
+      if (a) a.genres = [];
+      editingArtist = null;
+      computeGenreCounts();
+      renderSidebar();
+      renderTable();
+    } catch(err) { showError(`Erro ao remover: ${err.message}`); btn.disabled = false; }
+  }
+});
 
 // ── Criar gênero ───────────────────────────────────────────────────────────────
 const newGenreInput = document.getElementById("new-genre-input");
