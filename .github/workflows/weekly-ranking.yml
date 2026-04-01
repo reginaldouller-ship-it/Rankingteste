@@ -36,6 +36,7 @@ jobs:
           git config user.email "bot@ranking-brasil.com"
           git add data/ranking.json
           git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
+          git pull --rebase origin main
           git push
 
       - name: Deploy GitHub Pages
