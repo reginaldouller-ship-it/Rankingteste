@@ -420,10 +420,7 @@ function emoji(i) { return EMOJIS[i % EMOJIS.length]; }
 
 function fmt(n) {
   if (!n) return "—";
-  if (n >= 1e9) return (n / 1e9).toFixed(1) + "B";
-  if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
-  if (n >= 1e3) return (n / 1e3).toFixed(0) + "K";
-  return n.toString();
+  return n.toLocaleString("en-US");
 }
 
 async function retryThumbnail(img) {
@@ -671,8 +668,6 @@ function refreshGenreFilters() {
   const container = document.getElementById("genre-filters");
   container.innerHTML = "";
   buildGenreFilters();
-}
-
 // ── Genre Override UI ───────────────────────────────────────────────────────
 let activeDropdown = null;
 
