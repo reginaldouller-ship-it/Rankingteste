@@ -693,4 +693,121 @@ def run():
             prev_ranking = json.load(f).get("tracks", [])
         print(f"📂 Ranking anterior: {len(prev_ranking)} tracks")
     except FileNotFoundError:
-        print("📂 Nenhum ranking anterior
+        print("📂 Nenhum ranking anterior — primeira execução")
+    prev_lookup = {_track_key(e["artist"], e["title"]): e["rank"] for e in prev_ranking}
+    history = load_history(sb)
+
+    spotify_tracks = scrape_spotify()
+    time.sleep(2)
+    youtube_tracks = scrape_youtube()
+    ranking = match_tracks(spotify_tracks, youtube_tracks)
+
+    # ── Reconciliar nomes de artistas com entradas canônicas já no banco ──────
+    # Evita criar "Henrique" + "Juliano" separados quando "Henrique & Juliano"
+    # já existe, e resolve diferenças de capitalização (ex: "MC IG" vs "Mc IG").
+    known_artists_lower: dict[str, str] = {}
+    if sb:
+        try:
+            res = sb.table("artists").select("name").execute()
+            known_artists_lower = {r["name"].lower(): r["name"] for r in res.data}
+            print(f"🔍 {len(known_artists_lower)} artistas carregados para reconciliação")
+        except Exception as exc:
+            print(f"⚠️  Falha ao carregar artistas para reconciliação: {exc}")
+
+    for e in ranking:
+        raw = e.get("artists") or ([e["artist"]] if e.get("artist") else [])
+        resolved = _resolve_artists(raw, known_artists_lower)
+        e["artists"] = resolved
+        e["artist"]  = resolved[0] if resolved else ""
+
+    # Calcular trend
+    print("📊 Calculando variações no ranking...")
+    for e in ranking:
+        key       = _track_key(e["artist"], e["title"])
+        prev_rank = prev_lookup.get(key)
+        e["prev_rank"] = prev_rank
+        if prev_rank is None:
+            e["trend"] = "return" if key in history["seen_tracks"] else "new"
+        elif e["rank"] < prev_rank:
+            e["trend"] = f"up:{prev_rank - e['rank']}"
+        elif e["rank"] > prev_rank:
+            e["trend"] = f"down:{e['rank'] - prev_rank}"
+        else:
+            e["trend"] = "same"
+
+    token = get_spotify_token()
+    if not token:
+        print("⚠️  Sem credenciais Spotify — thumbnails e gêneros serão limitados")
+
+    yt_only = [e for e in ranking if not e["in_both"] and e["pos_spotify"] is None]
+    if token and yt_only:
+        print(f"🔍 Buscando links Spotify para {len(yt_only)} músicas YouTube-only...")
+        for e in yt_only:
+            sid, url, thumb = search_spotify_track(e["artist"], e["title"], token)
+            e["spotify_id"]  = sid
+            e["spotify_url"] = url
+            if thumb:
+                e["thumbnail_url"] = thumb
+    for e in yt_only:
+        e.setdefault("thumbnail_url", "")
+
+    api_artist_genres = enrich_with_spotify_api(ranking, token)
+
+    for e in ranking:
+        e.setdefault("thumbnail_url", "")
+
+    # Resolver gêneros
+    genres_config = load_genres_config(sb)
+    # Mapa lowercase→canonical para validação (impede gêneros fora do banco)
+    known_genres_lower = {g.lower(): g for g in genres_config["genres"]} if genres_config["genres"] else {}
+    print(f"🎨 Resolvendo gêneros ({len(genres_config['artist_genres'])} artistas manuais, "
+          f"{len(genres_config['track_overrides'])} overrides, "
+          f"{len(known_genres_lower)} gêneros configurados)...")
+    enriched_genre = 0
+    for e in ranking:
+        raw_genre = resolve_genre(
+            e,
+            genres_config["artist_genres"],
+            genres_config["track_overrides"],
+            api_artist_genres,
+        )
+        # Valida e normaliza para o nome canônico do banco.
+        # Se o gênero não existir no banco, usa "outros".
+        if known_genres_lower:
+            e["genre"] = _validate_genre(raw_genre, known_genres_lower) or \
+                         known_genres_lower.get("outros", raw_genre)
+        else:
+            e["genre"] = raw_genre
+        if e["genre"] and e["genre"] != "outros":
+            enriched_genre += 1
+    print(f"  ✅ {enriched_genre} tracks classificados")
+
+    for e in ranking:
+        e.pop("_api_artist_ids", None)
+
+    week_label = f"Semana de {datetime.now().strftime('%d/%m/%Y')}"
+
+    if sb:
+        try:
+            _sb_upsert_artists(sb, ranking)
+            _sb_save_ranking(sb, ranking, week_label)
+        except Exception as e:
+            print(f"⚠️  Falha ao salvar no Supabase: {e}")
+
+    update_history(ranking, history, sb)
+
+    output = {
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "week_label":   week_label,
+        "tracks":       ranking,
+    }
+    with open("data/ranking.json", "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    print(f"\n✅ data/ranking.json gerado — {len(ranking)} músicas")
+    if ranking:
+        print(f"🥇 #1: {ranking[0]['artist']} — {ranking[0]['title']} ({ranking[0]['total_streams']:,} streams)")
+
+
+if __name__ == "__main__":
+    run()
