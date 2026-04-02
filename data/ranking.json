@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-02T16:51:44.622278Z",
+  "generated_at": "2026-04-02T19:02:33.058173Z",
   "week_label": "Semana de 02/04/2026",
   "tracks": [
     {
@@ -449,7 +449,7 @@
       "prev_rank": 20,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e527f3feda78b6dfec7be109",
-      "genre": "Trap"
+      "genre": "Rap"
     },
     {
       "artist": "MC Meno K",
@@ -509,7 +509,7 @@
       "total_streams": 5118460,
       "rank": 23,
       "prev_rank": null,
-      "trend": "new",
+      "trend": "return",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273cb9206020cf3699906b706d5",
       "genre": "Sertanejo"
     },
@@ -1616,7 +1616,7 @@
       "total_streams": 2661579,
       "rank": 75,
       "prev_rank": null,
-      "trend": "new",
+      "trend": "return",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27372cc126653816fa4474dad8c",
       "genre": "Sertanejo"
     },
@@ -1801,7 +1801,7 @@
       "total_streams": 2498895,
       "rank": 84,
       "prev_rank": null,
-      "trend": "new",
+      "trend": "return",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2734453a73d31d7a3fd8a23e0c9",
       "genre": "Sertanejo"
     },
@@ -1963,7 +1963,7 @@
       "total_streams": 2349537,
       "rank": 92,
       "prev_rank": null,
-      "trend": "new",
+      "trend": "return",
       "thumbnail_url": "https://i.scdn.co/image/aee03e87ed5bf3a157515acab7dc2df632a85118",
       "genre": "Sertanejo"
     },
@@ -2392,7 +2392,7 @@
       "total_streams": 1812086,
       "rank": 113,
       "prev_rank": null,
-      "trend": "new",
+      "trend": "return",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c0560d7e00d4f9adf2f02b3b",
       "genre": "Sertanejo"
     },
@@ -5073,7 +5073,7 @@
       "total_streams": 1059704,
       "rank": 242,
       "prev_rank": null,
-      "trend": "new",
+      "trend": "return",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273717a191d0dd76669487ccaac",
       "genre": "Sertanejo"
     },
