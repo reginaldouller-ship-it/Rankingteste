@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-01T22:14:18.199228Z",
-  "week_label": "Semana de 01/04/2026",
+  "generated_at": "2026-04-02T16:51:44.622278Z",
+  "week_label": "Semana de 02/04/2026",
   "tracks": [
     {
       "artist": "DJ Oreia",
@@ -494,10 +494,9 @@
       "genre": "Gospel"
     },
     {
-      "artist": "Felipe",
+      "artist": "Felipe e Rodrigo",
       "artists": [
-        "Felipe",
-        "Rodrigo"
+        "Felipe e Rodrigo"
       ],
       "title": "Ignora (Ao Vivo)",
       "spotify_url": "https://open.spotify.com/track/0dI5yI0wplyuwBMEGKXeJC",
@@ -509,10 +508,10 @@
       "in_both": true,
       "total_streams": 5118460,
       "rank": 23,
-      "prev_rank": 23,
-      "trend": "same",
+      "prev_rank": null,
+      "trend": "new",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273cb9206020cf3699906b706d5",
-      "genre": "sertanejo"
+      "genre": "Sertanejo"
     },
     {
       "artist": "Filho do Piseiro",
@@ -1602,10 +1601,9 @@
       "genre": "Forró/Piseiro"
     },
     {
-      "artist": "Henrique",
+      "artist": "Henrique & Juliano",
       "artists": [
-        "Henrique",
-        "Juliano"
+        "Henrique & Juliano"
       ],
       "title": "Amor Dos Outros (Ao Vivo)",
       "spotify_url": "https://open.spotify.com/track/48RQfxFa4BY4jmAhJBQZPQ",
@@ -1617,10 +1615,10 @@
       "in_both": false,
       "total_streams": 2661579,
       "rank": 75,
-      "prev_rank": 75,
-      "trend": "same",
+      "prev_rank": null,
+      "trend": "new",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27372cc126653816fa4474dad8c",
-      "genre": "sertanejo"
+      "genre": "Sertanejo"
     },
     {
       "artist": "Mc Lele JP",
@@ -1788,10 +1786,9 @@
       "genre": "Sertanejo"
     },
     {
-      "artist": "Henrique",
+      "artist": "Henrique & Juliano",
       "artists": [
-        "Henrique",
-        "Juliano"
+        "Henrique & Juliano"
       ],
       "title": "Até Você Voltar (Ao Vivo)",
       "spotify_url": "https://open.spotify.com/track/4ksSf8cL3VlUvQSkFcRHy3",
@@ -1803,10 +1800,10 @@
       "in_both": false,
       "total_streams": 2498895,
       "rank": 84,
-      "prev_rank": 84,
-      "trend": "same",
+      "prev_rank": null,
+      "trend": "new",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2734453a73d31d7a3fd8a23e0c9",
-      "genre": "sertanejo"
+      "genre": "Sertanejo"
     },
     {
       "artist": "ZXKAI",
@@ -1951,10 +1948,9 @@
       "genre": "Funk"
     },
     {
-      "artist": "Zezé Di Camargo",
+      "artist": "Zezé Di Camargo & Luciano",
       "artists": [
-        "Zezé Di Camargo",
-        "Luciano"
+        "Zezé Di Camargo & Luciano"
       ],
       "title": "Irmão da Lua, Amigo das Estrelas",
       "spotify_url": "https://open.spotify.com/track/1PW3LjmxJqVoQ9nmdbxF9f",
@@ -1966,10 +1962,10 @@
       "in_both": true,
       "total_streams": 2349537,
       "rank": 92,
-      "prev_rank": 92,
-      "trend": "same",
+      "prev_rank": null,
+      "trend": "new",
       "thumbnail_url": "https://i.scdn.co/image/aee03e87ed5bf3a157515acab7dc2df632a85118",
-      "genre": "sertanejo"
+      "genre": "Sertanejo"
     },
     {
       "artist": "Henrique & Juliano",
@@ -2196,7 +2192,7 @@
       "prev_rank": 103,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739560e4efca631010f9667951",
-      "genre": "funk"
+      "genre": "Funk"
     },
     {
       "artist": "Matuê",
@@ -2381,10 +2377,9 @@
       "genre": "Funk"
     },
     {
-      "artist": "Henrique",
+      "artist": "Henrique & Juliano",
       "artists": [
-        "Henrique",
-        "Juliano"
+        "Henrique & Juliano"
       ],
       "title": "Mudando de Assunto (En Vivo)",
       "spotify_url": "https://open.spotify.com/track/2AQJRDfQJbfgmTf5e62Czl",
@@ -2396,10 +2391,10 @@
       "in_both": false,
       "total_streams": 1812086,
       "rank": 113,
-      "prev_rank": 113,
-      "trend": "same",
+      "prev_rank": null,
+      "trend": "new",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c0560d7e00d4f9adf2f02b3b",
-      "genre": "rap"
+      "genre": "Sertanejo"
     },
     {
       "artist": "MC Leozinho ZS",
@@ -5063,10 +5058,9 @@
       "genre": "Funk"
     },
     {
-      "artist": "Henrique",
+      "artist": "Henrique & Juliano",
       "artists": [
-        "Henrique",
-        "Juliano"
+        "Henrique & Juliano"
       ],
       "title": "Quem Ama Sempre Entende (Ao Vivo)",
       "spotify_url": "https://open.spotify.com/track/2JGI42JhPCML6thLHjABF2",
@@ -5078,15 +5072,15 @@
       "in_both": false,
       "total_streams": 1059704,
       "rank": 242,
-      "prev_rank": 242,
-      "trend": "same",
+      "prev_rank": null,
+      "trend": "new",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273717a191d0dd76669487ccaac",
-      "genre": "sertanejo"
+      "genre": "Sertanejo"
     },
     {
-      "artist": "MC IG",
+      "artist": "Mc IG",
       "artists": [
-        "MC IG"
+        "Mc IG"
       ],
       "title": "400K 2",
       "spotify_url": "https://open.spotify.com/track/0GKWB02lWvDAHLZIKuPrr2",
@@ -5101,7 +5095,7 @@
       "prev_rank": 243,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730cc08d5af403f2bf5504fdf1",
-      "genre": "funk"
+      "genre": "Funk"
     },
     {
       "artist": "Yago Oproprio",
