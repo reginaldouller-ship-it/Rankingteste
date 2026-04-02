@@ -379,9 +379,41 @@ function fmt(n) {
   return n.toString();
 }
 
+async function retryThumbnail(img) {
+  img.onerror = null;
+  const spotifyUrl = img.dataset.spotify;
+  if (!spotifyUrl) return;
+  if (thumbnailCache.has(spotifyUrl)) {
+    img.src = thumbnailCache.get(spotifyUrl);
+    return;
+  }
+  try {
+    const res = await fetch(
+      `https://open.spotify.com/oembed?url=${encodeURIComponent(spotifyUrl)}`
+    );
+    if (res.ok) {
+      const data = await res.json();
+      if (data.thumbnail_url) {
+        thumbnailCache.set(spotifyUrl, data.thumbnail_url);
+        img.src = data.thumbnail_url;
+        const track = allTracks.find(t => t.spotify_url === spotifyUrl);
+        if (track) track.thumbnail_url = data.thumbnail_url;
+      }
+    }
+  } catch (_) {}
+}
+
+function loadMissingThumbnails() {
+  document.querySelectorAll('.track-thumb img[data-spotify]').forEach(img => {
+    if (img.getAttribute('src') === '') retryThumbnail(img);
+  });
+}
+
 let allTracks = [];
+let artistGenresMap = {};
 let currentFilter = "all";
 let currentGenre = "all";
+const thumbnailCache = new Map();
 
 function copyLink(url, btn) {
   navigator.clipboard.writeText(url).then(() => {
@@ -403,14 +435,17 @@ function buildGenreFilters() {
   // Count genres across ALL tracks
   const genreCounts = {};
   for (const t of allTracks) {
-    const g = t.genre || "outros";
-    genreCounts[g] = (genreCounts[g] || 0) + 1;
+    for (const g of (t._genres || [t.genre || "outros"])) {
+      genreCounts[g] = (genreCounts[g] || 0) + 1;
+    }
   }
   const genres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
 
   // Count genres in current platform filter
   const platformFiltered = filterByPlatform(allTracks);
-  const platformGenres = new Set(platformFiltered.map(t => t.genre || "outros"));
+  const platformGenres = new Set(
+    platformFiltered.flatMap(t => t._genres || [t.genre || "outros"])
+  );
 
   const allBtn = document.createElement("button");
   allBtn.className = "genre-btn" + (currentGenre === "all" ? " active" : "");
@@ -434,7 +469,7 @@ function render() {
   let tracks = filterByPlatform(allTracks);
 
   if (currentGenre !== "all") {
-    tracks = tracks.filter(t => (t.genre || "outros") === currentGenre);
+    tracks = tracks.filter(t => (t._genres || [t.genre || "outros"]).includes(currentGenre));
   }
 
   if (!tracks.length) {
@@ -445,9 +480,7 @@ function render() {
   list.innerHTML = tracks.map((t, i) => {
     const rankCls = t.rank === 1 ? "rank-1" : t.rank === 2 ? "rank-2" : t.rank === 3 ? "rank-3" : "";
 
-    const thumbContent = t.thumbnail_url
-      ? `<img src="${t.thumbnail_url}" width="52" height="52" alt="">`
-      : emoji(i);
+    const thumbContent = `<img src="${t.thumbnail_url || ''}" width="52" height="52" alt="" data-spotify="${t.spotify_url || ''}" onerror="retryThumbnail(this)">`;
 
     const copyIconSvg = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
 
@@ -501,6 +534,50 @@ function render() {
   }).join("");
 }
 
+function enrichTrackGenres(tracks) {
+  for (const t of tracks) {
+    const artistCount = t.artists ? t.artists.length : 1;
+    if (artistCount === 1) {
+      const name = (t.artist || "").toLowerCase();
+      const mapped = artistGenresMap[name];
+      if (mapped && mapped.length > 0) {
+        t._genres = mapped;
+        continue;
+      }
+    }
+    t._genres = [t.genre || "outros"];
+  }
+}
+
+async function loadArtistGenres() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/artists_with_genres?select=name,genres`,
+      { headers: SB_HEADERS }
+    );
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows && rows.length > 0) {
+        for (const row of rows) {
+          if (row.name && Array.isArray(row.genres) && row.genres.length > 0) {
+            artistGenresMap[row.name.toLowerCase()] = row.genres;
+          }
+        }
+        return;
+      }
+    }
+  } catch (_) {}
+
+  try {
+    const res = await fetch("data/genres.json");
+    if (!res.ok) return;
+    const data = await res.json();
+    for (const [name, genres] of Object.entries(data.artist_genres || {})) {
+      artistGenresMap[name.toLowerCase()] = Array.isArray(genres) ? genres : [genres];
+    }
+  } catch (_) {}
+}
+
 function refreshGenreFilters() {
   const container = document.getElementById("genre-filters");
   container.innerHTML = "";
@@ -513,6 +590,8 @@ const SB_HEADERS    = { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${SUPA
 
 async function loadRanking() {
   const list = document.getElementById("track-list");
+  const artistGenresPromise = loadArtistGenres();
+
   try {
     // Tenta Supabase primeiro (latest_ranking view = semana mais recente)
     const res = await fetch(
@@ -532,8 +611,11 @@ async function loadRanking() {
           const weeks = await weekRes.json();
           document.getElementById("week-badge").textContent = weeks[0]?.week_label || "";
         }
+        await Promise.allSettled([artistGenresPromise]);
+        enrichTrackGenres(allTracks);
         buildGenreFilters();
         render();
+        loadMissingThumbnails();
         return;
       }
     }
@@ -546,8 +628,11 @@ async function loadRanking() {
     const data = await res.json();
     allTracks = data.tracks || [];
     document.getElementById("week-badge").textContent = data.week_label || "";
+    await Promise.allSettled([artistGenresPromise]);
+    enrichTrackGenres(allTracks);
     buildGenreFilters();
     render();
+    loadMissingThumbnails();
   } catch (e) {
     list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${e.message}</small></div>`;
   }
@@ -562,6 +647,7 @@ document.getElementById("filters").addEventListener("click", e => {
   currentFilter = btn.dataset.filter;
   refreshGenreFilters();
   render();
+  loadMissingThumbnails();
 });
 
 // Filtros de gênero (delegação de eventos)
@@ -571,6 +657,7 @@ document.getElementById("genre-filters").addEventListener("click", e => {
   currentGenre = btn.dataset.genre;
   refreshGenreFilters();
   render();
+  loadMissingThumbnails();
 });
 
 loadRanking();
