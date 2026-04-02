@@ -1,3 +1,5 @@
+https://reginaldouller-ship-it.github.io/Rankingteste/index.html
+
 # 🎵 Ranking Brasil Semanal — Spotify + YouTube
 
 Ranking combinado das músicas mais tocadas no Brasil, cruzando os dados semanais do Spotify e do YouTube. Atualizado automaticamente toda **sexta-feira**.
