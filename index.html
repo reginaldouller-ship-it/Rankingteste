@@ -121,6 +121,7 @@
       font-size: 12px;
       cursor: pointer;
       transition: all 0.15s;
+      user-select: none;
     }
     .genre-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
     .genre-btn.active {
@@ -128,7 +129,12 @@
       border-color: rgba(255,255,255,0.25);
       color: var(--text);
     }
-    .genre-btn.dim { opacity: 0.4; }
+    .genre-btn.active-selected {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .genre-btn.dim { opacity: 0.35; pointer-events: none; }
 
     /* ── MAIN ── */
     main {
@@ -139,7 +145,6 @@
 
     /* ── TRACK ROW ── */
     .track-list { display: flex; flex-direction: column; gap: 4px; }
-
     .track {
       display: grid;
       grid-template-columns: 36px 52px 1fr auto;
@@ -163,10 +168,90 @@
       text-align: center;
       color: var(--muted);
       min-width: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
     }
-    .rank-1 { color: var(--gold); }
-    .rank-2 { color: var(--silver); }
-    .rank-3 { color: var(--bronze); }
+    .rank-filter-pos { font-size: 16px; font-weight: 700; line-height: 1; }
+    .rank-global-pos { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1; opacity: 0.75; }
+    .rank-1 .rank-filter-pos { color: var(--gold); }
+    .rank-2 .rank-filter-pos { color: var(--silver); }
+    .rank-3 .rank-filter-pos { color: var(--bronze); }
+    .rank-num.no-filter { font-size: 16px; }
+    .rank-num.no-filter.rank-1 { color: var(--gold); }
+    .rank-num.no-filter.rank-2 { color: var(--silver); }
+    .rank-num.no-filter.rank-3 { color: var(--bronze); }
+
+    /* ── GENRE OVERRIDE BUTTON ── */
+    .genre-override-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .genre-override-btn:hover {
+      background: var(--surface2);
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text);
+    }
+    .genre-override-btn.has-override {
+      border-color: rgba(108,99,255,0.4);
+      color: var(--accent);
+    }
+
+    /* ── GENRE DROPDOWN ── */
+    .genre-dropdown {
+      position: fixed;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      padding: 6px;
+      min-width: 180px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    .genre-dropdown.open { display: block; }
+    .genre-dropdown-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 4px 8px 6px;
+    }
+    .genre-dropdown-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: none;
+      background: none;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .genre-dropdown-item:hover { background: var(--surface2); }
+    .genre-dropdown-item.current { color: var(--accent); font-weight: 600; }
+    .genre-dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
+    .genre-dropdown-remove { color: #ef4444; }
+    .genre-dropdown-remove:hover { background: rgba(239,68,68,0.1); }
 
     .track-thumb {
       width: 52px; height: 52px;
@@ -182,8 +267,7 @@
       overflow: hidden;
     }
     .track-thumb img {
-      width: 52px;
-      height: 52px;
+      width: 52px; height: 52px;
       border-radius: 8px;
       object-fit: cover;
       border: none;
@@ -192,130 +276,78 @@
 
     .track-info { min-width: 0; }
     .track-title {
-      font-size: 14px;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 14px; font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       color: var(--text);
     }
     .track-artist {
-      font-size: 12px;
-      color: var(--muted);
+      font-size: 12px; color: var(--muted);
       margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .track-tags { display: flex; align-items: center; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
 
     .tag-both {
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 10px; font-weight: 600;
       color: var(--accent);
       background: rgba(108,99,255,0.12);
       border: 1px solid rgba(108,99,255,0.3);
-      padding: 2px 7px;
-      border-radius: 4px;
+      padding: 2px 7px; border-radius: 4px;
     }
-
     .sp-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 500;
       color: var(--sp);
       background: rgba(29,185,84,0.08);
       border: 1px solid rgba(29,185,84,0.25);
-      padding: 2px 8px;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background 0.15s;
+      padding: 2px 8px; border-radius: 4px;
+      text-decoration: none; transition: background 0.15s;
     }
     .sp-link:hover { background: rgba(29,185,84,0.18); }
     .sp-link svg { width: 10px; height: 10px; fill: var(--sp); }
-
     .copy-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 500;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500;
       color: var(--sp);
       background: rgba(29,185,84,0.08);
       border: 1px solid rgba(29,185,84,0.25);
-      padding: 2px 7px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.15s;
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.4;
+      padding: 2px 7px; border-radius: 4px;
+      cursor: pointer; transition: background 0.15s;
+      font-family: 'DM Sans', sans-serif; line-height: 1.4;
     }
     .copy-btn:hover { background: rgba(29,185,84,0.18); }
     .copy-btn svg { width: 10px; height: 10px; fill: var(--sp); }
 
     /* ── META RIGHT ── */
     .track-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 5px;
-      flex-shrink: 0;
-      min-width: 110px;
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 5px;
+      flex-shrink: 0; min-width: 110px;
     }
     .total-streams {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
+      font-size: 14px; font-weight: 600; color: var(--text);
     }
-    .platform-detail {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
-    }
-    .plat-row {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--muted);
-    }
+    .platform-detail { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .plat-row { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
     .plat-dot { width: 6px; height: 6px; border-radius: 50%; }
     .trend-up   { color: #22c55e; font-size: 11px; }
     .trend-down { color: #ef4444; font-size: 11px; }
     .trend-new  { color: var(--gold); font-size: 10px; font-weight: 600; }
 
-    /* ── EMPTY ── */
-    .empty {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 14px; }
 
-    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: var(--muted);
-      font-size: 12px;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
+      text-align: center; padding: 2rem 1rem;
+      color: var(--muted); font-size: 12px;
+      border-top: 1px solid var(--border); margin-top: 2rem;
     }
     footer a { color: var(--muted); }
     .btn-manage-genres {
-      display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: .85rem;
-      text-decoration: none;
-      white-space: nowrap;
+      display: inline-block; background: var(--accent); color: #fff;
+      padding: 6px 14px; border-radius: 8px;
+      font-weight: 600; font-size: .85rem;
+      text-decoration: none; white-space: nowrap;
     }
     .btn-manage-genres:hover { opacity: .85; }
 
@@ -332,9 +364,7 @@
 
 <header>
   <div class="header-inner">
-    <div>
-      <div class="logo">Ranking<span>BR</span></div>
-    </div>
+    <div><div class="logo">Ranking<span>BR</span></div></div>
     <div id="week-badge" class="week-badge">carregando...</div>
     <div class="platform-pills">
       <div class="pill"><span class="dot" style="background:var(--sp)"></span>Spotify</div>
@@ -368,6 +398,21 @@
 <script>
 const EMOJIS = ["🔥","🎵","⭐","👑","💥","🎤","🎶","🥁","🎸","🎧",
                 "🌟","💫","🏆","🎼","🎹","🎺","🎻","🪗","🪘","🥳"];
+
+const SUPABASE_URL  = "https://suzcbyzidnzzahwrkveh.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
+const SB_HEADERS    = {
+  "Content-Type":  "application/json",
+  "apikey":        SUPABASE_ANON,
+  "Authorization": `Bearer ${SUPABASE_ANON}`,
+  "Prefer":        "return=representation",
+};
+
+let allTracks     = [];
+let allGenres     = [];        // [{id, name}] — fonte oficial
+let currentFilter = "all";
+let currentGenres = new Set(); // multi-seleção; vazio = todos
+let trackOverrides = {};       // { spotify_id: genre_name }
 
 function emoji(i) { return EMOJIS[i % EMOJIS.length]; }
 
@@ -417,10 +462,19 @@ const thumbnailCache = new Map();
 
 function copyLink(url, btn) {
   navigator.clipboard.writeText(url).then(() => {
-    const original = btn.innerHTML;
+    const orig = btn.innerHTML;
     btn.innerHTML = "Copiado!";
-    setTimeout(() => { btn.innerHTML = original; }, 1500);
+    setTimeout(() => { btn.innerHTML = orig; }, 1500);
   });
+}
+
+async function sbRpc(fn, params) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: "POST", headers: SB_HEADERS, body: JSON.stringify(params),
+  });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
+  const txt = await r.text();
+  return txt ? JSON.parse(txt) : null;
 }
 
 function filterByPlatform(tracks) {
@@ -428,6 +482,17 @@ function filterByPlatform(tracks) {
   if (currentFilter === "spotify") return tracks.filter(t => t.pos_spotify && !t.in_both);
   if (currentFilter === "youtube") return tracks.filter(t => t.pos_youtube && !t.in_both);
   return tracks;
+}
+
+function getEffectiveGenre(t) {
+  if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined)
+    return trackOverrides[t.spotify_id] || "outros";
+  return t.genre || "outros";
+}
+
+function applyGenreFilter(tracks) {
+  if (currentGenres.size === 0) return tracks;
+  return tracks.filter(t => currentGenres.has(getEffectiveGenre(t)));
 }
 
 function buildGenreFilters() {
@@ -440,26 +505,33 @@ function buildGenreFilters() {
     }
   }
   const genres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
+  container.innerHTML = "";
 
-  // Count genres in current platform filter
   const platformFiltered = filterByPlatform(allTracks);
   const platformGenres = new Set(
     platformFiltered.flatMap(t => t._genres || [t.genre || "outros"])
   );
+  const presentGenres    = new Set(platformFiltered.map(t => getEffectiveGenre(t)));
+  const knownNames       = allGenres.map(g => g.name);
+  const extraGenres      = [...presentGenres].filter(g => !knownNames.includes(g));
+  const genreNames       = [...knownNames, ...extraGenres];
 
   const allBtn = document.createElement("button");
-  allBtn.className = "genre-btn" + (currentGenre === "all" ? " active" : "");
-  allBtn.textContent = "Todos os gêneros";
-  allBtn.dataset.genre = "all";
+  allBtn.className   = "genre-btn" + (currentGenres.size === 0 ? " active" : "");
+  allBtn.textContent = "Todos";
+  allBtn.dataset.genre = "__all__";
   container.appendChild(allBtn);
 
-  for (const g of genres) {
+  for (const name of genreNames) {
     const btn = document.createElement("button");
-    const isActive = currentGenre === g;
-    const hasTracks = platformGenres.has(g);
-    btn.className = "genre-btn" + (isActive ? " active" : "") + (!hasTracks ? " dim" : "");
-    btn.textContent = g;
-    btn.dataset.genre = g;
+    const isSelected = currentGenres.has(name);
+    const hasTracks  = presentGenres.has(name);
+    let cls = "genre-btn";
+    if (isSelected)      cls += " active-selected";
+    else if (!hasTracks) cls += " dim";
+    btn.className    = cls;
+    btn.textContent  = name;
+    btn.dataset.genre = name;
     container.appendChild(btn);
   }
 }
@@ -471,18 +543,35 @@ function render() {
   if (currentGenre !== "all") {
     tracks = tracks.filter(t => (t._genres || [t.genre || "outros"]).includes(currentGenre));
   }
+  tracks = applyGenreFilter(tracks);
+  const hasGenreFilter = currentGenres.size > 0;
 
   if (!tracks.length) {
     list.innerHTML = `<div class="empty">Nenhuma música neste filtro.</div>`;
     return;
   }
 
+  const copyIconSvg = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+
   list.innerHTML = tracks.map((t, i) => {
-    const rankCls = t.rank === 1 ? "rank-1" : t.rank === 2 ? "rank-2" : t.rank === 3 ? "rank-3" : "";
+    const filterPos = i + 1;
+    const globalPos = t.rank;
 
     const thumbContent = `<img src="${t.thumbnail_url || ''}" width="52" height="52" alt="" data-spotify="${t.spotify_url || ''}" onerror="retryThumbnail(this)">`;
+    let rankHtml;
+    if (hasGenreFilter) {
+      const fpCls = filterPos === 1 ? "rank-1" : filterPos === 2 ? "rank-2" : filterPos === 3 ? "rank-3" : "";
+      rankHtml = `<div class="rank-num ${fpCls}">
+        <span class="rank-filter-pos">${filterPos}</span>
+        <span class="rank-global-pos">#${globalPos}</span>
+      </div>`;
+    } else {
+      const gpCls = "no-filter" + (globalPos === 1 ? " rank-1" : globalPos === 2 ? " rank-2" : globalPos === 3 ? " rank-3" : "");
+      rankHtml = `<div class="rank-num ${gpCls}">${globalPos}</div>`;
+    }
 
-    const copyIconSvg = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+    const thumbContent = t.thumbnail_url
+      ? `<img src="${t.thumbnail_url}" width="52" height="52" alt="">` : emoji(i);
 
     const spButtons = t.spotify_url
       ? `<a class="sp-link" href="${t.spotify_url}" target="_blank" rel="noopener">
@@ -492,8 +581,7 @@ function render() {
         <button class="copy-btn" onclick="copyLink('${t.spotify_url}', this)" title="Copiar link">${copyIconSvg}</button>`
       : "";
 
-    const bothTag = t.in_both ? `<span class="tag-both">✦ nas duas</span>` : "";
-
+    const bothTag    = t.in_both ? `<span class="tag-both">✦ nas duas</span>` : "";
     const trendBadge = (() => {
       if (!t.trend || t.trend === "same") return "";
       if (t.trend === "new")    return `<span class="trend-new">NOVO</span>`;
@@ -504,31 +592,34 @@ function render() {
     })();
 
     const spRow = t.streams_spotify
-      ? `<div class="plat-row"><span class="plat-dot" style="background:var(--sp)"></span>#${t.pos_spotify ?? "—"} · ${fmt(t.streams_spotify)}</div>`
-      : "";
+      ? `<div class="plat-row"><span class="plat-dot" style="background:var(--sp)"></span>#${t.pos_spotify ?? "—"} · ${fmt(t.streams_spotify)}</div>` : "";
     const ytRow = t.streams_youtube
-      ? `<div class="plat-row"><span class="plat-dot" style="background:var(--yt)"></span>#${t.pos_youtube ?? "—"} · ${fmt(t.streams_youtube)}</div>`
+      ? `<div class="plat-row"><span class="plat-dot" style="background:var(--yt)"></span>#${t.pos_youtube ?? "—"} · ${fmt(t.streams_youtube)}</div>` : "";
+
+    const effectiveGenre = getEffectiveGenre(t);
+    const hasOverride    = t.spotify_id && trackOverrides[t.spotify_id] != null;
+    const overrideBtn    = t.spotify_id
+      ? `<button class="genre-override-btn${hasOverride ? " has-override" : ""}"
+           data-spotify-id="${t.spotify_id}"
+           data-current-genre="${effectiveGenre}"
+           title="${hasOverride ? "Gênero manual: " + effectiveGenre : "Definir gênero manualmente"}"
+           onclick="openGenreDropdown(this, event)">⋯</button>`
       : "";
 
     return `
     <div class="track">
-      <div class="rank-num ${rankCls}">${t.rank}</div>
+      ${rankHtml}
       <div class="track-thumb">${thumbContent}</div>
       <div class="track-info">
         <div class="track-title">${t.title}</div>
         <div class="track-artist">${(t.artists && t.artists.length > 1) ? t.artists.join(", ") : (t.artist || "")}</div>
-        <div class="track-tags">
-          ${trendBadge}
-          ${bothTag}
-          ${spButtons}
-        </div>
+        <div class="track-tags">${trendBadge}${bothTag}${spButtons}</div>
       </div>
       <div class="track-meta">
-        <div class="total-streams">${fmt(t.total_streams)}</div>
-        <div class="platform-detail">
-          ${spRow}
-          ${ytRow}
+        <div class="total-streams" style="display:flex;align-items:center;gap:6px">
+          <span>${fmt(t.total_streams)}</span>${overrideBtn}
         </div>
+        <div class="platform-detail">${spRow}${ytRow}</div>
       </div>
     </div>`;
   }).join("");
@@ -582,27 +673,121 @@ function refreshGenreFilters() {
   const container = document.getElementById("genre-filters");
   container.innerHTML = "";
   buildGenreFilters();
+// ── Genre Override UI ───────────────────────────────────────────────────────
+let activeDropdown = null;
+
+function openGenreDropdown(btn, event) {
+  event.stopPropagation();
+  if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
+
+  const spotifyId    = btn.dataset.spotifyId;
+  const currentGenre = btn.dataset.currentGenre;
+  const dropdown     = document.createElement("div");
+  dropdown.className = "genre-dropdown open";
+
+  const title = document.createElement("div");
+  title.className   = "genre-dropdown-title";
+  title.textContent = "Gênero da música";
+  dropdown.appendChild(title);
+
+  for (const g of allGenres) {
+    const item = document.createElement("button");
+    item.className   = "genre-dropdown-item" + (g.name === currentGenre ? " current" : "");
+    item.textContent = (g.name === currentGenre ? "✓ " : "") + g.name;
+    item.addEventListener("click", async () => {
+      dropdown.remove(); activeDropdown = null;
+      await setTrackGenre(spotifyId, g.name, btn);
+    });
+    dropdown.appendChild(item);
+  }
+
+  if (trackOverrides[spotifyId] != null) {
+    const div = document.createElement("div");
+    div.className = "genre-dropdown-divider";
+    dropdown.appendChild(div);
+    const removeItem = document.createElement("button");
+    removeItem.className   = "genre-dropdown-item genre-dropdown-remove";
+    removeItem.textContent = "✕ Remover gênero manual";
+    removeItem.addEventListener("click", async () => {
+      dropdown.remove(); activeDropdown = null;
+      await removeTrackGenre(spotifyId, btn);
+    });
+    dropdown.appendChild(removeItem);
+  }
+
+  document.body.appendChild(dropdown);
+  activeDropdown = dropdown;
+  const rect = btn.getBoundingClientRect();
+  let left = rect.right - 200;
+  let top  = rect.bottom + 4;
+  if (left < 8) left = 8;
+  if (top + 300 > window.innerHeight) top = rect.top - 4 - dropdown.offsetHeight;
+  dropdown.style.left = left + "px";
+  dropdown.style.top  = top  + "px";
 }
 
-const SUPABASE_URL  = "https://suzcbyzidnzzahwrkveh.supabase.co";
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
-const SB_HEADERS    = { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${SUPABASE_ANON}` };
+document.addEventListener("click", () => {
+  if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
+});
+
+async function setTrackGenre(spotifyId, genreName, btn) {
+  btn.disabled = true;
+  try {
+    await sbRpc("set_track_override", { p_spotify_id: spotifyId, p_genre_name: genreName });
+    trackOverrides[spotifyId] = genreName;
+    btn.dataset.currentGenre  = genreName;
+    btn.classList.add("has-override");
+    btn.title = "Gênero manual: " + genreName;
+    buildGenreFilters();
+    render();
+  } catch (e) {
+    alert("Erro ao salvar gênero: " + e.message);
+  } finally { btn.disabled = false; }
+}
+
+async function removeTrackGenre(spotifyId, btn) {
+  btn.disabled = true;
+  try {
+    await sbRpc("remove_track_override", { p_spotify_id: spotifyId });
+    delete trackOverrides[spotifyId];
+    btn.classList.remove("has-override");
+    btn.title = "Definir gênero manualmente";
+    buildGenreFilters();
+    render();
+  } catch (e) {
+    alert("Erro ao remover gênero: " + e.message);
+  } finally { btn.disabled = false; }
+}
+
+// ── Carregamento ────────────────────────────────────────────────────────────
+async function loadGenres() {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/genres?select=id,name&order=name`, { headers: SB_HEADERS });
+    if (r.ok) allGenres = await r.json();
+  } catch (_) {}
+}
+
+async function loadTrackOverrides() {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/track_overrides_with_genres?select=spotify_id,genre_name`, { headers: SB_HEADERS });
+    if (r.ok) {
+      const rows = await r.json();
+      for (const row of rows) trackOverrides[row.spotify_id] = row.genre_name;
+    }
+  } catch (_) {}
+}
 
 async function loadRanking() {
   const list = document.getElementById("track-list");
   const artistGenresPromise = loadArtistGenres();
 
   try {
-    // Tenta Supabase primeiro (latest_ranking view = semana mais recente)
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/latest_ranking?select=*&order=rank`,
-      { headers: SB_HEADERS }
-    );
+    await Promise.all([loadGenres(), loadTrackOverrides()]);
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/latest_ranking?select=*&order=rank`, { headers: SB_HEADERS });
     if (res.ok) {
       const tracks = await res.json();
       if (tracks && tracks.length > 0) {
         allTracks = tracks;
-        // Buscar week_label da semana mais recente
         const weekRes = await fetch(
           `${SUPABASE_URL}/rest/v1/ranking_weeks?select=week_label&order=generated_at.desc&limit=1`,
           { headers: SB_HEADERS }
@@ -619,9 +804,8 @@ async function loadRanking() {
         return;
       }
     }
-  } catch (_) { /* fallback abaixo */ }
+  } catch (_) {}
 
-  // Fallback: ranking.json local (GitHub Pages estático)
   try {
     const res = await fetch("data/ranking.json");
     if (!res.ok) throw new Error("Arquivo não encontrado");
@@ -638,24 +822,26 @@ async function loadRanking() {
   }
 }
 
-// Filtros de plataforma
+// ── Event listeners ─────────────────────────────────────────────────────────
 document.getElementById("filters").addEventListener("click", e => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
   document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   currentFilter = btn.dataset.filter;
-  refreshGenreFilters();
+  buildGenreFilters();
   render();
   loadMissingThumbnails();
 });
 
-// Filtros de gênero (delegação de eventos)
 document.getElementById("genre-filters").addEventListener("click", e => {
   const btn = e.target.closest(".genre-btn");
   if (!btn) return;
-  currentGenre = btn.dataset.genre;
-  refreshGenreFilters();
+  const genre = btn.dataset.genre;
+  if (genre === "__all__")           currentGenres.clear();
+  else if (currentGenres.has(genre)) currentGenres.delete(genre);
+  else                               currentGenres.add(genre);
+  buildGenreFilters();
   render();
   loadMissingThumbnails();
 });

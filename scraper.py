@@ -55,15 +55,12 @@ def get_supabase():
 
 def _sb_load_genres_config(sb):
     """Carrega config de gêneros do Supabase."""
-    # Artistas com gêneros (via view)
     res = sb.table("artists_with_genres").select("name,genres").execute()
     artist_genres = {row["name"]: row["genres"] for row in res.data}
 
-    # Overrides por track (via view com join já resolvido)
     ov_res = sb.table("track_overrides_with_genres").select("*").execute()
     track_overrides = {row["spotify_id"]: row["genre_name"] for row in ov_res.data}
 
-    # Lista de gêneros
     g_res = sb.table("genres").select("name").order("name").execute()
     genres = [row["name"] for row in g_res.data]
 
@@ -270,7 +267,6 @@ def enrich_with_spotify_api(ranking, token):
     for e in ranking:
         sid = e.get("spotify_id")
         if sid and sid in track_data:
-            # FIX: não sobrescreve thumbnail existente com string vazia
             new_thumb = track_data[sid]["thumbnail"]
             if new_thumb:
                 e["thumbnail_url"] = new_thumb
@@ -325,18 +321,23 @@ def search_spotify_track(artist, title, token):
 
 # ── Gêneros ───────────────────────────────────────────────────────────────────
 
+# Valores correspondem EXATAMENTE aos nomes na tabela genres do Supabase.
 _GENRE_MAP = [
-    ("funk", "funk"), ("brega", "funk"), ("baile funk", "funk"),
-    ("sertanejo", "sertanejo"),
-    ("pagode", "pagode"), ("samba", "pagode"),
-    ("forro", "forró"), ("forró", "forró"), ("xote", "forró"), ("baião", "forró"),
-    ("axé", "axé"), ("axe", "axé"),
-    ("gospel", "gospel"), ("ccm", "gospel"),
-    ("rap", "rap"), ("hip hop", "rap"), ("trap", "rap"),
-    ("mpb", "mpb"),
-    ("rock", "rock"),
-    ("pop", "pop"),
-    ("eletrônica", "eletrônica"), ("electronic", "eletrônica"), ("dance", "eletrônica"),
+    ("brega funk", "Brega Funk"), ("baile funk", "Funk"), ("funk", "Funk"), ("brega", "Brega Funk"),
+    ("sertanejo", "Sertanejo"),
+    ("pagode", "Pagode"), ("samba", "Pagode"),
+    ("piseiro", "Forró/Piseiro"), ("forro", "Forró/Piseiro"), ("forró", "Forró/Piseiro"),
+    ("xote", "Forró/Piseiro"), ("baião", "Forró/Piseiro"),
+    ("gospel", "Gospel"), ("ccm", "Gospel"),
+    ("trap", "Trap"),
+    ("rap", "Rap"), ("hip hop", "Rap"),
+    ("phonk", "Phonk"),
+    ("mpb", "MPB"),
+    ("reggae", "Reggae"),
+    ("rock", "outros"),
+    ("pop", "Pop"),
+    ("eletrônica", "Eletrônica"), ("electronic", "Eletrônica"), ("dance", "Eletrônica"),
+    ("internacional", "Internacional"),
 ]
 
 
@@ -351,22 +352,63 @@ def normalize_genre(genre_str):
 def guess_genre(artist, title):
     text = (artist + " " + title).lower()
     if re.search(r"\bmc\b|\bmc\.", text) or text.startswith("mc "):
-        return "funk"
+        return "Funk"
     if re.search(r"\bdj\b", text) and "sertanejo" not in text:
-        return "funk"
+        return "Funk"
     if "sertanejo" in text:
-        return "sertanejo"
+        return "Sertanejo"
     if re.search(r"\bpagode\b|\bsamba\b", text):
-        return "pagode"
-    if re.search(r"\bforró\b|\bforro\b|\bxote\b", text):
-        return "forró"
-    if re.search(r"\baxé\b|\baxe\b", text):
-        return "axé"
+        return "Pagode"
+    if re.search(r"\bforró\b|\bforro\b|\bxote\b|\bpiseiro\b", text):
+        return "Forró/Piseiro"
     if re.search(r"\bgospel\b|\blouvor\b|\badoração\b", text):
-        return "gospel"
-    if re.search(r"\brap\b|\bfeat\b", text):
-        return "rap"
+        return "Gospel"
+    if re.search(r"\btrap\b", text):
+        return "Trap"
+    if re.search(r"\brap\b", text):
+        return "Rap"
     return "outros"
+
+
+def _validate_genre(genre, known_genres_lower):
+    """Normaliza o gênero resolvido para o nome canônico do banco (case-insensitive).
+    Retorna o nome exato do banco, ou None se não encontrado."""
+    if not genre:
+        return None
+    return known_genres_lower.get(genre.lower())
+
+
+def _resolve_artists(names, known_lower):
+    """Tenta resolver uma lista de nomes de artistas para o nome canônico no banco.
+
+    known_lower: dict {lowercase_name: canonical_name}
+
+    Estratégias (em ordem):
+    1. Nome único → busca case-insensitive direta.
+    2. Múltiplos nomes → tenta join com " & ", " e ", ", " para encontrar duo/grupo.
+    3. Tenta os dois primeiros nomes + resto separadamente.
+    4. Resolução individual case-insensitive para cada nome.
+    """
+    if not names:
+        return names
+
+    if len(names) == 1:
+        canonical = known_lower.get(names[0].lower())
+        return [canonical] if canonical else names
+
+    # Tentar combinações dos nomes para encontrar duo/grupo registrado
+    for sep in (" & ", " e ", ", "):
+        combined = sep.join(names)
+        if combined.lower() in known_lower:
+            return [known_lower[combined.lower()]]
+        # Apenas primeiros dois + restante
+        if len(names) > 2:
+            combined2 = names[0] + sep + names[1]
+            if combined2.lower() in known_lower:
+                return [known_lower[combined2.lower()]] + names[2:]
+
+    # Resolução individual (case-insensitive)
+    return [known_lower.get(n.lower(), n) for n in names]
 
 
 def load_genres_config(sb=None):
@@ -376,7 +418,6 @@ def load_genres_config(sb=None):
             return _sb_load_genres_config(sb)
         except Exception as e:
             print(f"⚠️  Falha ao carregar gêneros do Supabase: {e}")
-    # Fallback: arquivo local
     try:
         with open("data/genres.json", encoding="utf-8") as f:
             return json.load(f)
@@ -468,7 +509,6 @@ def update_history(ranking, history, sb=None):
         except Exception as e:
             print(f"⚠️  Falha ao sincronizar histórico: {e}")
 
-    # Backup local sempre
     os.makedirs("data", exist_ok=True)
     with open("data/ranking_history.json", "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
@@ -647,7 +687,6 @@ def run():
     else:
         print("⚠️  Sem Supabase — usando somente arquivos locais")
 
-    # Carregar ranking anterior para cálculo de trend
     prev_ranking: list[dict] = []
     try:
         with open("data/ranking.json", encoding="utf-8") as f:
@@ -662,6 +701,24 @@ def run():
     time.sleep(2)
     youtube_tracks = scrape_youtube()
     ranking = match_tracks(spotify_tracks, youtube_tracks)
+
+    # ── Reconciliar nomes de artistas com entradas canônicas já no banco ──────
+    # Evita criar "Henrique" + "Juliano" separados quando "Henrique & Juliano"
+    # já existe, e resolve diferenças de capitalização (ex: "MC IG" vs "Mc IG").
+    known_artists_lower: dict[str, str] = {}
+    if sb:
+        try:
+            res = sb.table("artists").select("name").execute()
+            known_artists_lower = {r["name"].lower(): r["name"] for r in res.data}
+            print(f"🔍 {len(known_artists_lower)} artistas carregados para reconciliação")
+        except Exception as exc:
+            print(f"⚠️  Falha ao carregar artistas para reconciliação: {exc}")
+
+    for e in ranking:
+        raw = e.get("artists") or ([e["artist"]] if e.get("artist") else [])
+        resolved = _resolve_artists(raw, known_artists_lower)
+        e["artists"] = resolved
+        e["artist"]  = resolved[0] if resolved else ""
 
     # Calcular trend
     print("📊 Calculando variações no ranking...")
@@ -682,7 +739,6 @@ def run():
     if not token:
         print("⚠️  Sem credenciais Spotify — thumbnails e gêneros serão limitados")
 
-    # Buscar Spotify para tracks só no YouTube
     yt_only = [e for e in ranking if not e["in_both"] and e["pos_spotify"] is None]
     if token and yt_only:
         print(f"🔍 Buscando links Spotify para {len(yt_only)} músicas YouTube-only...")
@@ -695,7 +751,6 @@ def run():
     for e in yt_only:
         e.setdefault("thumbnail_url", "")
 
-    # Enriquecer thumbnails via batch API
     api_artist_genres = enrich_with_spotify_api(ranking, token)
 
     for e in ranking:
@@ -703,27 +758,35 @@ def run():
 
     # Resolver gêneros
     genres_config = load_genres_config(sb)
+    # Mapa lowercase→canonical para validação (impede gêneros fora do banco)
+    known_genres_lower = {g.lower(): g for g in genres_config["genres"]} if genres_config["genres"] else {}
     print(f"🎨 Resolvendo gêneros ({len(genres_config['artist_genres'])} artistas manuais, "
-          f"{len(genres_config['track_overrides'])} overrides)...")
+          f"{len(genres_config['track_overrides'])} overrides, "
+          f"{len(known_genres_lower)} gêneros configurados)...")
     enriched_genre = 0
     for e in ranking:
-        e["genre"] = resolve_genre(
+        raw_genre = resolve_genre(
             e,
             genres_config["artist_genres"],
             genres_config["track_overrides"],
             api_artist_genres,
         )
-        if e["genre"] != "outros":
+        # Valida e normaliza para o nome canônico do banco.
+        # Se o gênero não existir no banco, usa "outros".
+        if known_genres_lower:
+            e["genre"] = _validate_genre(raw_genre, known_genres_lower) or \
+                         known_genres_lower.get("outros", raw_genre)
+        else:
+            e["genre"] = raw_genre
+        if e["genre"] and e["genre"] != "outros":
             enriched_genre += 1
     print(f"  ✅ {enriched_genre} tracks classificados")
 
-    # Limpar campo interno antes de serializar
     for e in ranking:
         e.pop("_api_artist_ids", None)
 
     week_label = f"Semana de {datetime.now().strftime('%d/%m/%Y')}"
 
-    # Persistir no Supabase
     if sb:
         try:
             _sb_upsert_artists(sb, ranking)
@@ -731,10 +794,8 @@ def run():
         except Exception as e:
             print(f"⚠️  Falha ao salvar no Supabase: {e}")
 
-    # Atualizar histórico
     update_history(ranking, history, sb)
 
-    # Salvar ranking.json local (fallback para o site estático)
     output = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "week_label":   week_label,
