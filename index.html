@@ -408,11 +408,13 @@ const SB_HEADERS    = {
   "Prefer":        "return=representation",
 };
 
-let allTracks     = [];
-let allGenres     = [];        // [{id, name}] — fonte oficial
-let currentFilter = "all";
-let currentGenres = new Set(); // multi-seleção; vazio = todos
-let trackOverrides = {};       // { spotify_id: genre_name }
+let allTracks      = [];
+let allGenres      = [];        // [{id, name}] — fonte oficial
+let artistGenresMap = {};       // { "nome artista lowercase": ["genero1", "genero2"] }
+let currentFilter  = "all";
+let currentGenres  = new Set(); // multi-seleção; vazio = todos
+let trackOverrides = {};        // { spotify_id: genre_name }
+const thumbnailCache = new Map();
 
 function emoji(i) { return EMOJIS[i % EMOJIS.length]; }
 
@@ -454,12 +456,6 @@ function loadMissingThumbnails() {
   });
 }
 
-let allTracks = [];
-let artistGenresMap = {};
-let currentFilter = "all";
-let currentGenre = "all";
-const thumbnailCache = new Map();
-
 function copyLink(url, btn) {
   navigator.clipboard.writeText(url).then(() => {
     const orig = btn.innerHTML;
@@ -492,7 +488,15 @@ function getEffectiveGenre(t) {
 
 function applyGenreFilter(tracks) {
   if (currentGenres.size === 0) return tracks;
-  return tracks.filter(t => currentGenres.has(getEffectiveGenre(t)));
+  return tracks.filter(t => {
+    // Override manual tem prioridade
+    if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined) {
+      return currentGenres.has(trackOverrides[t.spotify_id] || "outros");
+    }
+    // Multi-gênero via _genres (artistas com 2+ gêneros)
+    const genres = t._genres || [t.genre || "outros"];
+    return genres.some(g => currentGenres.has(g));
+  });
 }
 
 function buildGenreFilters() {
@@ -540,9 +544,6 @@ function render() {
   const list = document.getElementById("track-list");
   let tracks = filterByPlatform(allTracks);
 
-  if (currentGenre !== "all") {
-    tracks = tracks.filter(t => (t._genres || [t.genre || "outros"]).includes(currentGenre));
-  }
   tracks = applyGenreFilter(tracks);
   const hasGenreFilter = currentGenres.size > 0;
 
@@ -569,9 +570,6 @@ function render() {
       const gpCls = "no-filter" + (globalPos === 1 ? " rank-1" : globalPos === 2 ? " rank-2" : globalPos === 3 ? " rank-3" : "");
       rankHtml = `<div class="rank-num ${gpCls}">${globalPos}</div>`;
     }
-
-    const thumbContent = t.thumbnail_url
-      ? `<img src="${t.thumbnail_url}" width="52" height="52" alt="">` : emoji(i);
 
     const spButtons = t.spotify_url
       ? `<a class="sp-link" href="${t.spotify_url}" target="_blank" rel="noopener">
