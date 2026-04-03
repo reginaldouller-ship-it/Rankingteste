@@ -28,10 +28,26 @@ SUPABASE_SERVICE_KEY  = os.environ.get("SUPABASE_SERVICE_KEY", "")
 
 _token_cache = {"token": None, "expires_at": 0}
 
-# Regex para split de múltiplos artistas em títulos do YouTube
-# NÃO faz split em " e " — preserva duos como "Felipe e Rodrigo"
+# ---------------------------------------------------------------------------
+# FIX: Regex de split de artistas do YouTube
+#
+# PROBLEMA ANTERIOR: o regex usava `[,&]` como separadores, quebrando duos
+# como "Henrique & Juliano" → ["Henrique", "Juliano"] e
+# "Zezé Di Camargo & Luciano" → ["Zezé Di Camargo", "Luciano"].
+#
+# CORREÇÃO: remover `&` do separador. Usar APENAS vírgula e feat/ft.
+# O `&` em nomes de duos brasileiros é parte do nome artístico e NÃO
+# deve ser tratado como separador de múltiplos artistas.
+#
+# Exemplos que agora funcionam corretamente:
+#   "Henrique & Juliano"           → ["Henrique & Juliano"]   ✅
+#   "Zezé Di Camargo & Luciano"    → ["Zezé Di Camargo & Luciano"]  ✅
+#   "Jorge & Mateus"               → ["Jorge & Mateus"]  ✅
+#   "DJ Oreia, Mc Lele JP, MC Meno K" → ["DJ Oreia", "Mc Lele JP", "MC Meno K"]  ✅
+#   "Fernando & Sorocaba, Hugo & Guilherme" → ["Fernando & Sorocaba", "Hugo & Guilherme"]  ✅
+# ---------------------------------------------------------------------------
 _FEAT_RE = re.compile(
-    r'\s+(?:feat\.?|ft\.?)\s+|\s*[,&]\s*(?=\S)',
+    r'\s+(?:feat\.?|ft\.?)\s+|\s*,\s*(?=\S)',
     re.IGNORECASE,
 )
 
@@ -270,7 +286,7 @@ def enrich_with_spotify_api(ranking, token):
     for e in ranking:
         sid = e.get("spotify_id")
         if sid and sid in track_data:
-            # FIX: não sobrescreve thumbnail existente com string vazia
+            # Não sobrescreve thumbnail existente com string vazia
             new_thumb = track_data[sid]["thumbnail"]
             if new_thumb:
                 e["thumbnail_url"] = new_thumb
@@ -556,6 +572,7 @@ def scrape_youtube():
             parts = full_text.split(" - ", 1)
             artist_raw = parts[0].strip()
             track_name = parts[1].strip()
+            # FIX: usar _FEAT_RE que NÃO usa & como separador
             artist_parts = [a.strip() for a in _FEAT_RE.split(artist_raw) if a.strip()]
             artist_names = artist_parts if artist_parts else [artist_raw]
             artist_name = artist_names[0]
