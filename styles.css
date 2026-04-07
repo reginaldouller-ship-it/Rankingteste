@@ -1,0 +1,46 @@
+/* ── Variáveis globais ── */
+:root {
+  --sp: #1DB954;
+  --yt: #FF0000;
+  --gold: #F5A623;
+  --silver: #9BA8B5;
+  --bronze: #C97B3B;
+  --bg: #0d0d0f;
+  --surface: #16161a;
+  --surface2: #1e1e24;
+  --surface3: #26262e;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0f0f4;
+  --muted: #7a7a8c;
+  --accent: #6C63FF;
+  --danger: #ef4444;
+  --success: #22c55e;
+}
+
+/* ── Reset ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header compartilhado ── */
+.logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+.logo span { color: var(--accent); }
+
+/* ── Botão gerenciar gêneros (compartilhado) ── */
+.btn-manage-genres {
+  display: inline-block; background: var(--accent); color: #fff;
+  padding: 6px 14px; border-radius: 8px;
+  font-weight: 600; font-size: .85rem;
+  text-decoration: none; white-space: nowrap;
+}
+.btn-manage-genres:hover { opacity: .85; }
