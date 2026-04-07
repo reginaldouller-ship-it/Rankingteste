@@ -282,7 +282,7 @@ def enrich_with_spotify_api(ranking, token):
 
 
 _YT_SUFFIX_RE = re.compile(
-    r"\s*[\(\[]\s*(ao vivo|live|acústico|acustico|clipe oficial|official|"
+    r"\s*[\(\[]\s*(ao vivo|en vivo|live|acústico|acustico|clipe oficial|official|"
     r"official video|official music video|lyric video|visualizer|"
     r"part\.|feat\.|ft\.)[^\)\]]*[\)\]]",
     re.IGNORECASE,
@@ -293,6 +293,22 @@ def _clean_yt_title(title):
     cleaned = _YT_SUFFIX_RE.sub("", title).strip()
     cleaned = re.sub(r"\s*[-–]\s*(ao vivo|live|acústico|acustico)\s*$", "", cleaned, flags=re.IGNORECASE).strip()
     return cleaned or title
+
+
+def _artist_matches(expected_artist, spotify_track):
+    """Verifica se ao menos um artista do resultado Spotify bate com o artista esperado."""
+    expected = expected_artist.lower()
+    sp_artists = [a["name"].lower() for a in spotify_track.get("artists", [])]
+    for sp in sp_artists:
+        # Match direto ou parcial (um contém o outro)
+        if sp in expected or expected in sp:
+            return True
+        # Match por primeira palavra (ex: "Henrique" em "Henrique & Juliano")
+        sp_first = sp.split()[0] if sp.split() else sp
+        exp_first = expected.split()[0] if expected.split() else expected
+        if sp_first == exp_first:
+            return True
+    return False
 
 
 def search_spotify_track(artist, title, token):
@@ -309,11 +325,12 @@ def search_spotify_track(artist, title, token):
             r = _spotify_get(
                 "https://api.spotify.com/v1/search",
                 token,
-                {"q": q, "type": "track", "market": "BR", "limit": 1},
+                {"q": q, "type": "track", "market": "BR", "limit": 5},
             )
             items = r.json().get("tracks", {}).get("items", [])
-            if items:
-                track = items[0]
+            for track in items:
+                if not _artist_matches(artist, track):
+                    continue
                 spotify_id = track["id"]
                 images = track.get("album", {}).get("images", [])
                 thumbnail = images[0]["url"] if images else ""
