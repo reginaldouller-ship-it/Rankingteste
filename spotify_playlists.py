@@ -108,7 +108,7 @@ def get_or_create_playlist(token, user_id, name, description=""):
         token,
         json_data={
             "name": name,
-            "public": True,
+            "public": False,
             "description": description,
         },
     )
@@ -201,6 +201,20 @@ def sync_genre_playlist(token, playlist_id, new_tracks, max_tracks=101):
     return added
 
 
+def _ensure_playlists_private(token, user_id):
+    """Torna privadas todas as playlists do RankingBR que ainda estão públicas."""
+    playlists = _get_all_user_playlists(token, user_id)
+    for p in playlists:
+        if p["name"].startswith("RankingBR") and p.get("public", False):
+            _spotify_request(
+                "PUT",
+                f"{SPOTIFY_API}/playlists/{p['id']}",
+                token,
+                json_data={"public": False},
+            )
+            print(f"  🔒 {p['name']} → privada")
+
+
 # ── Orquestração ─────────────────────────────────────────────────────────────
 
 def sync_all_playlists(token, ranking_tracks):
@@ -212,6 +226,9 @@ def sync_all_playlists(token, ranking_tracks):
 
     user_id = _get_user_id(token)
     print(f"  👤 Usuário: {user_id}")
+
+    # Garantir que todas as playlists do RankingBR são privadas
+    _ensure_playlists_private(token, user_id)
 
     # Agrupar tracks por gênero (multi-gênero: track aparece em todas as playlists)
     genres = {}
