@@ -140,9 +140,9 @@ def sync_genre_playlist(token, playlist_id, new_tracks, max_tracks=101):
     """
     Sincroniza playlist com os tracks do ranking.
 
-    - Tracks do ranking são colocados no topo, na ordem do ranking
-    - Tracks que saíram do ranking permanecem após os do ranking
-    - Se total > max_tracks, remove os excedentes (tracks antigos que saíram)
+    - Playlist reflete exatamente os tracks do ranking atual para o gênero
+    - Tracks que saíram do gênero (por override manual ou mudança) são removidos
+    - Ordem segue o ranking
     """
     # URIs dos novos tracks (ranking atual), filtrar sem spotify_id
     new_uris = []
@@ -151,28 +151,20 @@ def sync_genre_playlist(token, playlist_id, new_tracks, max_tracks=101):
         if sid:
             new_uris.append(f"spotify:track:{sid}")
 
-    # URIs atuais na playlist
-    current_uris = _get_playlist_track_uris(token, playlist_id)
+    # Remover duplicatas mantendo ordem
+    seen = set()
+    final_uris = []
+    for uri in new_uris:
+        if uri not in seen:
+            seen.add(uri)
+            final_uris.append(uri)
 
-    # Tracks antigos que não estão no ranking atual (manter no final)
-    new_uris_set = set(new_uris)
-    old_remaining = [uri for uri in current_uris if uri not in new_uris_set]
-
-    # Montar lista final: ranking no topo + antigos no final
-    final_uris = new_uris + old_remaining
-
-    # Limitar a max_tracks (cortando os antigos mais velhos)
+    # Limitar a max_tracks
     if len(final_uris) > max_tracks:
         final_uris = final_uris[:max_tracks]
 
-    # Remover duplicatas mantendo ordem
-    seen = set()
-    deduped = []
-    for uri in final_uris:
-        if uri not in seen:
-            seen.add(uri)
-            deduped.append(uri)
-    final_uris = deduped
+    # URIs atuais na playlist
+    current_uris = _get_playlist_track_uris(token, playlist_id)
 
     # Se não mudou nada, skip
     if final_uris == current_uris:
