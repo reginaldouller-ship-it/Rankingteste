@@ -117,6 +117,10 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
         while url:
             data = spotify_get(url, token)
             for t in data.get("items", []):
+                # Só inclui faixas onde o artista é performer
+                track_artist_ids = [a["id"] for a in t.get("artists", [])]
+                if spotify_artist_id not in track_artist_ids:
+                    continue
                 if t["id"] not in album_track_map:
                     album_track_map[t["id"]] = {
                         "album_name": album["name"],
@@ -137,14 +141,23 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
             if t:
                 pop_map[t["id"]] = t
 
-    # 4. Deduplicate by name (keep highest popularity)
+    # 4. Deduplicate by name+duration (keep highest popularity)
     name_map = {}
     for track_id in all_track_ids:
         full = pop_map.get(track_id)
         if not full:
             continue
         album_info = album_track_map[track_id]
-        key = full["name"].lower().strip()
+        duration = full.get("duration_ms", 0)
+        # Chave: nome + duração (tolerância de 2s) para diferenciar versões distintas
+        rounded_dur = round(duration / 2000)
+        key = (full["name"].lower().strip(), rounded_dur)
+
+        # Detectar feat: artista principal não é o primeiro listado
+        track_artist_ids = [a["id"] for a in full.get("artists", [])]
+        track_artist_names = [a["name"] for a in full.get("artists", [])]
+        is_featured = len(track_artist_ids) > 1 and track_artist_ids[0] != spotify_artist_id
+
         existing = name_map.get(key)
         if not existing or full.get("popularity", 0) > existing["popularity"]:
             name_map[key] = {
@@ -156,7 +169,9 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
                 "release_date": album_info["release_date"],
                 "popularity": full.get("popularity", 0),
                 "spotify_url": full.get("external_urls", {}).get("spotify", ""),
-                "duration_ms": full.get("duration_ms", 0),
+                "duration_ms": duration,
+                "is_featured": is_featured,
+                "track_artists": track_artist_names,
             }
 
     tracks = sorted(name_map.values(), key=lambda t: -t["popularity"])
@@ -166,6 +181,10 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
 def sync_artist(artist_name, spotify_artist_id, token):
     """Sync a single artist's discography to Supabase."""
     tracks = fetch_artist_discography(artist_name, spotify_artist_id, token)
+
+    if not tracks:
+        print(f"  ⚠️  {artist_name}: 0 tracks retornadas, pulando para não apagar dados")
+        return 0
 
     # Delete old tracks
     sb_delete(f"artist_tracks?artist_name=eq.{requests.utils.quote(artist_name)}")
