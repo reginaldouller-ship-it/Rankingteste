@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-07T18:03:30.303796+00:00",
+  "generated_at": "2026-04-07T19:38:33.957943+00:00",
   "week_label": "Semana 27/03 — 02/04/2026",
   "week_end_date": "2026-04-02",
   "tracks": [
@@ -23,9 +23,12 @@
       "in_both": true,
       "total_streams": 15325558,
       "rank": 1,
-      "prev_rank": 3,
-      "trend": "up:2",
+      "prev_rank": 1,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273602f97feddd13e75029f2b8f",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -48,9 +51,12 @@
       "in_both": true,
       "total_streams": 15150835,
       "rank": 2,
-      "prev_rank": 1,
-      "trend": "down:1",
+      "prev_rank": 2,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27351b22c9a616f49cb2e881f45",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -71,9 +77,12 @@
       "in_both": true,
       "total_streams": 14673645,
       "rank": 3,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 3,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735c67607fd2c208c66670703e",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -93,9 +102,12 @@
       "in_both": true,
       "total_streams": 13083129,
       "rank": 4,
-      "prev_rank": 2,
-      "trend": "down:2",
+      "prev_rank": 4,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273db856c80b9caed8d46a37436",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -117,9 +129,12 @@
       "in_both": true,
       "total_streams": 11986988,
       "rank": 5,
-      "prev_rank": 6,
-      "trend": "up:1",
+      "prev_rank": 5,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -137,9 +152,12 @@
       "in_both": true,
       "total_streams": 11315725,
       "rank": 6,
-      "prev_rank": 4,
-      "trend": "down:2",
+      "prev_rank": 6,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -158,9 +176,12 @@
       "in_both": true,
       "total_streams": 9343826,
       "rank": 7,
-      "prev_rank": 8,
-      "trend": "up:1",
+      "prev_rank": 7,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733eb9bb75e0b5472777ba0291",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -182,9 +203,12 @@
       "in_both": true,
       "total_streams": 9086443,
       "rank": 8,
-      "prev_rank": 9,
-      "trend": "up:1",
+      "prev_rank": 8,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273bb2624be0c78ed088dd4d237",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -203,9 +227,12 @@
       "in_both": true,
       "total_streams": 8764444,
       "rank": 9,
-      "prev_rank": 7,
-      "trend": "down:2",
+      "prev_rank": 9,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ae0147d756dbb8f2f90d1d28",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -224,9 +251,12 @@
       "in_both": true,
       "total_streams": 8674666,
       "rank": 10,
-      "prev_rank": 14,
-      "trend": "up:4",
+      "prev_rank": 10,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -244,9 +274,12 @@
       "in_both": true,
       "total_streams": 8312545,
       "rank": 11,
-      "prev_rank": 10,
-      "trend": "down:1",
+      "prev_rank": 11,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273781def2b7594a2cd1bf123b7",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -267,9 +300,12 @@
       "in_both": true,
       "total_streams": 7386661,
       "rank": 12,
-      "prev_rank": 16,
-      "trend": "up:4",
+      "prev_rank": 12,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739977a75e107f54d30e904177",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -291,9 +327,12 @@
       "in_both": true,
       "total_streams": 7306638,
       "rank": 13,
-      "prev_rank": 11,
-      "trend": "down:2",
+      "prev_rank": 13,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273cb98f69e53e890fd816e81f2",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -317,9 +356,12 @@
       "in_both": true,
       "total_streams": 6929098,
       "rank": 14,
-      "prev_rank": 12,
-      "trend": "down:2",
+      "prev_rank": 14,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730750f26afb87085bb279339e",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -338,9 +380,12 @@
       "in_both": true,
       "total_streams": 6861524,
       "rank": 15,
-      "prev_rank": 17,
-      "trend": "up:2",
+      "prev_rank": 15,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c89ff3434d85f33354c929b8",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -368,9 +413,12 @@
       "in_both": true,
       "total_streams": 6826791,
       "rank": 16,
-      "prev_rank": 42,
-      "trend": "up:26",
+      "prev_rank": 16,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273459936b34c47a0d6ba53b0ac",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -391,9 +439,12 @@
       "in_both": true,
       "total_streams": 6530619,
       "rank": 17,
-      "prev_rank": 18,
-      "trend": "up:1",
+      "prev_rank": 17,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ece7d3536bfbace45e8093d3",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -413,9 +464,12 @@
       "in_both": true,
       "total_streams": 6376176,
       "rank": 18,
-      "prev_rank": 21,
-      "trend": "up:3",
+      "prev_rank": 18,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730f9cfb57a699f3d2db9b5541",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -433,9 +487,12 @@
       "in_both": true,
       "total_streams": 5978515,
       "rank": 19,
-      "prev_rank": 28,
-      "trend": "up:9",
+      "prev_rank": 19,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f678dfce3405c8d2f786b73f",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -463,6 +520,9 @@
       "prev_rank": 20,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e527f3feda78b6dfec7be109",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -480,9 +540,12 @@
       "in_both": true,
       "total_streams": 5594361,
       "rank": 21,
-      "prev_rank": 35,
-      "trend": "up:14",
+      "prev_rank": 21,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273cbdde8a138debae4178aaaa4",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -503,9 +566,12 @@
       "in_both": true,
       "total_streams": 5592980,
       "rank": 22,
-      "prev_rank": 211,
-      "trend": "up:189",
+      "prev_rank": 22,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731381f350c5f7f620ee69a622",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -523,9 +589,12 @@
       "in_both": true,
       "total_streams": 5577116,
       "rank": 23,
-      "prev_rank": 27,
-      "trend": "up:4",
+      "prev_rank": 23,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273aedf2bb1081cd9f3e9fe985c",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -543,9 +612,12 @@
       "in_both": true,
       "total_streams": 5523972,
       "rank": 24,
-      "prev_rank": 13,
-      "trend": "down:11",
+      "prev_rank": 24,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -563,9 +635,12 @@
       "in_both": true,
       "total_streams": 5499958,
       "rank": 25,
-      "prev_rank": 15,
-      "trend": "down:10",
+      "prev_rank": 25,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -583,9 +658,12 @@
       "in_both": true,
       "total_streams": 5189982,
       "rank": 26,
-      "prev_rank": null,
-      "trend": "return",
+      "prev_rank": 26,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273cb9206020cf3699906b706d5",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -603,9 +681,12 @@
       "in_both": true,
       "total_streams": 5163400,
       "rank": 27,
-      "prev_rank": 22,
-      "trend": "down:5",
+      "prev_rank": 27,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e6a840b4d13f30e3e8e1c9b9",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -623,9 +704,12 @@
       "in_both": true,
       "total_streams": 5104990,
       "rank": 28,
-      "prev_rank": 26,
-      "trend": "down:2",
+      "prev_rank": 28,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732352886a6fab375db431d2a7",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -651,9 +735,12 @@
       "in_both": true,
       "total_streams": 4881817,
       "rank": 29,
-      "prev_rank": 33,
-      "trend": "up:4",
+      "prev_rank": 29,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739af91331280cf2dfb0eab351",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -672,9 +759,12 @@
       "in_both": true,
       "total_streams": 4753454,
       "rank": 30,
-      "prev_rank": 56,
-      "trend": "up:26",
+      "prev_rank": 30,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2734946f8697aac744aaee731e6",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -692,9 +782,12 @@
       "in_both": true,
       "total_streams": 4719215,
       "rank": 31,
-      "prev_rank": 29,
-      "trend": "down:2",
+      "prev_rank": 31,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273816b8305390fbbc649b9a49b",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -712,9 +805,12 @@
       "in_both": true,
       "total_streams": 4617696,
       "rank": 32,
-      "prev_rank": 24,
-      "trend": "down:8",
+      "prev_rank": 32,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27333bdafcafccf5df6fc2bb9d7",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -734,9 +830,12 @@
       "in_both": true,
       "total_streams": 4259696,
       "rank": 33,
-      "prev_rank": 41,
-      "trend": "up:8",
+      "prev_rank": 33,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273bde3897aae673f657b6a622a",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -756,9 +855,12 @@
       "in_both": true,
       "total_streams": 4170537,
       "rank": 34,
-      "prev_rank": 43,
-      "trend": "up:9",
+      "prev_rank": 34,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27341f166032f17817683c63acb",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -777,9 +879,12 @@
       "in_both": true,
       "total_streams": 4167667,
       "rank": 35,
-      "prev_rank": 36,
-      "trend": "up:1",
+      "prev_rank": 35,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2734dee64ae7ed8d46b9406a3c5",
+      "_genres": [
+        "Trap"
+      ],
       "genre": "Trap"
     },
     {
@@ -806,9 +911,12 @@
       "in_both": true,
       "total_streams": 4100150,
       "rank": 36,
-      "prev_rank": 39,
-      "trend": "up:3",
+      "prev_rank": 36,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -826,9 +934,12 @@
       "in_both": false,
       "total_streams": 4018253,
       "rank": 37,
-      "prev_rank": 19,
-      "trend": "down:18",
+      "prev_rank": 37,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -846,9 +957,12 @@
       "in_both": false,
       "total_streams": 3925183,
       "rank": 38,
-      "prev_rank": 51,
-      "trend": "up:13",
+      "prev_rank": 38,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732774b00531d558bc19e12a24",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -867,10 +981,14 @@
       "in_both": true,
       "total_streams": 3915681,
       "rank": 39,
-      "prev_rank": 38,
-      "trend": "down:1",
+      "prev_rank": 39,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ffcea6aa61b3e4aea9ff120c",
-      "genre": "outros"
+      "_genres": [
+        "Funk",
+        "outros"
+      ],
+      "genre": "Funk"
     },
     {
       "artist": "Natanzinho Lima",
@@ -887,9 +1005,12 @@
       "in_both": true,
       "total_streams": 3908395,
       "rank": 40,
-      "prev_rank": 49,
-      "trend": "up:9",
+      "prev_rank": 40,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27328b80175c461ea4df3b9212a",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -912,9 +1033,12 @@
       "in_both": true,
       "total_streams": 3811515,
       "rank": 41,
-      "prev_rank": 25,
-      "trend": "down:16",
+      "prev_rank": 41,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -935,10 +1059,14 @@
       "in_both": true,
       "total_streams": 3715411,
       "rank": 42,
-      "prev_rank": 46,
-      "trend": "up:4",
+      "prev_rank": 42,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735729faf96431459c2750896f",
-      "genre": "Trap"
+      "_genres": [
+        "Rap",
+        "Trap"
+      ],
+      "genre": "Rap"
     },
     {
       "artist": "Mc Iguinho Ct",
@@ -965,9 +1093,12 @@
       "in_both": true,
       "total_streams": 3683436,
       "rank": 43,
-      "prev_rank": 44,
-      "trend": "up:1",
+      "prev_rank": 43,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27323a6f949748bea5edfe1d91d",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -987,9 +1118,13 @@
       "in_both": true,
       "total_streams": 3649013,
       "rank": 44,
-      "prev_rank": 53,
-      "trend": "up:9",
+      "prev_rank": 44,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f8fc839361eacee6af4af11a",
+      "_genres": [
+        "Rap",
+        "Trap"
+      ],
       "genre": "Rap"
     },
     {
@@ -1007,9 +1142,12 @@
       "in_both": false,
       "total_streams": 3636092,
       "rank": 45,
-      "prev_rank": 47,
-      "trend": "up:2",
+      "prev_rank": 45,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1027,9 +1165,12 @@
       "in_both": false,
       "total_streams": 3622453,
       "rank": 46,
-      "prev_rank": 48,
-      "trend": "up:2",
+      "prev_rank": 46,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c7b2b714340ce4e69cabefb5",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1047,9 +1188,12 @@
       "in_both": false,
       "total_streams": 3547820,
       "rank": 47,
-      "prev_rank": 105,
-      "trend": "up:58",
+      "prev_rank": 47,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e7082d6929965c0820542807",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -1067,9 +1211,12 @@
       "in_both": false,
       "total_streams": 3470253,
       "rank": 48,
-      "prev_rank": 32,
-      "trend": "down:16",
+      "prev_rank": 48,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1088,9 +1235,12 @@
       "in_both": false,
       "total_streams": 3469066,
       "rank": 49,
-      "prev_rank": 57,
-      "trend": "up:8",
+      "prev_rank": 49,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737123a50231e233b0e169450e",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1109,9 +1259,12 @@
       "in_both": false,
       "total_streams": 3444705,
       "rank": 50,
-      "prev_rank": 63,
-      "trend": "up:13",
+      "prev_rank": 50,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273118ee259740a273083255f75",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -1129,9 +1282,12 @@
       "in_both": true,
       "total_streams": 3399544,
       "rank": 51,
-      "prev_rank": 61,
-      "trend": "up:10",
+      "prev_rank": 51,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dee23f5771e3d55c5f41278c",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1149,9 +1305,12 @@
       "in_both": false,
       "total_streams": 3391522,
       "rank": 52,
-      "prev_rank": 31,
-      "trend": "down:21",
+      "prev_rank": 52,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1169,9 +1328,12 @@
       "in_both": false,
       "total_streams": 3373712,
       "rank": 53,
-      "prev_rank": 30,
-      "trend": "down:23",
+      "prev_rank": 53,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1189,9 +1351,12 @@
       "in_both": false,
       "total_streams": 3359067,
       "rank": 54,
-      "prev_rank": 34,
-      "trend": "down:20",
+      "prev_rank": 54,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1210,9 +1375,12 @@
       "in_both": true,
       "total_streams": 3292060,
       "rank": 55,
-      "prev_rank": 45,
-      "trend": "down:10",
+      "prev_rank": 55,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731f3b2b4bb290416356f63434",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -1230,9 +1398,12 @@
       "in_both": true,
       "total_streams": 3285054,
       "rank": 56,
-      "prev_rank": 62,
-      "trend": "up:6",
+      "prev_rank": 56,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273986844db25ce9aea2267e3ae",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -1250,9 +1421,12 @@
       "in_both": false,
       "total_streams": 3284431,
       "rank": 57,
-      "prev_rank": 37,
-      "trend": "down:20",
+      "prev_rank": 57,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1270,9 +1444,12 @@
       "in_both": false,
       "total_streams": 3224857,
       "rank": 58,
-      "prev_rank": 60,
-      "trend": "up:2",
+      "prev_rank": 58,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732a782c4b71f69b28a3b8d355",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1291,9 +1468,12 @@
       "in_both": false,
       "total_streams": 3176470,
       "rank": 59,
-      "prev_rank": 66,
-      "trend": "up:7",
+      "prev_rank": 59,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b6e7e3c36da82692dca0217f",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1311,9 +1491,12 @@
       "in_both": true,
       "total_streams": 3145939,
       "rank": 60,
-      "prev_rank": 58,
-      "trend": "down:2",
+      "prev_rank": 60,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b1863bf95557ea7f357c4947",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1331,9 +1514,12 @@
       "in_both": false,
       "total_streams": 3039139,
       "rank": 61,
-      "prev_rank": 40,
-      "trend": "down:21",
+      "prev_rank": 61,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1353,9 +1539,12 @@
       "in_both": false,
       "total_streams": 3011032,
       "rank": 62,
-      "prev_rank": 65,
-      "trend": "up:3",
+      "prev_rank": 62,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27325bbba1d86fca54672a86c5b",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1374,9 +1563,12 @@
       "in_both": false,
       "total_streams": 2902433,
       "rank": 63,
-      "prev_rank": 68,
-      "trend": "up:5",
+      "prev_rank": 63,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27347955b951c6a89e1e5a6777a",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -1394,9 +1586,12 @@
       "in_both": false,
       "total_streams": 2859899,
       "rank": 64,
-      "prev_rank": 71,
-      "trend": "up:7",
+      "prev_rank": 64,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b21bebf4df8085accf3bd88c",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1414,9 +1609,12 @@
       "in_both": false,
       "total_streams": 2851972,
       "rank": 65,
-      "prev_rank": 86,
-      "trend": "up:21",
+      "prev_rank": 65,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737b1b6f41c1645af9757d5616",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1434,9 +1632,12 @@
       "in_both": false,
       "total_streams": 2824276,
       "rank": 66,
-      "prev_rank": 50,
-      "trend": "down:16",
+      "prev_rank": 66,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1455,9 +1656,12 @@
       "in_both": false,
       "total_streams": 2821675,
       "rank": 67,
-      "prev_rank": 76,
-      "trend": "up:9",
+      "prev_rank": 67,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27395615fab0b775890670668ee",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -1475,9 +1679,12 @@
       "in_both": false,
       "total_streams": 2817050,
       "rank": 68,
-      "prev_rank": null,
-      "trend": "return",
+      "prev_rank": 68,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27372cc126653816fa4474dad8c",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1495,9 +1702,12 @@
       "in_both": false,
       "total_streams": 2778198,
       "rank": 69,
-      "prev_rank": 52,
-      "trend": "down:17",
+      "prev_rank": 69,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1516,9 +1726,12 @@
       "in_both": true,
       "total_streams": 2745467,
       "rank": 70,
-      "prev_rank": 67,
-      "trend": "down:3",
+      "prev_rank": 70,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273819cfce6a65f58d4ad29bed3",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1536,9 +1749,12 @@
       "in_both": true,
       "total_streams": 2743644,
       "rank": 71,
-      "prev_rank": 77,
-      "trend": "up:6",
+      "prev_rank": 71,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27321ebf49b3292c3f0f575f0f5",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1557,9 +1773,12 @@
       "in_both": false,
       "total_streams": 2742707,
       "rank": 72,
-      "prev_rank": 70,
-      "trend": "down:2",
+      "prev_rank": 72,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273528a05e536843c12583b60b7",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1577,9 +1796,12 @@
       "in_both": false,
       "total_streams": 2717812,
       "rank": 73,
-      "prev_rank": 89,
-      "trend": "up:16",
+      "prev_rank": 73,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730d5f00c853be5debb5eba851",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1598,9 +1820,12 @@
       "in_both": false,
       "total_streams": 2697915,
       "rank": 74,
-      "prev_rank": 79,
-      "trend": "up:5",
+      "prev_rank": 74,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f7bd4008ce03446119f4b9a2",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -1619,9 +1844,12 @@
       "in_both": true,
       "total_streams": 2686296,
       "rank": 75,
-      "prev_rank": 195,
-      "trend": "up:120",
+      "prev_rank": 75,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27353011fef9c8dabe454bf865d",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1639,9 +1867,12 @@
       "in_both": false,
       "total_streams": 2664942,
       "rank": 76,
-      "prev_rank": 88,
-      "trend": "up:12",
+      "prev_rank": 76,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27339ccc143fa0c800fd90cdf48",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1659,9 +1890,12 @@
       "in_both": true,
       "total_streams": 2638771,
       "rank": 77,
-      "prev_rank": 81,
-      "trend": "up:4",
+      "prev_rank": 77,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ba22c87c3148dce9c95ad7bb",
+      "_genres": [
+        "Reggae"
+      ],
       "genre": "Reggae"
     },
     {
@@ -1679,9 +1913,12 @@
       "in_both": false,
       "total_streams": 2631435,
       "rank": 78,
-      "prev_rank": 59,
-      "trend": "down:19",
+      "prev_rank": 78,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1699,9 +1936,12 @@
       "in_both": true,
       "total_streams": 2625633,
       "rank": 79,
-      "prev_rank": 78,
-      "trend": "down:1",
+      "prev_rank": 79,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737ae4d78852e406eff2f4eef6",
+      "_genres": [
+        "Pop"
+      ],
       "genre": "Pop"
     },
     {
@@ -1719,9 +1959,12 @@
       "in_both": false,
       "total_streams": 2596219,
       "rank": 80,
-      "prev_rank": 69,
-      "trend": "down:11",
+      "prev_rank": 80,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731063e4a2b6e169864183b897",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1739,9 +1982,12 @@
       "in_both": false,
       "total_streams": 2581874,
       "rank": 81,
-      "prev_rank": 55,
-      "trend": "down:26",
+      "prev_rank": 81,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dfa17fad7f190c901603270e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1759,9 +2005,12 @@
       "in_both": false,
       "total_streams": 2523045,
       "rank": 82,
-      "prev_rank": 80,
-      "trend": "down:2",
+      "prev_rank": 82,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735645e61562deebdda78755b6",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -1783,6 +2032,9 @@
       "prev_rank": 83,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273525edab604386ce3fce89cc5",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1800,9 +2052,12 @@
       "in_both": false,
       "total_streams": 2507085,
       "rank": 84,
-      "prev_rank": 93,
-      "trend": "up:9",
+      "prev_rank": 84,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732774b00531d558bc19e12a24",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1820,10 +2075,13 @@
       "in_both": false,
       "total_streams": 2490723,
       "rank": 85,
-      "prev_rank": 103,
-      "trend": "up:18",
+      "prev_rank": 85,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739560e4efca631010f9667951",
-      "genre": "Funk"
+      "_genres": [
+        "Trap"
+      ],
+      "genre": "Trap"
     },
     {
       "artist": "Netto Brito",
@@ -1840,9 +2098,12 @@
       "in_both": false,
       "total_streams": 2404078,
       "rank": 86,
-      "prev_rank": 74,
-      "trend": "down:12",
+      "prev_rank": 86,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731ee8fd36c1896eaa5c3a4d4a",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -1861,9 +2122,12 @@
       "in_both": true,
       "total_streams": 2348417,
       "rank": 87,
-      "prev_rank": 90,
-      "trend": "up:3",
+      "prev_rank": 87,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273253f9d582bd52ce3797f0f16",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -1883,10 +2147,14 @@
       "in_both": false,
       "total_streams": 2337076,
       "rank": 88,
-      "prev_rank": 82,
-      "trend": "down:6",
+      "prev_rank": 88,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273fbbcdc1d9d247f1ee19c524a",
-      "genre": "Sertanejo"
+      "_genres": [
+        "Funk",
+        "Sertanejo"
+      ],
+      "genre": "Funk"
     },
     {
       "artist": "Dave",
@@ -1904,9 +2172,12 @@
       "in_both": true,
       "total_streams": 2328093,
       "rank": 89,
-      "prev_rank": 230,
-      "trend": "up:141",
+      "prev_rank": 89,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273fecaa7826bb0cbe139a8cb83",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1924,9 +2195,12 @@
       "in_both": true,
       "total_streams": 2320446,
       "rank": 90,
-      "prev_rank": 192,
-      "trend": "up:102",
+      "prev_rank": 90,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273eda9478c39a21e1cdc6609ca",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -1944,9 +2218,12 @@
       "in_both": false,
       "total_streams": 2307087,
       "rank": 91,
-      "prev_rank": null,
-      "trend": "return",
+      "prev_rank": 91,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2734453a73d31d7a3fd8a23e0c9",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1965,9 +2242,12 @@
       "in_both": false,
       "total_streams": 2298426,
       "rank": 92,
-      "prev_rank": 99,
-      "trend": "up:7",
+      "prev_rank": 92,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273895043849e01b7e582a1343f",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -1986,9 +2266,12 @@
       "in_both": false,
       "total_streams": 2251194,
       "rank": 93,
-      "prev_rank": 96,
-      "trend": "up:3",
+      "prev_rank": 93,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739276a996605bd1a9fcdd1563",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -2006,9 +2289,12 @@
       "in_both": false,
       "total_streams": 2202678,
       "rank": 94,
-      "prev_rank": 85,
-      "trend": "down:9",
+      "prev_rank": 94,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737bff89cf90806ae22a6b72df",
+      "_genres": [
+        "Phonk"
+      ],
       "genre": "Phonk"
     },
     {
@@ -2017,8 +2303,8 @@
         "Natanzinho Lima"
       ],
       "title": "Me Apaixonei Nessa Morena (Ao Vivo)",
-      "spotify_url": "https://open.spotify.com/track/7xcDd2JxnJtO87QQr8uY0O",
-      "spotify_id": "7xcDd2JxnJtO87QQr8uY0O",
+      "spotify_url": "https://open.spotify.com/track/2VHPApYzm74egFMmFTLXhk",
+      "spotify_id": "2VHPApYzm74egFMmFTLXhk",
       "pos_spotify": null,
       "streams_spotify": 0,
       "pos_youtube": 34,
@@ -2028,7 +2314,10 @@
       "rank": 95,
       "prev_rank": 95,
       "trend": "same",
-      "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735074cd430e45c5cc5ee170d1",
+      "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737e0db9d9dc3f6e3fce3793c4",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -2046,9 +2335,12 @@
       "in_both": false,
       "total_streams": 2157160,
       "rank": 96,
-      "prev_rank": 97,
-      "trend": "up:1",
+      "prev_rank": 96,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a5bfe6c52b161313c64805b0",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -2067,9 +2359,12 @@
       "in_both": false,
       "total_streams": 2144885,
       "rank": 97,
-      "prev_rank": 101,
-      "trend": "up:4",
+      "prev_rank": 97,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d414884237372b01fa29bca7",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2088,9 +2383,12 @@
       "in_both": false,
       "total_streams": 2137213,
       "rank": 98,
-      "prev_rank": 140,
-      "trend": "up:42",
+      "prev_rank": 98,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273aef93f26690acf0bb34d1111",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2108,9 +2406,12 @@
       "in_both": false,
       "total_streams": 2069721,
       "rank": 99,
-      "prev_rank": 109,
-      "trend": "up:10",
+      "prev_rank": 99,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737ea581f6963d14d477207234",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2128,9 +2429,12 @@
       "in_both": false,
       "total_streams": 2067384,
       "rank": 100,
-      "prev_rank": 106,
-      "trend": "up:6",
+      "prev_rank": 100,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2736871f3c5c8238f18a9ba88f7",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2148,9 +2452,12 @@
       "in_both": false,
       "total_streams": 2057475,
       "rank": 101,
-      "prev_rank": 98,
-      "trend": "down:3",
+      "prev_rank": 101,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2736cfbba7f8998e20d090ead91",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -2168,9 +2475,13 @@
       "in_both": false,
       "total_streams": 2022905,
       "rank": 102,
-      "prev_rank": 104,
-      "trend": "up:2",
+      "prev_rank": 102,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a602766a53a1827a4b5ed315",
+      "_genres": [
+        "Rap",
+        "Trap"
+      ],
       "genre": "Rap"
     },
     {
@@ -2189,9 +2500,12 @@
       "in_both": false,
       "total_streams": 2017706,
       "rank": 103,
-      "prev_rank": 102,
-      "trend": "down:1",
+      "prev_rank": 103,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273eba409657c9ae5d8e1c821d6",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2209,9 +2523,12 @@
       "in_both": false,
       "total_streams": 1975306,
       "rank": 104,
-      "prev_rank": 111,
-      "trend": "up:7",
+      "prev_rank": 104,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27311cbd3e8bf276fff7884f38f",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -2231,9 +2548,12 @@
       "in_both": false,
       "total_streams": 1961420,
       "rank": 105,
-      "prev_rank": 107,
-      "trend": "up:2",
+      "prev_rank": 105,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a9a95c2c1cdf65c0225be992",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2251,9 +2571,12 @@
       "in_both": false,
       "total_streams": 1958346,
       "rank": 106,
-      "prev_rank": 100,
-      "trend": "down:6",
+      "prev_rank": 106,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733effc31cd0331026b14a8d37",
+      "_genres": [
+        "outros"
+      ],
       "genre": "outros"
     },
     {
@@ -2272,9 +2595,12 @@
       "in_both": false,
       "total_streams": 1939697,
       "rank": 107,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 107,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f13a6db4ec8bfbf64ab21acc",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2292,9 +2618,12 @@
       "in_both": false,
       "total_streams": 1927380,
       "rank": 108,
-      "prev_rank": 110,
-      "trend": "up:2",
+      "prev_rank": 108,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273deb164b57dd85d716ba3f252",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2313,9 +2642,12 @@
       "in_both": false,
       "total_streams": 1924978,
       "rank": 109,
-      "prev_rank": 141,
-      "trend": "up:32",
+      "prev_rank": 109,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730bbc0f9c2c078ad5570bcf79",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2333,9 +2665,12 @@
       "in_both": false,
       "total_streams": 1916045,
       "rank": 110,
-      "prev_rank": 121,
-      "trend": "up:11",
+      "prev_rank": 110,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ea190554a8e581839a4d00fa",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2353,9 +2688,12 @@
       "in_both": false,
       "total_streams": 1914657,
       "rank": 111,
-      "prev_rank": 108,
-      "trend": "down:3",
+      "prev_rank": 111,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f6963058335b04664d89f1d4",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2373,9 +2711,12 @@
       "in_both": false,
       "total_streams": 1903780,
       "rank": 112,
-      "prev_rank": 234,
-      "trend": "up:122",
+      "prev_rank": 112,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273307d3b80a559a3d1f27d2a86",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -2393,9 +2734,12 @@
       "in_both": false,
       "total_streams": 1900817,
       "rank": 113,
-      "prev_rank": 64,
-      "trend": "down:49",
+      "prev_rank": 113,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27373d9eb145f621516f94ab0ab",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -2413,9 +2757,12 @@
       "in_both": false,
       "total_streams": 1839049,
       "rank": 114,
-      "prev_rank": 112,
-      "trend": "down:2",
+      "prev_rank": 114,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27369cc45de495077f7ac286a86",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2438,9 +2785,12 @@
       "in_both": false,
       "total_streams": 1819334,
       "rank": 115,
-      "prev_rank": 117,
-      "trend": "up:2",
+      "prev_rank": 115,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27314564c5d5987242d4bc3b41a",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2458,9 +2808,12 @@
       "in_both": false,
       "total_streams": 1800428,
       "rank": 116,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 116,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ba323f9a5e6a954eb54884bf",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2479,9 +2832,12 @@
       "in_both": false,
       "total_streams": 1798049,
       "rank": 117,
-      "prev_rank": 118,
-      "trend": "up:1",
+      "prev_rank": 117,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b5e7fe6b4a828f62157e5942",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2500,10 +2856,14 @@
       "in_both": false,
       "total_streams": 1795249,
       "rank": 118,
-      "prev_rank": 87,
-      "trend": "down:31",
+      "prev_rank": 118,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273eb54fbe81238f37e986477f1",
-      "genre": "Sertanejo"
+      "_genres": [
+        "Pagode",
+        "Sertanejo"
+      ],
+      "genre": "Pagode"
     },
     {
       "artist": "Danado do Recife",
@@ -2520,9 +2880,12 @@
       "in_both": false,
       "total_streams": 1749085,
       "rank": 119,
-      "prev_rank": 145,
-      "trend": "up:26",
+      "prev_rank": 119,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27318ee1e73dd692f2eafc1fd74",
+      "_genres": [
+        "Brega Funk"
+      ],
       "genre": "Brega Funk"
     },
     {
@@ -2540,9 +2903,12 @@
       "in_both": false,
       "total_streams": 1732277,
       "rank": 120,
-      "prev_rank": 122,
-      "trend": "up:2",
+      "prev_rank": 120,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731eb5e996639036a49b09f1e5",
+      "_genres": [
+        "MPB"
+      ],
       "genre": "MPB"
     },
     {
@@ -2561,9 +2927,12 @@
       "in_both": false,
       "total_streams": 1727142,
       "rank": 121,
-      "prev_rank": 130,
-      "trend": "up:9",
+      "prev_rank": 121,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c77d5744a4cf572db8b9ce82",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2582,9 +2951,12 @@
       "in_both": false,
       "total_streams": 1725108,
       "rank": 122,
-      "prev_rank": 115,
-      "trend": "down:7",
+      "prev_rank": 122,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273637ad44baf5a31702471cdde",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2602,9 +2974,12 @@
       "in_both": false,
       "total_streams": 1718557,
       "rank": 123,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 123,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d8b8208b2a82af143adcc0bf",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -2622,9 +2997,12 @@
       "in_both": false,
       "total_streams": 1713120,
       "rank": 124,
-      "prev_rank": 129,
-      "trend": "up:5",
+      "prev_rank": 124,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737b5223a3668f9768ffd1fb90",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -2644,9 +3022,12 @@
       "in_both": false,
       "total_streams": 1707473,
       "rank": 125,
-      "prev_rank": 73,
-      "trend": "down:52",
+      "prev_rank": 125,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f92f8fff9e2e5fe2c68fbe41",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2664,9 +3045,12 @@
       "in_both": false,
       "total_streams": 1681917,
       "rank": 126,
-      "prev_rank": 143,
-      "trend": "up:17",
+      "prev_rank": 126,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732774b00531d558bc19e12a24",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2687,9 +3071,12 @@
       "in_both": false,
       "total_streams": 1670241,
       "rank": 127,
-      "prev_rank": 120,
-      "trend": "down:7",
+      "prev_rank": 127,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27352ae193e416c6c9d974aa11a",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2707,9 +3094,13 @@
       "in_both": false,
       "total_streams": 1664574,
       "rank": 128,
-      "prev_rank": 91,
-      "trend": "down:37",
+      "prev_rank": 128,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d29499a3340df1fb8cf58119",
+      "_genres": [
+        "Funk",
+        "Pop"
+      ],
       "genre": "Funk"
     },
     {
@@ -2728,9 +3119,12 @@
       "in_both": false,
       "total_streams": 1654277,
       "rank": 129,
-      "prev_rank": 142,
-      "trend": "up:13",
+      "prev_rank": 129,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27309b716849855b3040d457dfa",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -2748,9 +3142,12 @@
       "in_both": false,
       "total_streams": 1637464,
       "rank": 130,
-      "prev_rank": 228,
-      "trend": "up:98",
+      "prev_rank": 130,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2738271dbeea8f10d929ba5f930",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -2768,9 +3165,12 @@
       "in_both": false,
       "total_streams": 1630483,
       "rank": 131,
-      "prev_rank": 150,
-      "trend": "up:19",
+      "prev_rank": 131,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27399c540c0f78793fcea84a920",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2788,9 +3188,12 @@
       "in_both": false,
       "total_streams": 1629796,
       "rank": 132,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 132,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b335fa375ab39cf2bee69850",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2808,9 +3211,12 @@
       "in_both": false,
       "total_streams": 1627879,
       "rank": 133,
-      "prev_rank": 132,
-      "trend": "down:1",
+      "prev_rank": 133,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d7812467811a7da6e6a44902",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -2829,9 +3235,12 @@
       "in_both": false,
       "total_streams": 1618234,
       "rank": 134,
-      "prev_rank": 119,
-      "trend": "down:15",
+      "prev_rank": 134,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733cd9d90704e7851e5e87cc4f",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2857,9 +3266,12 @@
       "in_both": false,
       "total_streams": 1608873,
       "rank": 135,
-      "prev_rank": 123,
-      "trend": "down:12",
+      "prev_rank": 135,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739feb75257028a22d90f18489",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2877,9 +3289,12 @@
       "in_both": false,
       "total_streams": 1604131,
       "rank": 136,
-      "prev_rank": 165,
-      "trend": "up:29",
+      "prev_rank": 136,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735eba99fd76c96ae206756326",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -2899,9 +3314,12 @@
       "in_both": false,
       "total_streams": 1583031,
       "rank": 137,
-      "prev_rank": 125,
-      "trend": "down:12",
+      "prev_rank": 137,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e8481b5a9a1fe54db2277018",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -2921,9 +3339,12 @@
       "in_both": false,
       "total_streams": 1577381,
       "rank": 138,
-      "prev_rank": 139,
-      "trend": "up:1",
+      "prev_rank": 138,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273327481999129daa293cd68b9",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -2941,9 +3362,12 @@
       "in_both": false,
       "total_streams": 1572180,
       "rank": 139,
-      "prev_rank": 133,
-      "trend": "down:6",
+      "prev_rank": 139,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739ecec60f76ad6f8cc67c7e93",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -2962,9 +3386,12 @@
       "in_both": false,
       "total_streams": 1563510,
       "rank": 140,
-      "prev_rank": 137,
-      "trend": "down:3",
+      "prev_rank": 140,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c41e9113accd254115b6f433",
+      "_genres": [
+        "Reggae"
+      ],
       "genre": "Reggae"
     },
     {
@@ -2983,9 +3410,12 @@
       "in_both": false,
       "total_streams": 1561335,
       "rank": 141,
-      "prev_rank": 128,
-      "trend": "down:13",
+      "prev_rank": 141,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27372686b4ebe10115c9faea962",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3006,9 +3436,12 @@
       "in_both": false,
       "total_streams": 1542850,
       "rank": 142,
-      "prev_rank": 127,
-      "trend": "down:15",
+      "prev_rank": 142,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ea190554a8e581839a4d00fa",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3028,9 +3461,12 @@
       "in_both": false,
       "total_streams": 1535832,
       "rank": 143,
-      "prev_rank": 146,
-      "trend": "up:3",
+      "prev_rank": 143,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735b993af014001ebc34578779",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3049,9 +3485,12 @@
       "in_both": false,
       "total_streams": 1529273,
       "rank": 144,
-      "prev_rank": 147,
-      "trend": "up:3",
+      "prev_rank": 144,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273017db730b5c9adf3247b0144",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -3069,9 +3508,12 @@
       "in_both": false,
       "total_streams": 1528269,
       "rank": 145,
-      "prev_rank": 156,
-      "trend": "up:11",
+      "prev_rank": 145,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27316cef1f3aca2e9ae3b0d44b9",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -3089,9 +3531,12 @@
       "in_both": false,
       "total_streams": 1515447,
       "rank": 146,
-      "prev_rank": 124,
-      "trend": "down:22",
+      "prev_rank": 146,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735ed7f22a098f5b612b459e13",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3109,9 +3554,13 @@
       "in_both": false,
       "total_streams": 1515428,
       "rank": 147,
-      "prev_rank": 135,
-      "trend": "down:12",
+      "prev_rank": 147,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f78ea8aae8a360d9def9e819",
+      "_genres": [
+        "Rap",
+        "Trap"
+      ],
       "genre": "Rap"
     },
     {
@@ -3129,9 +3578,12 @@
       "in_both": false,
       "total_streams": 1500401,
       "rank": 148,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 148,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733a5f7c54b4d41d2a6ec6d935",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3149,9 +3601,12 @@
       "in_both": false,
       "total_streams": 1492081,
       "rank": 149,
-      "prev_rank": 136,
-      "trend": "down:13",
+      "prev_rank": 149,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f636a7699a7c45c0845a6da8",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -3171,9 +3626,12 @@
       "in_both": false,
       "total_streams": 1491355,
       "rank": 150,
-      "prev_rank": 153,
-      "trend": "up:3",
+      "prev_rank": 150,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735b3aec5b060c124f3624baaf",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3194,6 +3652,9 @@
       "prev_rank": 151,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730b080d4f0af2da9451318a2b",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3211,9 +3672,12 @@
       "in_both": false,
       "total_streams": 1484600,
       "rank": 152,
-      "prev_rank": 148,
-      "trend": "down:4",
+      "prev_rank": 152,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e085771f4847a0299ca54ebb",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -3231,9 +3695,12 @@
       "in_both": false,
       "total_streams": 1479159,
       "rank": 153,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 153,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273fde6507e83d18f33140512c8",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3251,9 +3718,12 @@
       "in_both": false,
       "total_streams": 1476011,
       "rank": 154,
-      "prev_rank": 203,
-      "trend": "up:49",
+      "prev_rank": 154,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a12711350e19c7f73cb8a636",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -3272,9 +3742,12 @@
       "in_both": false,
       "total_streams": 1472807,
       "rank": 155,
-      "prev_rank": 134,
-      "trend": "down:21",
+      "prev_rank": 155,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2738165d2312f9ea9631b047a7c",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3292,9 +3765,12 @@
       "in_both": false,
       "total_streams": 1460513,
       "rank": 156,
-      "prev_rank": 181,
-      "trend": "up:25",
+      "prev_rank": 156,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273497e68476e7062b1bf5ea83f",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -3312,9 +3788,12 @@
       "in_both": false,
       "total_streams": 1455045,
       "rank": 157,
-      "prev_rank": 178,
-      "trend": "up:21",
+      "prev_rank": 157,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f066003f5c78d52a42bb25b1",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -3332,9 +3811,12 @@
       "in_both": false,
       "total_streams": 1443626,
       "rank": 158,
-      "prev_rank": 168,
-      "trend": "up:10",
+      "prev_rank": 158,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27399c540c0f78793fcea84a920",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3353,9 +3835,12 @@
       "in_both": false,
       "total_streams": 1423866,
       "rank": 159,
-      "prev_rank": 158,
-      "trend": "down:1",
+      "prev_rank": 159,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730016df79925e37aa15afee93",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3373,9 +3858,12 @@
       "in_both": false,
       "total_streams": 1420541,
       "rank": 160,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 160,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b335fa375ab39cf2bee69850",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3393,9 +3881,12 @@
       "in_both": false,
       "total_streams": 1419975,
       "rank": 161,
-      "prev_rank": 184,
-      "trend": "up:23",
+      "prev_rank": 161,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f5b0d511b5c1669f800c88fe",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3413,9 +3904,12 @@
       "in_both": false,
       "total_streams": 1419316,
       "rank": 162,
-      "prev_rank": 237,
-      "trend": "up:75",
+      "prev_rank": 162,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273eaa565cf68d0ffc37aaff9a6",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3434,9 +3928,12 @@
       "in_both": false,
       "total_streams": 1416497,
       "rank": 163,
-      "prev_rank": 173,
-      "trend": "up:10",
+      "prev_rank": 163,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731934ec8e48237e1fe26c866b",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3454,9 +3951,12 @@
       "in_both": false,
       "total_streams": 1415671,
       "rank": 164,
-      "prev_rank": 166,
-      "trend": "up:2",
+      "prev_rank": 164,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273cc8ede763dd33229b1feed9e",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3474,9 +3974,12 @@
       "in_both": false,
       "total_streams": 1408892,
       "rank": 165,
-      "prev_rank": 144,
-      "trend": "down:21",
+      "prev_rank": 165,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27350ff0f63e65c6eac6e7a5b97",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3494,9 +3997,12 @@
       "in_both": false,
       "total_streams": 1408208,
       "rank": 166,
-      "prev_rank": 213,
-      "trend": "up:47",
+      "prev_rank": 166,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737ea581f6963d14d477207234",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3514,9 +4020,12 @@
       "in_both": false,
       "total_streams": 1406336,
       "rank": 167,
-      "prev_rank": 149,
-      "trend": "down:18",
+      "prev_rank": 167,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273fddfffec51b4580acae727c1",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -3534,9 +4043,12 @@
       "in_both": false,
       "total_streams": 1404730,
       "rank": 168,
-      "prev_rank": 210,
-      "trend": "up:42",
+      "prev_rank": 168,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737ae4d78852e406eff2f4eef6",
+      "_genres": [
+        "Pop"
+      ],
       "genre": "Pop"
     },
     {
@@ -3554,9 +4066,12 @@
       "in_both": false,
       "total_streams": 1404399,
       "rank": 169,
-      "prev_rank": 54,
-      "trend": "down:115",
+      "prev_rank": 169,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c33c011434a5dfeb74bdcc7a",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -3576,9 +4091,12 @@
       "in_both": false,
       "total_streams": 1399059,
       "rank": 170,
-      "prev_rank": 175,
-      "trend": "up:5",
+      "prev_rank": 170,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27301003c234f677e043968fafb",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3596,9 +4114,12 @@
       "in_both": false,
       "total_streams": 1398037,
       "rank": 171,
-      "prev_rank": 131,
-      "trend": "down:40",
+      "prev_rank": 171,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27397ddf098a4c67a290a3d11fe",
+      "_genres": [
+        "outros"
+      ],
       "genre": "outros"
     },
     {
@@ -3616,9 +4137,13 @@
       "in_both": false,
       "total_streams": 1390300,
       "rank": 172,
-      "prev_rank": 160,
-      "trend": "down:12",
+      "prev_rank": 172,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Rap",
+        "Trap"
+      ],
       "genre": "Rap"
     },
     {
@@ -3636,9 +4161,12 @@
       "in_both": false,
       "total_streams": 1381556,
       "rank": 173,
-      "prev_rank": 163,
-      "trend": "down:10",
+      "prev_rank": 173,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2738d18d73bbfc8985d52865edf",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -3657,10 +4185,14 @@
       "in_both": false,
       "total_streams": 1378689,
       "rank": 174,
-      "prev_rank": 176,
-      "trend": "up:2",
+      "prev_rank": 174,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e295ee75598a12d933800298",
-      "genre": "Sertanejo"
+      "_genres": [
+        "Forró/Piseiro",
+        "Sertanejo"
+      ],
+      "genre": "Forró/Piseiro"
     },
     {
       "artist": "DJ Japa NK",
@@ -3679,9 +4211,12 @@
       "in_both": false,
       "total_streams": 1368821,
       "rank": 175,
-      "prev_rank": 202,
-      "trend": "up:27",
+      "prev_rank": 175,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273bb2624be0c78ed088dd4d237",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3699,9 +4234,12 @@
       "in_both": false,
       "total_streams": 1368769,
       "rank": 176,
-      "prev_rank": 152,
-      "trend": "down:24",
+      "prev_rank": 176,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273bbd45c8d36e0e045ef640411",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -3719,9 +4257,12 @@
       "in_both": false,
       "total_streams": 1364948,
       "rank": 177,
-      "prev_rank": 172,
-      "trend": "down:5",
+      "prev_rank": 177,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273754b8b3d6d58bcdca4fd329d",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3739,9 +4280,12 @@
       "in_both": false,
       "total_streams": 1359837,
       "rank": 178,
-      "prev_rank": 197,
-      "trend": "up:19",
+      "prev_rank": 178,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c89ff3434d85f33354c929b8",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -3761,10 +4305,15 @@
       "in_both": false,
       "total_streams": 1359266,
       "rank": 179,
-      "prev_rank": 155,
-      "trend": "down:24",
+      "prev_rank": 179,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27318becb5683908988b89884d2",
-      "genre": "Pop"
+      "_genres": [
+        "Forró/Piseiro",
+        "Funk",
+        "Pop"
+      ],
+      "genre": "Forró/Piseiro"
     },
     {
       "artist": "Henrique & Juliano",
@@ -3781,9 +4330,12 @@
       "in_both": false,
       "total_streams": 1353806,
       "rank": 180,
-      "prev_rank": 209,
-      "trend": "up:29",
+      "prev_rank": 180,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735bb6668a856035550a66fc31",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3801,9 +4353,12 @@
       "in_both": false,
       "total_streams": 1353781,
       "rank": 181,
-      "prev_rank": 179,
-      "trend": "down:2",
+      "prev_rank": 181,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e8ee6a30da5e556e34ee6574",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -3821,9 +4376,12 @@
       "in_both": false,
       "total_streams": 1353774,
       "rank": 182,
-      "prev_rank": 190,
-      "trend": "up:8",
+      "prev_rank": 182,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c8e97cafeb2acb85b21a777e",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -3844,9 +4402,12 @@
       "in_both": false,
       "total_streams": 1347830,
       "rank": 183,
-      "prev_rank": 161,
-      "trend": "down:22",
+      "prev_rank": 183,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273281c57a0765bf4e23460277b",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3865,10 +4426,14 @@
       "in_both": false,
       "total_streams": 1345824,
       "rank": 184,
-      "prev_rank": 204,
-      "trend": "up:20",
+      "prev_rank": 184,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730f91729d8550f80bccccdd5a",
-      "genre": "Sertanejo"
+      "_genres": [
+        "Funk",
+        "Sertanejo"
+      ],
+      "genre": "Funk"
     },
     {
       "artist": "Guilherme & Benuto",
@@ -3886,9 +4451,12 @@
       "in_both": false,
       "total_streams": 1341726,
       "rank": 185,
-      "prev_rank": 154,
-      "trend": "down:31",
+      "prev_rank": 185,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d7500f85c26a38fb6726ce76",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3906,9 +4474,12 @@
       "in_both": false,
       "total_streams": 1330809,
       "rank": 186,
-      "prev_rank": 198,
-      "trend": "up:12",
+      "prev_rank": 186,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b79f3c0a62d3c71aea3b344b",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -3927,9 +4498,12 @@
       "in_both": false,
       "total_streams": 1330485,
       "rank": 187,
-      "prev_rank": 201,
-      "trend": "up:14",
+      "prev_rank": 187,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273fb51d96504e19623c4fb77db",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3948,9 +4522,12 @@
       "in_both": false,
       "total_streams": 1329930,
       "rank": 188,
-      "prev_rank": 183,
-      "trend": "down:5",
+      "prev_rank": 188,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27360ef106d975679382d18f5a4",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -3974,6 +4551,9 @@
       "prev_rank": 189,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27347cbd521916fc422be1a5c9a",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -3993,10 +4573,15 @@
       "in_both": false,
       "total_streams": 1320149,
       "rank": 190,
-      "prev_rank": 126,
-      "trend": "down:64",
+      "prev_rank": 190,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ce6e55f41bca55272187441e",
-      "genre": "Sertanejo"
+      "_genres": [
+        "Forró/Piseiro",
+        "Funk",
+        "Sertanejo"
+      ],
+      "genre": "Forró/Piseiro"
     },
     {
       "artist": "Drops INA",
@@ -4013,9 +4598,12 @@
       "in_both": false,
       "total_streams": 1318474,
       "rank": 191,
-      "prev_rank": 72,
-      "trend": "down:119",
+      "prev_rank": 191,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735f0b779a345c596c1c2e753e",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -4034,9 +4622,12 @@
       "in_both": false,
       "total_streams": 1316550,
       "rank": 192,
-      "prev_rank": 193,
-      "trend": "up:1",
+      "prev_rank": 192,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b1e8a9fa2c21159ea637b766",
+      "_genres": [
+        "MPB"
+      ],
       "genre": "MPB"
     },
     {
@@ -4056,9 +4647,12 @@
       "in_both": false,
       "total_streams": 1315078,
       "rank": 193,
-      "prev_rank": 174,
-      "trend": "down:19",
+      "prev_rank": 193,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273945c72e1a8123c6d1717afe6",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -4076,9 +4670,12 @@
       "in_both": false,
       "total_streams": 1315047,
       "rank": 194,
-      "prev_rank": 185,
-      "trend": "down:9",
+      "prev_rank": 194,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737ea581f6963d14d477207234",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4103,9 +4700,12 @@
       "in_both": false,
       "total_streams": 1311155,
       "rank": 195,
-      "prev_rank": 170,
-      "trend": "down:25",
+      "prev_rank": 195,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739fe1c4dea8fdbb452b66b271",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -4123,9 +4723,12 @@
       "in_both": false,
       "total_streams": 1308937,
       "rank": 196,
-      "prev_rank": 199,
-      "trend": "up:3",
+      "prev_rank": 196,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27399c540c0f78793fcea84a920",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4145,9 +4748,12 @@
       "in_both": false,
       "total_streams": 1302714,
       "rank": 197,
-      "prev_rank": 196,
-      "trend": "down:1",
+      "prev_rank": 197,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27349720414b47078b8d010f1b5",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -4165,9 +4771,12 @@
       "in_both": false,
       "total_streams": 1302019,
       "rank": 198,
-      "prev_rank": 186,
-      "trend": "down:12",
+      "prev_rank": 198,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -4185,9 +4794,12 @@
       "in_both": false,
       "total_streams": 1292382,
       "rank": 199,
-      "prev_rank": 162,
-      "trend": "down:37",
+      "prev_rank": 199,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -4208,9 +4820,12 @@
       "in_both": false,
       "total_streams": 1292236,
       "rank": 200,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 200,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a4362ef6429c2c80ff0cfc05",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -4229,9 +4844,12 @@
       "in_both": false,
       "total_streams": 1278091,
       "rank": 201,
-      "prev_rank": 222,
-      "trend": "up:21",
+      "prev_rank": 201,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2736098584c562a60f704a84f74",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4250,9 +4868,12 @@
       "in_both": false,
       "total_streams": 1277350,
       "rank": 202,
-      "prev_rank": 167,
-      "trend": "down:35",
+      "prev_rank": 202,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273684ecc5bc1b724d0106ad694",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -4270,9 +4891,12 @@
       "in_both": false,
       "total_streams": 1271659,
       "rank": 203,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 203,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27350eb8b741c09b9159338fa9f",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4291,9 +4915,12 @@
       "in_both": false,
       "total_streams": 1271580,
       "rank": 204,
-      "prev_rank": 208,
-      "trend": "up:4",
+      "prev_rank": 204,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e3079216d2d0ab407065fb3b",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4312,9 +4939,12 @@
       "in_both": false,
       "total_streams": 1267125,
       "rank": 205,
-      "prev_rank": 220,
-      "trend": "up:15",
+      "prev_rank": 205,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2738940ac99f49e44f59e6f7fb3",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -4332,9 +4962,12 @@
       "in_both": false,
       "total_streams": 1263688,
       "rank": 206,
-      "prev_rank": 214,
-      "trend": "up:8",
+      "prev_rank": 206,
+      "trend": "same",
       "thumbnail_url": "",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -4355,6 +4988,9 @@
       "prev_rank": 207,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e2f039481babe23658fc719a",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -4372,9 +5008,12 @@
       "in_both": false,
       "total_streams": 1260278,
       "rank": 208,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 208,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ba22c87c3148dce9c95ad7bb",
+      "_genres": [
+        "Reggae"
+      ],
       "genre": "Reggae"
     },
     {
@@ -4392,9 +5031,12 @@
       "in_both": false,
       "total_streams": 1259678,
       "rank": 209,
-      "prev_rank": 225,
-      "trend": "up:16",
+      "prev_rank": 209,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273908c9364b91953b3d9a8a4b7",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4412,9 +5054,12 @@
       "in_both": false,
       "total_streams": 1253152,
       "rank": 210,
-      "prev_rank": 187,
-      "trend": "down:23",
+      "prev_rank": 210,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2735f46bc8a4692e3d7d356181e",
+      "_genres": [
+        "MPB"
+      ],
       "genre": "MPB"
     },
     {
@@ -4432,9 +5077,12 @@
       "in_both": false,
       "total_streams": 1252854,
       "rank": 211,
-      "prev_rank": 226,
-      "trend": "up:15",
+      "prev_rank": 211,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739276a996605bd1a9fcdd1563",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -4452,9 +5100,12 @@
       "in_both": false,
       "total_streams": 1250795,
       "rank": 212,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 212,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731f3f13761d6dca14c9465a88",
+      "_genres": [
+        "Trap"
+      ],
       "genre": "Trap"
     },
     {
@@ -4472,9 +5123,12 @@
       "in_both": false,
       "total_streams": 1248325,
       "rank": 213,
-      "prev_rank": 194,
-      "trend": "down:19",
+      "prev_rank": 213,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27350c217d91c1a5c78b28df59c",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -4492,9 +5146,12 @@
       "in_both": false,
       "total_streams": 1246889,
       "rank": 214,
-      "prev_rank": 205,
-      "trend": "down:9",
+      "prev_rank": 214,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2736871f3c5c8238f18a9ba88f7",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4513,9 +5170,12 @@
       "in_both": false,
       "total_streams": 1245478,
       "rank": 215,
-      "prev_rank": 200,
-      "trend": "down:15",
+      "prev_rank": 215,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27382ea2e9e1858aa012c57cd45",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -4541,9 +5201,12 @@
       "in_both": false,
       "total_streams": 1242044,
       "rank": 216,
-      "prev_rank": 191,
-      "trend": "down:25",
+      "prev_rank": 216,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739fe1c4dea8fdbb452b66b271",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -4561,9 +5224,12 @@
       "in_both": false,
       "total_streams": 1240434,
       "rank": 217,
-      "prev_rank": 219,
-      "trend": "up:2",
+      "prev_rank": 217,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273840d8e0f9b1440af82acfb43",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -4582,9 +5248,13 @@
       "in_both": false,
       "total_streams": 1237482,
       "rank": 218,
-      "prev_rank": 217,
-      "trend": "down:1",
+      "prev_rank": 218,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733827f71bd45d25aebd22d335",
+      "_genres": [
+        "Forró/Piseiro",
+        "Sertanejo"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -4602,9 +5272,12 @@
       "in_both": false,
       "total_streams": 1236461,
       "rank": 219,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 219,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c854354a13f74f7328aacc3b",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -4622,9 +5295,12 @@
       "in_both": false,
       "total_streams": 1233596,
       "rank": 220,
-      "prev_rank": 188,
-      "trend": "down:32",
+      "prev_rank": 220,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e8ee6a30da5e556e34ee6574",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -4642,9 +5318,12 @@
       "in_both": false,
       "total_streams": 1232793,
       "rank": 221,
-      "prev_rank": null,
-      "trend": "return",
+      "prev_rank": 221,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/aee03e87ed5bf3a157515acab7dc2df632a85118",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4663,9 +5342,12 @@
       "in_both": false,
       "total_streams": 1231038,
       "rank": 222,
-      "prev_rank": 182,
-      "trend": "down:40",
+      "prev_rank": 222,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a1f6ae3a6f88b8f5be9e2b32",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4683,9 +5365,12 @@
       "in_both": false,
       "total_streams": 1226193,
       "rank": 223,
-      "prev_rank": 215,
-      "trend": "down:8",
+      "prev_rank": 223,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732774b00531d558bc19e12a24",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4704,9 +5389,12 @@
       "in_both": false,
       "total_streams": 1219335,
       "rank": 224,
-      "prev_rank": 227,
-      "trend": "up:3",
+      "prev_rank": 224,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2739135c41b1da1eecd682c4dc6",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4724,9 +5412,12 @@
       "in_both": false,
       "total_streams": 1219069,
       "rank": 225,
-      "prev_rank": 212,
-      "trend": "down:13",
+      "prev_rank": 225,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273b6dfc668af5fca2e5ec7fb61",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -4744,9 +5435,12 @@
       "in_both": false,
       "total_streams": 1217065,
       "rank": 226,
-      "prev_rank": 221,
-      "trend": "down:5",
+      "prev_rank": 226,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733d6bc6dc549d0c91f7fe133a",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -4764,9 +5458,12 @@
       "in_both": false,
       "total_streams": 1211310,
       "rank": 227,
-      "prev_rank": 216,
-      "trend": "down:11",
+      "prev_rank": 227,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2731db7e1f2d82eca4a7ea3d0d4",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -4784,9 +5481,12 @@
       "in_both": false,
       "total_streams": 1211181,
       "rank": 228,
-      "prev_rank": 159,
-      "trend": "down:69",
+      "prev_rank": 228,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273555124d70ffd719b86bda37b",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -4807,9 +5507,12 @@
       "in_both": false,
       "total_streams": 1195688,
       "rank": 229,
-      "prev_rank": 177,
-      "trend": "down:52",
+      "prev_rank": 229,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733df8232aa6c7f8f7a51da985",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -4827,9 +5530,12 @@
       "in_both": false,
       "total_streams": 1189654,
       "rank": 230,
-      "prev_rank": 229,
-      "trend": "down:1",
+      "prev_rank": 230,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27393b7f0d53b20302ee6e28f13",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4847,9 +5553,12 @@
       "in_both": false,
       "total_streams": 1188915,
       "rank": 231,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 231,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2738c41083f05f021821a8b7c0d",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4870,6 +5579,9 @@
       "prev_rank": 232,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273517a7d4192da6fa36ad18b90",
+      "_genres": [
+        "Forró/Piseiro"
+      ],
       "genre": "Forró/Piseiro"
     },
     {
@@ -4887,9 +5599,12 @@
       "in_both": false,
       "total_streams": 1171505,
       "rank": 233,
-      "prev_rank": 235,
-      "trend": "up:2",
+      "prev_rank": 233,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733b09db5c0356ad00d2be5b90",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -4907,9 +5622,12 @@
       "in_both": false,
       "total_streams": 1161215,
       "rank": 234,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 234,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e7082d6929965c0820542807",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -4927,9 +5645,12 @@
       "in_both": false,
       "total_streams": 1155977,
       "rank": 235,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 235,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273791afc1355d6777bde8e2dad",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -4947,9 +5668,12 @@
       "in_both": false,
       "total_streams": 1152742,
       "rank": 236,
-      "prev_rank": 223,
-      "trend": "down:13",
+      "prev_rank": 236,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27308f171b3d7ca9fbe94777b23",
+      "_genres": [
+        "Phonk"
+      ],
       "genre": "Phonk"
     },
     {
@@ -4967,9 +5691,12 @@
       "in_both": false,
       "total_streams": 1132699,
       "rank": 237,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 237,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27340ed6bd17c96972c94a69ca6",
+      "_genres": [
+        "Funk"
+      ],
       "genre": "Funk"
     },
     {
@@ -4987,9 +5714,12 @@
       "in_both": false,
       "total_streams": 1131123,
       "rank": 238,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 238,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e7082d6929965c0820542807",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -5007,9 +5737,12 @@
       "in_both": false,
       "total_streams": 1061111,
       "rank": 239,
-      "prev_rank": 244,
-      "trend": "up:5",
+      "prev_rank": 239,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d0f4f0cddf1e360cd4c6f60c",
+      "_genres": [
+        "Rap"
+      ],
       "genre": "Rap"
     },
     {
@@ -5030,6 +5763,9 @@
       "prev_rank": 240,
       "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2737dee7beb239fa0fb4ab76884",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -5047,9 +5783,12 @@
       "in_both": false,
       "total_streams": 1047147,
       "rank": 241,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 241,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732ca769bb73374b00d09a1c82",
+      "_genres": [
+        "Internacional"
+      ],
       "genre": "Internacional"
     },
     {
@@ -5067,9 +5806,12 @@
       "in_both": false,
       "total_streams": 1046164,
       "rank": 242,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 242,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2730af9d0856ccfc5736e214386",
+      "_genres": [
+        "Pagode"
+      ],
       "genre": "Pagode"
     },
     {
@@ -5087,9 +5829,12 @@
       "in_both": false,
       "total_streams": 1045967,
       "rank": 243,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 243,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27341621834c904ed64d604d1a5",
+      "_genres": [
+        "MPB"
+      ],
       "genre": "MPB"
     },
     {
@@ -5107,9 +5852,12 @@
       "in_both": false,
       "total_streams": 1035427,
       "rank": 244,
-      "prev_rank": 238,
-      "trend": "down:6",
+      "prev_rank": 244,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732e06e7417a0a3d94f6c44128",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     },
     {
@@ -5127,9 +5875,12 @@
       "in_both": false,
       "total_streams": 1034436,
       "rank": 245,
-      "prev_rank": null,
-      "trend": "return",
+      "prev_rank": 245,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273717a191d0dd76669487ccaac",
+      "_genres": [
+        "Sertanejo"
+      ],
       "genre": "Sertanejo"
     },
     {
@@ -5147,9 +5898,12 @@
       "in_both": false,
       "total_streams": 1016403,
       "rank": 246,
-      "prev_rank": null,
-      "trend": "new",
+      "prev_rank": 246,
+      "trend": "same",
       "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ac8f76c122c718df4e1f3bb0",
+      "_genres": [
+        "Gospel"
+      ],
       "genre": "Gospel"
     }
   ]

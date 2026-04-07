@@ -53,6 +53,16 @@
 - [x] Adicionado `normalize_artist_name()` no scraper — aplica Unicode NFC + strip em todos os nomes de artistas
 - [x] Aplicado em `scrape_spotify()` e `scrape_youtube()` para prevenir duplicatas futuras
 
+### Sincronização de Playlists Spotify (07/04/2026)
+- [x] Criado `spotify_playlists.py` — sync de playlists por gênero + "Mais Tocadas"
+- [x] Criado `spotify_auth.py` — fluxo OAuth para obter refresh_token
+- [x] Criado `sync_playlists_runner.py` — script standalone que lê ranking+gêneros do Supabase e sincroniza playlists
+- [x] Criado workflow `.github/workflows/sync-playlists.yml` (workflow_dispatch only)
+- [x] Deploy da Edge Function `trigger-playlist-sync` no Supabase — proxy seguro para disparar o workflow
+- [x] Botão "Sync Playlists" no header do `index.html` com feedback visual (syncing/success/error)
+- [ ] Configurar secret `GITHUB_PAT` no Supabase (fine-grained PAT com scope `actions:write`)
+- [ ] Testar fluxo completo: alterar gênero → clicar Sync → verificar playlists atualizadas
+
 ### Skill de Code Review
 - [x] Criada skill `code-review` em `~/.claude/skills/code-review/SKILL.md`
 - [x] Revisao por severidade: Critico, Alto, Medio, Baixo
@@ -81,10 +91,28 @@
 - [ ] Testar scraper completo localmente com persistencia no Supabase
 
 ### Deploy
-- [ ] Commitar alteracoes (calendario, scraper, PROGRESS.md)
-- [ ] Criar PR e mergear na main
+- [x] Commit direto na main: calendario, scraper, PROGRESS.md (42ee77b)
+- [x] Cron do scraper trocado de sexta (5) para sabado (6) — 13h UTC
 - [ ] Verificar que GitHub Actions roda o scraper na proxima sexta-feira
 - [ ] Confirmar que o deploy no GitHub Pages funciona com os novos arquivos (config.js, styles.css, genres-app.js)
+
+### Multi-Gênero + Playlist Links (07/04/2026)
+- [x] Migração DB: PK `track_overrides` alterada de `(spotify_id)` para `(spotify_id, genre_id)`
+- [x] Nova RPC `toggle_track_override` — adiciona/remove gênero sem substituir os existentes
+- [x] View `track_overrides_with_genres` agora retorna `genre_names` (array)
+- [x] Dropdown de override com checkboxes multi-seleção (toggle individual)
+- [x] `getEffectiveGenres()` retorna array de gêneros (override ou artista)
+- [x] `enrichTrackGenres()` coleta gêneros de TODOS os artistas (union)
+- [x] Tracks com artista multi-gênero aparecem em todos os filtros correspondentes
+- [x] Backend `sync_all_playlists` coloca track em múltiplas playlists de gênero
+- [x] Seção "Playlists no Spotify" na home com links diretos para cada playlist
+- [x] Playlist "Mais Tocadas" usa multi-gênero para inclusão
+
+### Playlists Spotify
+- [x] Criar GitHub PAT (fine-grained) com permissão `actions:write` no repo Rankingteste
+- [x] Salvar PAT como secret `GITHUB_PAT` no Supabase (Dashboard → Edge Functions → Secrets)
+- [ ] Testar botão "Sync Playlists" no site publicado
+- [ ] Testar alteração de gênero multi-seleção + sync + verificar playlist no Spotify
 
 ### Melhorias Futuras
 - [ ] Verificar RLS no Supabase para todas as tabelas acessiveis via anon key
@@ -104,13 +132,18 @@ Rankingteste-main/
   config.js            — Config Supabase compartilhada (URL, keys, helpers)
   styles.css           — CSS compartilhado (variaveis, reset, logo)
   scraper.py           — Scraper Spotify + YouTube (kworb.net)
+  spotify_playlists.py — Sync de playlists Spotify por genero
+  spotify_auth.py      — OAuth flow para obter refresh_token
+  sync_playlists_runner.py — Runner standalone de sync (le ranking do Supabase)
   requirements.txt     — Dependencias Python (versoes fixadas)
   data/
     ranking.json       — Ranking local (fallback)
     ranking_history.json — Historico de tracks
     genres.json        — Config de generos (fallback local)
+    playlist_ids.json  — Cache genero → playlist_id do Spotify
   .github/workflows/
-    weekly-ranking.yml — Scraper automatico (sexta 13h UTC)
+    weekly-ranking.yml — Scraper automatico (sabado 13h UTC)
+    sync-playlists.yml — Sync playlists on-demand (workflow_dispatch)
     jekyll-gh-pages.yml — Deploy GitHub Pages
 ```
 
@@ -126,3 +159,9 @@ Rankingteste-main/
 | track_overrides | Override manual de genero por track (spotify_id) |
 | track_history | Historico de aparicoes de tracks |
 | Views: latest_ranking, artists_with_genres, track_overrides_with_genres |
+
+### Supabase Edge Functions
+
+| Funcao | Descricao |
+|--------|-----------|
+| trigger-playlist-sync | Proxy seguro para disparar workflow sync-playlists.yml via GitHub API |
