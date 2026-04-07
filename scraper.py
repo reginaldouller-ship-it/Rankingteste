@@ -7,7 +7,7 @@ Gera ranking combinado por soma de streams e persiste no Supabase.
 import requests
 from bs4 import BeautifulSoup
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 import re
 import time
 import os
@@ -117,7 +117,7 @@ def _sb_save_ranking(sb, ranking, week_label):
     """Salva a semana e todos os tracks no Supabase."""
     week_res = sb.table("ranking_weeks").insert({
         "week_label":   week_label,
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
     week_id = week_res.data[0]["id"]
 
@@ -471,7 +471,7 @@ def load_history(sb=None):
 
 
 def update_history(ranking, history, sb=None):
-    today = datetime.utcnow().strftime("%Y-%m-%d")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     for e in ranking:
         key = _track_key(e["artist"], e["title"])
         if key not in history["seen_tracks"]:
@@ -753,7 +753,7 @@ def run():
 
     # Salvar ranking.json local (fallback para o site estático)
     output = {
-        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "week_label":   week_label,
         "tracks":       ranking,
     }

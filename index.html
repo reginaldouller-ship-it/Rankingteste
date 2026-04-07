@@ -6,29 +6,8 @@
   <title>Ranking Brasil Semanal — Spotify + YouTube</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --sp: #1DB954;
-      --yt: #FF0000;
-      --gold: #F5A623;
-      --silver: #9BA8B5;
-      --bronze: #C97B3B;
-      --bg: #0d0d0f;
-      --surface: #16161a;
-      --surface2: #1e1e24;
-      --border: rgba(255,255,255,0.07);
-      --text: #f0f0f4;
-      --muted: #7a7a8c;
-      --accent: #6C63FF;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
     /* ── HEADER ── */
     header {
       background: var(--surface);
@@ -47,21 +26,29 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
-    .logo span { color: var(--accent); }
-    .week-badge {
+    .logo { font-size: 1.25rem; }
+    .week-select {
+      font-family: 'DM Sans', sans-serif;
       font-size: 12px;
-      color: var(--muted);
+      color: var(--text);
       background: var(--surface2);
       border: 1px solid var(--border);
-      padding: 4px 10px;
+      padding: 5px 28px 5px 12px;
       border-radius: 20px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='%237a7a8c'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    .week-select:hover { border-color: rgba(255,255,255,0.2); }
+    .week-select:focus { border-color: var(--accent); }
+    .week-select option {
+      background: var(--surface);
+      color: var(--text);
     }
     .platform-pills { display: flex; gap: 8px; }
     .pill {
@@ -343,14 +330,6 @@
       border-top: 1px solid var(--border); margin-top: 2rem;
     }
     footer a { color: var(--muted); }
-    .btn-manage-genres {
-      display: inline-block; background: var(--accent); color: #fff;
-      padding: 6px 14px; border-radius: 8px;
-      font-weight: 600; font-size: .85rem;
-      text-decoration: none; white-space: nowrap;
-    }
-    .btn-manage-genres:hover { opacity: .85; }
-
     @media (max-width: 520px) {
       .track { grid-template-columns: 28px 40px 1fr auto; gap: 8px; }
       .track-thumb { width: 40px; height: 40px; }
@@ -365,7 +344,9 @@
 <header>
   <div class="header-inner">
     <div><div class="logo">Ranking<span>BR</span></div></div>
-    <div id="week-badge" class="week-badge">carregando...</div>
+    <select id="week-select" class="week-select" disabled>
+      <option>carregando...</option>
+    </select>
     <div class="platform-pills">
       <div class="pill"><span class="dot" style="background:var(--sp)"></span>Spotify</div>
       <div class="pill"><span class="dot" style="background:var(--yt)"></span>YouTube</div>
@@ -390,23 +371,16 @@
 </main>
 
 <footer>
-  Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank">kworb Spotify BR</a> +
-  <a href="https://kworb.net/youtube/insights/br.html" target="_blank">kworb YouTube BR</a> •
+  Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank" rel="noopener">kworb Spotify BR</a> +
+  <a href="https://kworb.net/youtube/insights/br.html" target="_blank" rel="noopener">kworb YouTube BR</a> •
   Atualizado toda sexta-feira
 </footer>
 
-<script>
+<script type="module">
+import { SUPABASE_URL, SB_HEADERS, sbRpc, esc } from './config.js';
+
 const EMOJIS = ["🔥","🎵","⭐","👑","💥","🎤","🎶","🥁","🎸","🎧",
                 "🌟","💫","🏆","🎼","🎹","🎺","🎻","🪗","🪘","🥳"];
-
-const SUPABASE_URL  = "https://suzcbyzidnzzahwrkveh.supabase.co";
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
-const SB_HEADERS    = {
-  "Content-Type":  "application/json",
-  "apikey":        SUPABASE_ANON,
-  "Authorization": `Bearer ${SUPABASE_ANON}`,
-  "Prefer":        "return=representation",
-};
 
 let allTracks      = [];
 let allGenres      = [];        // [{id, name}] — fonte oficial
@@ -447,8 +421,10 @@ async function retryThumbnail(img) {
         if (track) track.thumbnail_url = data.thumbnail_url;
       }
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Fallback thumbnail falhou:", e); }
 }
+// Expor para onerror inline
+window.retryThumbnail = retryThumbnail;
 
 function loadMissingThumbnails() {
   document.querySelectorAll('.track-thumb img[data-spotify]').forEach(img => {
@@ -463,15 +439,7 @@ function copyLink(url, btn) {
     setTimeout(() => { btn.innerHTML = orig; }, 1500);
   });
 }
-
-async function sbRpc(fn, params) {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
-    method: "POST", headers: SB_HEADERS, body: JSON.stringify(params),
-  });
-  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
-  const txt = await r.text();
-  return txt ? JSON.parse(txt) : null;
-}
+window.copyLink = copyLink;
 
 function filterByPlatform(tracks) {
   if (currentFilter === "both")    return tracks.filter(t => t.in_both);
@@ -489,11 +457,9 @@ function getEffectiveGenre(t) {
 function applyGenreFilter(tracks) {
   if (currentGenres.size === 0) return tracks;
   return tracks.filter(t => {
-    // Override manual tem prioridade
     if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined) {
       return currentGenres.has(trackOverrides[t.spotify_id] || "outros");
     }
-    // Multi-gênero via _genres (artistas com 2+ gêneros)
     const genres = t._genres || [t.genre || "outros"];
     return genres.some(g => currentGenres.has(g));
   });
@@ -501,14 +467,12 @@ function applyGenreFilter(tracks) {
 
 function buildGenreFilters() {
   const container = document.getElementById("genre-filters");
-  // Count genres across ALL tracks
   const genreCounts = {};
   for (const t of allTracks) {
     for (const g of (t._genres || [t.genre || "outros"])) {
       genreCounts[g] = (genreCounts[g] || 0) + 1;
     }
   }
-  const genres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
   container.innerHTML = "";
 
   const platformFiltered = filterByPlatform(allTracks);
@@ -558,7 +522,7 @@ function render() {
     const filterPos = i + 1;
     const globalPos = t.rank;
 
-    const thumbContent = `<img src="${t.thumbnail_url || ''}" width="52" height="52" alt="" data-spotify="${t.spotify_url || ''}" onerror="retryThumbnail(this)">`;
+    const thumbContent = `<img src="${esc(t.thumbnail_url || '')}" width="52" height="52" alt="" data-spotify="${esc(t.spotify_url || '')}" onerror="retryThumbnail(this)">`;
     let rankHtml;
     if (hasGenreFilter) {
       const fpCls = filterPos === 1 ? "rank-1" : filterPos === 2 ? "rank-2" : filterPos === 3 ? "rank-3" : "";
@@ -571,12 +535,13 @@ function render() {
       rankHtml = `<div class="rank-num ${gpCls}">${globalPos}</div>`;
     }
 
+    const safeSpotifyUrl = esc(t.spotify_url || '');
     const spButtons = t.spotify_url
-      ? `<a class="sp-link" href="${t.spotify_url}" target="_blank" rel="noopener">
+      ? `<a class="sp-link" href="${safeSpotifyUrl}" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
           Ouvir
         </a>
-        <button class="copy-btn" onclick="copyLink('${t.spotify_url}', this)" title="Copiar link">${copyIconSvg}</button>`
+        <button class="copy-btn" onclick="copyLink('${safeSpotifyUrl}', this)" title="Copiar link">${copyIconSvg}</button>`
       : "";
 
     const bothTag    = t.in_both ? `<span class="tag-both">✦ nas duas</span>` : "";
@@ -598,9 +563,9 @@ function render() {
     const hasOverride    = t.spotify_id && trackOverrides[t.spotify_id] != null;
     const overrideBtn    = t.spotify_id
       ? `<button class="genre-override-btn${hasOverride ? " has-override" : ""}"
-           data-spotify-id="${t.spotify_id}"
-           data-current-genre="${effectiveGenre}"
-           title="${hasOverride ? "Gênero manual: " + effectiveGenre : "Definir gênero manualmente"}"
+           data-spotify-id="${esc(t.spotify_id)}"
+           data-current-genre="${esc(effectiveGenre)}"
+           title="${hasOverride ? "Gênero manual: " + esc(effectiveGenre) : "Definir gênero manualmente"}"
            onclick="openGenreDropdown(this, event)">⋯</button>`
       : "";
 
@@ -609,8 +574,8 @@ function render() {
       ${rankHtml}
       <div class="track-thumb">${thumbContent}</div>
       <div class="track-info">
-        <div class="track-title">${t.title}</div>
-        <div class="track-artist">${(t.artists && t.artists.length > 1) ? t.artists.join(", ") : (t.artist || "")}</div>
+        <div class="track-title">${esc(t.title)}</div>
+        <div class="track-artist">${esc((t.artists && t.artists.length > 1) ? t.artists.join(", ") : (t.artist || ""))}</div>
         <div class="track-tags">${trendBadge}${bothTag}${spButtons}</div>
       </div>
       <div class="track-meta">
@@ -655,7 +620,7 @@ async function loadArtistGenres() {
         return;
       }
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Fallback: erro ao carregar gêneros do Supabase:", e); }
 
   try {
     const res = await fetch("data/genres.json");
@@ -664,13 +629,7 @@ async function loadArtistGenres() {
     for (const [name, genres] of Object.entries(data.artist_genres || {})) {
       artistGenresMap[name.toLowerCase()] = Array.isArray(genres) ? genres : [genres];
     }
-  } catch (_) {}
-}
-
-function refreshGenreFilters() {
-  const container = document.getElementById("genre-filters");
-  container.innerHTML = "";
-  buildGenreFilters();
+  } catch (e) { console.warn("Fallback: erro ao carregar genres.json:", e); }
 }
 
 // ── Genre Override UI ───────────────────────────────────────────────────────
@@ -725,6 +684,7 @@ function openGenreDropdown(btn, event) {
   dropdown.style.left = left + "px";
   dropdown.style.top  = top  + "px";
 }
+window.openGenreDropdown = openGenreDropdown;
 
 document.addEventListener("click", () => {
   if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
@@ -764,7 +724,7 @@ async function loadGenres() {
   try {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/genres?select=id,name&order=name`, { headers: SB_HEADERS });
     if (r.ok) allGenres = await r.json();
-  } catch (_) {}
+  } catch (e) { console.warn("Erro ao carregar gêneros:", e); }
 }
 
 async function loadTrackOverrides() {
@@ -774,29 +734,47 @@ async function loadTrackOverrides() {
       const rows = await r.json();
       for (const row of rows) trackOverrides[row.spotify_id] = row.genre_name;
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Erro ao carregar overrides:", e); }
 }
 
-async function loadRanking() {
+// ── Semanas disponíveis ─────────────────────────────────────────────────────
+let allWeeks = [];  // [{id, week_label, generated_at}]
+
+async function loadWeeks() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ranking_weeks?select=id,week_label,generated_at&order=generated_at.desc`,
+      { headers: SB_HEADERS }
+    );
+    if (res.ok) {
+      allWeeks = await res.json();
+      populateWeekSelect();
+    }
+  } catch (e) { console.warn("Erro ao carregar semanas:", e); }
+}
+
+function populateWeekSelect() {
+  const select = document.getElementById("week-select");
+  if (!allWeeks.length) return;
+  select.innerHTML = allWeeks.map(w =>
+    `<option value="${w.id}">${esc(w.week_label)}</option>`
+  ).join("");
+  select.disabled = false;
+}
+
+async function loadRankingByWeek(weekId) {
   const list = document.getElementById("track-list");
-  const artistGenresPromise = loadArtistGenres();
+  list.innerHTML = '<div class="empty">Carregando ranking...</div>';
 
   try {
-    await Promise.all([loadGenres(), loadTrackOverrides()]);
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/latest_ranking?select=*&order=rank`, { headers: SB_HEADERS });
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ranking_tracks?week_id=eq.${weekId}&select=*&order=rank`,
+      { headers: SB_HEADERS }
+    );
     if (res.ok) {
       const tracks = await res.json();
       if (tracks && tracks.length > 0) {
         allTracks = tracks;
-        const weekRes = await fetch(
-          `${SUPABASE_URL}/rest/v1/ranking_weeks?select=week_label&order=generated_at.desc&limit=1`,
-          { headers: SB_HEADERS }
-        );
-        if (weekRes.ok) {
-          const weeks = await weekRes.json();
-          document.getElementById("week-badge").textContent = weeks[0]?.week_label || "";
-        }
-        await Promise.allSettled([artistGenresPromise]);
         enrichTrackGenres(allTracks);
         buildGenreFilters();
         render();
@@ -804,25 +782,63 @@ async function loadRanking() {
         return;
       }
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Erro ao carregar ranking da semana:", e); }
+  list.innerHTML = '<div class="empty">Nenhum dado para esta semana.</div>';
+}
+
+async function loadRanking() {
+  const list = document.getElementById("track-list");
+  const artistGenresPromise = loadArtistGenres();
+
+  try {
+    await Promise.all([loadGenres(), loadTrackOverrides(), loadWeeks()]);
+    if (allWeeks.length > 0) {
+      // Carregar a semana mais recente
+      const latestWeekId = allWeeks[0].id;
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/ranking_tracks?week_id=eq.${latestWeekId}&select=*&order=rank`,
+        { headers: SB_HEADERS }
+      );
+      if (res.ok) {
+        const tracks = await res.json();
+        if (tracks && tracks.length > 0) {
+          allTracks = tracks;
+          await Promise.allSettled([artistGenresPromise]);
+          enrichTrackGenres(allTracks);
+          buildGenreFilters();
+          render();
+          loadMissingThumbnails();
+          return;
+        }
+      }
+    }
+  } catch (e) { console.warn("Fallback: erro ao carregar ranking do Supabase:", e); }
 
   try {
     const res = await fetch("data/ranking.json");
     if (!res.ok) throw new Error("Arquivo não encontrado");
     const data = await res.json();
     allTracks = data.tracks || [];
-    document.getElementById("week-badge").textContent = data.week_label || "";
+    // Fallback: mostrar label no select
+    const select = document.getElementById("week-select");
+    select.innerHTML = `<option>${esc(data.week_label || "")}</option>`;
+    select.disabled = true;
     await Promise.allSettled([artistGenresPromise]);
     enrichTrackGenres(allTracks);
     buildGenreFilters();
     render();
     loadMissingThumbnails();
   } catch (e) {
-    list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${e.message}</small></div>`;
+    list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${esc(e.message)}</small></div>`;
   }
 }
 
 // ── Event listeners ─────────────────────────────────────────────────────────
+document.getElementById("week-select").addEventListener("change", e => {
+  const weekId = parseInt(e.target.value, 10);
+  if (weekId) loadRankingByWeek(weekId);
+});
+
 document.getElementById("filters").addEventListener("click", e => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
