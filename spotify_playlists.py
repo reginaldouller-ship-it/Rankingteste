@@ -197,7 +197,7 @@ def sync_genre_playlist(token, playlist_id, new_tracks, max_tracks=101):
                 json_data={"uris": batch},
             )
 
-    added = len(new_uris_set - set(current_uris))
+    added = len(set(final_uris) - set(current_uris))
     return added
 
 
