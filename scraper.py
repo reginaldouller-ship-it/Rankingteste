@@ -7,10 +7,11 @@ Gera ranking combinado por soma de streams e persiste no Supabase.
 import requests
 from bs4 import BeautifulSoup
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import re
 import time
 import os
+import unicodedata
 from collections import Counter
 
 HEADERS = {
@@ -29,9 +30,10 @@ SUPABASE_SERVICE_KEY  = os.environ.get("SUPABASE_SERVICE_KEY", "")
 _token_cache = {"token": None, "expires_at": 0}
 
 # Regex para split de múltiplos artistas em títulos do YouTube
-# NÃO faz split em " e " — preserva duos como "Felipe e Rodrigo"
+# Faz split em: vírgula, "feat.", "ft."
+# NÃO faz split em "&" nem "e" — preserva duplas como "Henrique & Juliano", "Felipe e Rodrigo"
 _FEAT_RE = re.compile(
-    r'\s+(?:feat\.?|ft\.?)\s+|\s*[,&]\s*(?=\S)',
+    r'\s+(?:feat\.?|ft\.?)\s+|\s*,\s*(?=\S)',
     re.IGNORECASE,
 )
 
@@ -113,12 +115,15 @@ def _sb_upsert_artists(sb, ranking):
     print(f"  ✅ {len(rows)} artistas sincronizados")
 
 
-def _sb_save_ranking(sb, ranking, week_label):
+def _sb_save_ranking(sb, ranking, week_label, week_end_date=None):
     """Salva a semana e todos os tracks no Supabase."""
-    week_res = sb.table("ranking_weeks").insert({
+    row = {
         "week_label":   week_label,
         "generated_at": datetime.now(timezone.utc).isoformat(),
-    }).execute()
+    }
+    if week_end_date:
+        row["week_end_date"] = week_end_date
+    week_res = sb.table("ranking_weeks").insert(row).execute()
     week_id = week_res.data[0]["id"]
 
     track_rows = [
@@ -444,6 +449,13 @@ def resolve_genre(entry, artist_genres_map, track_overrides, api_artist_genres):
     return guess_genre(entry.get("artist", ""), entry.get("title", ""))
 
 
+def normalize_artist_name(name):
+    """Normaliza nome de artista: Unicode NFC + strip.
+    Evita duplicatas como 'Mc Jacaré' (NFD) vs 'Mc Jacaré' (NFC).
+    """
+    return unicodedata.normalize("NFC", name.strip())
+
+
 # ── Histórico ─────────────────────────────────────────────────────────────────
 
 def normalize(text):
@@ -493,9 +505,26 @@ def update_history(ranking, history, sb=None):
 
 # ── Scrapers ──────────────────────────────────────────────────────────────────
 
+def extract_week_date(soup, source="spotify"):
+    """Extrai a data 'week ending' do cabeçalho da página kworb.
+    Spotify: 'Spotify Weekly Chart - Brazil - 2026/04/02'
+    YouTube: 'YouTube Brazil - Week ending 2026/04/02'
+    Retorna string 'YYYY-MM-DD' ou None.
+    """
+    text = soup.get_text()
+    m = re.search(r'(\d{4}/\d{2}/\d{2})', text)
+    if m:
+        date_str = m.group(1).replace("/", "-")
+        print(f"  📅 {source} week ending: {date_str}")
+        return date_str
+    print(f"  ⚠️ Não foi possível extrair data da semana ({source})")
+    return None
+
+
 def scrape_spotify():
     print("📡 Buscando Spotify BR Weekly...")
     soup = fetch(SPOTIFY_URL)
+    week_date = extract_week_date(soup, "Spotify")
     tracks = []
     rows = soup.select("table tr")[1:]
     for row in rows:
@@ -518,7 +547,7 @@ def scrape_spotify():
                 if m:
                     spotify_id = m.group(1)
             elif "/artist/" in href:
-                artist_names.append(link.get_text(strip=True))
+                artist_names.append(normalize_artist_name(link.get_text(strip=True)))
         if not track_name:
             continue
         streams = parse_streams(cols[6].get_text(strip=True))
@@ -536,7 +565,7 @@ def scrape_spotify():
         if int(pos) >= 200:
             break
     print(f"  ✅ {len(tracks)} músicas do Spotify")
-    return tracks
+    return tracks, week_date
 
 
 def scrape_youtube():
@@ -556,8 +585,8 @@ def scrape_youtube():
             parts = full_text.split(" - ", 1)
             artist_raw = parts[0].strip()
             track_name = parts[1].strip()
-            artist_parts = [a.strip() for a in _FEAT_RE.split(artist_raw) if a.strip()]
-            artist_names = artist_parts if artist_parts else [artist_raw]
+            artist_parts = [normalize_artist_name(a) for a in _FEAT_RE.split(artist_raw) if a.strip()]
+            artist_names = artist_parts if artist_parts else [normalize_artist_name(artist_raw)]
             artist_name = artist_names[0]
         else:
             artist_name = ""
@@ -675,9 +704,11 @@ def run():
     prev_lookup = {_track_key(e["artist"], e["title"]): e["rank"] for e in prev_ranking}
     history = load_history(sb)
 
-    spotify_tracks = scrape_spotify()
+    spotify_tracks, spotify_week_date = scrape_spotify()
     time.sleep(2)
     youtube_tracks = scrape_youtube()
+    # Usar a data do kworb (Spotify como referência principal)
+    week_end_date = spotify_week_date
     ranking = match_tracks(spotify_tracks, youtube_tracks)
 
     # Calcular trend
@@ -738,13 +769,19 @@ def run():
     for e in ranking:
         e.pop("_api_artist_ids", None)
 
-    week_label = f"Semana de {datetime.now().strftime('%d/%m/%Y')}"
+    # Gerar week_label a partir da data real do kworb
+    if week_end_date:
+        d = datetime.strptime(week_end_date, "%Y-%m-%d")
+        week_start = d - timedelta(days=6)
+        week_label = f"Semana {week_start.strftime('%d/%m')} — {d.strftime('%d/%m/%Y')}"
+    else:
+        week_label = f"Semana de {datetime.now().strftime('%d/%m/%Y')}"
 
     # Persistir no Supabase
     if sb:
         try:
             _sb_upsert_artists(sb, ranking)
-            _sb_save_ranking(sb, ranking, week_label)
+            _sb_save_ranking(sb, ranking, week_label, week_end_date)
         except Exception as e:
             print(f"⚠️  Falha ao salvar no Supabase: {e}")
 
@@ -753,9 +790,10 @@ def run():
 
     # Salvar ranking.json local (fallback para o site estático)
     output = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "week_label":   week_label,
-        "tracks":       ranking,
+        "generated_at":  datetime.now(timezone.utc).isoformat(),
+        "week_label":    week_label,
+        "week_end_date": week_end_date,
+        "tracks":        ranking,
     }
     with open("data/ranking.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)

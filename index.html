@@ -27,28 +27,135 @@
       flex-wrap: wrap;
     }
     .logo { font-size: 1.25rem; }
-    .week-select {
+    /* ── WEEK PICKER (estilo Spotify) ── */
+    .week-picker-wrap { position: relative; }
+    .week-picker-btn {
       font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--text);
       background: var(--surface2);
       border: 1px solid var(--border);
-      padding: 5px 28px 5px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
       cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='%237a7a8c'%3E%3Cpath d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       transition: border-color 0.15s;
-      outline: none;
+      white-space: nowrap;
     }
-    .week-select:hover { border-color: rgba(255,255,255,0.2); }
-    .week-select:focus { border-color: var(--accent); }
-    .week-select option {
+    .week-picker-btn:hover { border-color: rgba(255,255,255,0.2); }
+    .week-picker-btn.open { border-color: var(--accent); }
+    .week-picker-btn svg { width: 12px; height: 12px; fill: var(--muted); transition: transform 0.2s; }
+    .week-picker-btn.open svg { transform: rotate(180deg); }
+
+    .week-calendar {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
       background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      padding: 16px;
+      z-index: 200;
+      display: none;
+      min-width: 520px;
+    }
+    .week-calendar.open { display: block; }
+
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .cal-nav {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 18px; padding: 4px 8px;
+      border-radius: 6px; transition: all 0.15s;
+    }
+    .cal-nav:hover { background: var(--surface2); color: var(--text); }
+    .cal-months {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 24px;
+      justify-content: center;
+    }
+    .cal-month-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 8px;
       color: var(--text);
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 32px);
+      grid-auto-rows: 32px;
+      row-gap: 2px;
+      column-gap: 0;
+      text-align: center;
+      justify-content: center;
+    }
+    .cal-dow {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      line-height: 32px;
+    }
+    .cal-day {
+      font-size: 12px;
+      line-height: 32px;
+      border-radius: 6px;
+      color: var(--muted);
+      cursor: default;
+      transition: background 0.1s, color 0.1s;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    .cal-day.empty { visibility: hidden; }
+    .cal-day.has-data {
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .cal-day.has-data:hover {
+      background: var(--surface2);
+    }
+    .cal-day.in-week {
+      background: rgba(108,99,255,0.15);
+      color: var(--text);
+      border-radius: 0;
+    }
+    .cal-day.week-start { border-radius: 6px 0 0 6px; }
+    .cal-day.week-end { border-radius: 0 6px 6px 0; }
+    .cal-day.selected {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+    .cal-day.future {
+      opacity: 0.25;
+    }
+
+    @media (max-width: 600px) {
+      .week-calendar {
+        min-width: auto;
+        width: calc(100vw - 2rem);
+        left: auto;
+        right: -1rem;
+        transform: none;
+      }
+      .cal-months {
+        grid-template-columns: 1fr;
+      }
     }
     .platform-pills { display: flex; gap: 8px; }
     .pill {
@@ -344,9 +451,20 @@
 <header>
   <div class="header-inner">
     <div><div class="logo">Ranking<span>BR</span></div></div>
-    <select id="week-select" class="week-select" disabled>
-      <option>carregando...</option>
-    </select>
+    <div class="week-picker-wrap">
+      <button class="week-picker-btn" id="week-picker-btn" disabled>
+        <span id="week-picker-label">carregando...</span>
+        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="week-calendar" id="week-calendar">
+        <div class="cal-header">
+          <button class="cal-nav" id="cal-prev">←</button>
+          <div></div>
+          <button class="cal-nav" id="cal-next">→</button>
+        </div>
+        <div class="cal-months" id="cal-months"></div>
+      </div>
+    </div>
     <div class="platform-pills">
       <div class="pill"><span class="dot" style="background:var(--sp)"></span>Spotify</div>
       <div class="pill"><span class="dot" style="background:var(--yt)"></span>YouTube</div>
@@ -737,30 +855,171 @@ async function loadTrackOverrides() {
   } catch (e) { console.warn("Erro ao carregar overrides:", e); }
 }
 
-// ── Semanas disponíveis ─────────────────────────────────────────────────────
-let allWeeks = [];  // [{id, week_label, generated_at}]
+// ── Semanas + Calendário estilo Spotify ─────────────────────────────────────
+let allWeeks = [];       // [{id, week_label, week_end_date, generated_at}]
+let selectedWeekId = null;
+let calViewDate = new Date();  // mês exibido no calendário
+
+const MONTHS_PT = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+                   "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const DAYS_PT = ["Do","Se","Te","Qu","Qu","Se","Sá"];
 
 async function loadWeeks() {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/ranking_weeks?select=id,week_label,generated_at&order=generated_at.desc`,
+      `${SUPABASE_URL}/rest/v1/ranking_weeks?select=id,week_label,week_end_date,generated_at&order=generated_at.desc`,
       { headers: SB_HEADERS }
     );
     if (res.ok) {
       allWeeks = await res.json();
-      populateWeekSelect();
+      if (allWeeks.length > 0) {
+        selectedWeekId = allWeeks[0].id;
+        updatePickerLabel();
+        // Posicionar calendário no mês da semana mais recente
+        const d = allWeeks[0].week_end_date
+          ? new Date(allWeeks[0].week_end_date + "T00:00:00")
+          : new Date();
+        calViewDate = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+        document.getElementById("week-picker-btn").disabled = false;
+      }
     }
   } catch (e) { console.warn("Erro ao carregar semanas:", e); }
 }
 
-function populateWeekSelect() {
-  const select = document.getElementById("week-select");
-  if (!allWeeks.length) return;
-  select.innerHTML = allWeeks.map(w =>
-    `<option value="${w.id}">${esc(w.week_label)}</option>`
-  ).join("");
-  select.disabled = false;
+function updatePickerLabel() {
+  const w = allWeeks.find(w => w.id === selectedWeekId);
+  const label = document.getElementById("week-picker-label");
+  if (w) {
+    if (w.week_end_date) {
+      const d = new Date(w.week_end_date + "T00:00:00");
+      label.textContent = `Semana de ${d.getDate()} de ${MONTHS_PT[d.getMonth()].substring(0,3)}`;
+    } else {
+      label.textContent = w.week_label;
+    }
+  }
 }
+
+function getWeekDates(weekEndStr) {
+  if (!weekEndStr) return [];
+  const end = new Date(weekEndStr + "T00:00:00");
+  const dates = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(end);
+    d.setDate(end.getDate() - i);
+    dates.push(d.toISOString().slice(0, 10));
+  }
+  return dates;
+}
+
+function renderCalendar() {
+  const container = document.getElementById("cal-months");
+  const weekDatesMap = {};  // "YYYY-MM-DD" -> weekId
+  const weekEndDates = new Set();
+
+  for (const w of allWeeks) {
+    if (!w.week_end_date) continue;
+    weekEndDates.add(w.week_end_date);
+    for (const d of getWeekDates(w.week_end_date)) {
+      weekDatesMap[d] = w.id;
+    }
+  }
+
+  // Semana selecionada
+  const selWeek = allWeeks.find(w => w.id === selectedWeekId);
+  const selDates = selWeek?.week_end_date ? new Set(getWeekDates(selWeek.week_end_date)) : new Set();
+  const selEnd = selWeek?.week_end_date || "";
+  const selStart = selDates.size ? [...selDates].sort()[0] : "";
+
+  const today = new Date();
+  let html = "";
+
+  for (let m = 0; m < 2; m++) {
+    const viewMonth = new Date(calViewDate.getFullYear(), calViewDate.getMonth() + m, 1);
+    const year = viewMonth.getFullYear();
+    const month = viewMonth.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDow = viewMonth.getDay();  // 0=Sun
+
+    html += `<div>
+      <div class="cal-month-title">${MONTHS_PT[month]} ${year}</div>
+      <div class="cal-grid">`;
+
+    for (const d of DAYS_PT) html += `<div class="cal-dow">${d}</div>`;
+    for (let i = 0; i < firstDow; i++) html += `<div class="cal-day empty"></div>`;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const isFuture = new Date(dateStr + "T00:00:00") > today;
+      const wId = weekDatesMap[dateStr];
+      const isInSel = selDates.has(dateStr);
+      const isSelected = dateStr === selEnd;
+      const isWeekStart = dateStr === selStart;
+      const isWeekEnd = dateStr === selEnd && isInSel;
+
+      let cls = "cal-day";
+      if (isFuture) cls += " future";
+      if (wId) cls += " has-data";
+      if (isInSel && !isSelected) cls += " in-week";
+      if (isSelected) cls += " selected";
+      if (isWeekStart) cls += " week-start";
+      if (isWeekEnd && !isSelected) cls += " week-end";
+
+      html += `<div class="${cls}" data-date="${dateStr}" ${wId ? `data-week-id="${wId}"` : ""}>${day}</div>`;
+    }
+
+    html += `</div></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function toggleCalendar() {
+  const cal = document.getElementById("week-calendar");
+  const btn = document.getElementById("week-picker-btn");
+  const isOpen = cal.classList.toggle("open");
+  btn.classList.toggle("open", isOpen);
+  if (isOpen) renderCalendar();
+}
+
+// ── Calendar event listeners
+document.getElementById("week-picker-btn").addEventListener("click", e => {
+  e.stopPropagation();
+  toggleCalendar();
+});
+
+document.getElementById("cal-prev").addEventListener("click", e => {
+  e.stopPropagation();
+  calViewDate.setMonth(calViewDate.getMonth() - 1);
+  renderCalendar();
+});
+
+document.getElementById("cal-next").addEventListener("click", e => {
+  e.stopPropagation();
+  calViewDate.setMonth(calViewDate.getMonth() + 1);
+  renderCalendar();
+});
+
+document.getElementById("cal-months").addEventListener("click", e => {
+  const day = e.target.closest(".cal-day.has-data");
+  if (!day) return;
+  const weekId = parseInt(day.dataset.weekId, 10);
+  if (weekId && weekId !== selectedWeekId) {
+    selectedWeekId = weekId;
+    updatePickerLabel();
+    renderCalendar();
+    loadRankingByWeek(weekId);
+  }
+  toggleCalendar();
+});
+
+document.addEventListener("click", e => {
+  const cal = document.getElementById("week-calendar");
+  const btn = document.getElementById("week-picker-btn");
+  if (cal.classList.contains("open") && !cal.contains(e.target) && !btn.contains(e.target)) {
+    cal.classList.remove("open");
+    btn.classList.remove("open");
+  }
+});
 
 async function loadRankingByWeek(weekId) {
   const list = document.getElementById("track-list");
@@ -793,7 +1052,6 @@ async function loadRanking() {
   try {
     await Promise.all([loadGenres(), loadTrackOverrides(), loadWeeks()]);
     if (allWeeks.length > 0) {
-      // Carregar a semana mais recente
       const latestWeekId = allWeeks[0].id;
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/ranking_tracks?week_id=eq.${latestWeekId}&select=*&order=rank`,
@@ -819,10 +1077,7 @@ async function loadRanking() {
     if (!res.ok) throw new Error("Arquivo não encontrado");
     const data = await res.json();
     allTracks = data.tracks || [];
-    // Fallback: mostrar label no select
-    const select = document.getElementById("week-select");
-    select.innerHTML = `<option>${esc(data.week_label || "")}</option>`;
-    select.disabled = true;
+    document.getElementById("week-picker-label").textContent = data.week_label || "";
     await Promise.allSettled([artistGenresPromise]);
     enrichTrackGenres(allTracks);
     buildGenreFilters();
@@ -834,10 +1089,6 @@ async function loadRanking() {
 }
 
 // ── Event listeners ─────────────────────────────────────────────────────────
-document.getElementById("week-select").addEventListener("change", e => {
-  const weekId = parseInt(e.target.value, 10);
-  if (weekId) loadRankingByWeek(weekId);
-});
 
 document.getElementById("filters").addEventListener("click", e => {
   const btn = e.target.closest(".filter-btn");
