@@ -6,29 +6,8 @@
   <title>Ranking Brasil Semanal — Spotify + YouTube</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --sp: #1DB954;
-      --yt: #FF0000;
-      --gold: #F5A623;
-      --silver: #9BA8B5;
-      --bronze: #C97B3B;
-      --bg: #0d0d0f;
-      --surface: #16161a;
-      --surface2: #1e1e24;
-      --border: rgba(255,255,255,0.07);
-      --text: #f0f0f4;
-      --muted: #7a7a8c;
-      --accent: #6C63FF;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
     /* ── HEADER ── */
     header {
       background: var(--surface);
@@ -47,21 +26,136 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+    .logo { font-size: 1.25rem; }
+    /* ── WEEK PICKER (estilo Spotify) ── */
+    .week-picker-wrap { position: relative; }
+    .week-picker-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--text);
-    }
-    .logo span { color: var(--accent); }
-    .week-badge {
-      font-size: 12px;
-      color: var(--muted);
       background: var(--surface2);
       border: 1px solid var(--border);
-      padding: 4px 10px;
+      padding: 6px 14px;
       border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.15s;
+      white-space: nowrap;
+    }
+    .week-picker-btn:hover { border-color: rgba(255,255,255,0.2); }
+    .week-picker-btn.open { border-color: var(--accent); }
+    .week-picker-btn svg { width: 12px; height: 12px; fill: var(--muted); transition: transform 0.2s; }
+    .week-picker-btn.open svg { transform: rotate(180deg); }
+
+    .week-calendar {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      padding: 16px;
+      z-index: 200;
+      display: none;
+      min-width: 520px;
+    }
+    .week-calendar.open { display: block; }
+
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .cal-nav {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 18px; padding: 4px 8px;
+      border-radius: 6px; transition: all 0.15s;
+    }
+    .cal-nav:hover { background: var(--surface2); color: var(--text); }
+    .cal-months {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 24px;
+      justify-content: center;
+    }
+    .cal-month-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 32px);
+      grid-auto-rows: 32px;
+      row-gap: 2px;
+      column-gap: 0;
+      text-align: center;
+      justify-content: center;
+    }
+    .cal-dow {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      line-height: 32px;
+    }
+    .cal-day {
+      font-size: 12px;
+      line-height: 32px;
+      border-radius: 6px;
+      color: var(--muted);
+      cursor: default;
+      transition: background 0.1s, color 0.1s;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    .cal-day.empty { visibility: hidden; }
+    .cal-day.has-data {
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .cal-day.has-data:hover {
+      background: var(--surface2);
+    }
+    .cal-day.in-week {
+      background: rgba(108,99,255,0.15);
+      color: var(--text);
+      border-radius: 0;
+    }
+    .cal-day.week-start { border-radius: 6px 0 0 6px; }
+    .cal-day.week-end { border-radius: 0 6px 6px 0; }
+    .cal-day.selected {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+    .cal-day.future {
+      opacity: 0.25;
+    }
+
+    @media (max-width: 600px) {
+      .week-calendar {
+        min-width: auto;
+        width: calc(100vw - 2rem);
+        left: auto;
+        right: -1rem;
+        transform: none;
+      }
+      .cal-months {
+        grid-template-columns: 1fr;
+      }
     }
     .platform-pills { display: flex; gap: 8px; }
     .pill {
@@ -343,14 +437,6 @@
       border-top: 1px solid var(--border); margin-top: 2rem;
     }
     footer a { color: var(--muted); }
-    .btn-manage-genres {
-      display: inline-block; background: var(--accent); color: #fff;
-      padding: 6px 14px; border-radius: 8px;
-      font-weight: 600; font-size: .85rem;
-      text-decoration: none; white-space: nowrap;
-    }
-    .btn-manage-genres:hover { opacity: .85; }
-
     @media (max-width: 520px) {
       .track { grid-template-columns: 28px 40px 1fr auto; gap: 8px; }
       .track-thumb { width: 40px; height: 40px; }
@@ -365,7 +451,20 @@
 <header>
   <div class="header-inner">
     <div><div class="logo">Ranking<span>BR</span></div></div>
-    <div id="week-badge" class="week-badge">carregando...</div>
+    <div class="week-picker-wrap">
+      <button class="week-picker-btn" id="week-picker-btn" disabled>
+        <span id="week-picker-label">carregando...</span>
+        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="week-calendar" id="week-calendar">
+        <div class="cal-header">
+          <button class="cal-nav" id="cal-prev">←</button>
+          <div></div>
+          <button class="cal-nav" id="cal-next">→</button>
+        </div>
+        <div class="cal-months" id="cal-months"></div>
+      </div>
+    </div>
     <div class="platform-pills">
       <div class="pill"><span class="dot" style="background:var(--sp)"></span>Spotify</div>
       <div class="pill"><span class="dot" style="background:var(--yt)"></span>YouTube</div>
@@ -390,23 +489,16 @@
 </main>
 
 <footer>
-  Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank">kworb Spotify BR</a> +
-  <a href="https://kworb.net/youtube/insights/br.html" target="_blank">kworb YouTube BR</a> •
+  Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank" rel="noopener">kworb Spotify BR</a> +
+  <a href="https://kworb.net/youtube/insights/br.html" target="_blank" rel="noopener">kworb YouTube BR</a> •
   Atualizado toda sexta-feira
 </footer>
 
-<script>
+<script type="module">
+import { SUPABASE_URL, SB_HEADERS, sbRpc, esc } from './config.js';
+
 const EMOJIS = ["🔥","🎵","⭐","👑","💥","🎤","🎶","🥁","🎸","🎧",
                 "🌟","💫","🏆","🎼","🎹","🎺","🎻","🪗","🪘","🥳"];
-
-const SUPABASE_URL  = "https://suzcbyzidnzzahwrkveh.supabase.co";
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1emNieXppZG56emFod3JrdmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTE0OTgsImV4cCI6MjA5MDYyNzQ5OH0.78EgRoCBydInVGZNlTOmUzlNjcJhgu04VtKrzN9TSyQ";
-const SB_HEADERS    = {
-  "Content-Type":  "application/json",
-  "apikey":        SUPABASE_ANON,
-  "Authorization": `Bearer ${SUPABASE_ANON}`,
-  "Prefer":        "return=representation",
-};
 
 let allTracks      = [];
 let allGenres      = [];        // [{id, name}] — fonte oficial
@@ -447,8 +539,10 @@ async function retryThumbnail(img) {
         if (track) track.thumbnail_url = data.thumbnail_url;
       }
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Fallback thumbnail falhou:", e); }
 }
+// Expor para onerror inline
+window.retryThumbnail = retryThumbnail;
 
 function loadMissingThumbnails() {
   document.querySelectorAll('.track-thumb img[data-spotify]').forEach(img => {
@@ -463,15 +557,7 @@ function copyLink(url, btn) {
     setTimeout(() => { btn.innerHTML = orig; }, 1500);
   });
 }
-
-async function sbRpc(fn, params) {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
-    method: "POST", headers: SB_HEADERS, body: JSON.stringify(params),
-  });
-  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.message || `HTTP ${r.status}`); }
-  const txt = await r.text();
-  return txt ? JSON.parse(txt) : null;
-}
+window.copyLink = copyLink;
 
 function filterByPlatform(tracks) {
   if (currentFilter === "both")    return tracks.filter(t => t.in_both);
@@ -489,11 +575,9 @@ function getEffectiveGenre(t) {
 function applyGenreFilter(tracks) {
   if (currentGenres.size === 0) return tracks;
   return tracks.filter(t => {
-    // Override manual tem prioridade
     if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined) {
       return currentGenres.has(trackOverrides[t.spotify_id] || "outros");
     }
-    // Multi-gênero via _genres (artistas com 2+ gêneros)
     const genres = t._genres || [t.genre || "outros"];
     return genres.some(g => currentGenres.has(g));
   });
@@ -501,14 +585,12 @@ function applyGenreFilter(tracks) {
 
 function buildGenreFilters() {
   const container = document.getElementById("genre-filters");
-  // Count genres across ALL tracks
   const genreCounts = {};
   for (const t of allTracks) {
     for (const g of (t._genres || [t.genre || "outros"])) {
       genreCounts[g] = (genreCounts[g] || 0) + 1;
     }
   }
-  const genres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
   container.innerHTML = "";
 
   const platformFiltered = filterByPlatform(allTracks);
@@ -558,7 +640,7 @@ function render() {
     const filterPos = i + 1;
     const globalPos = t.rank;
 
-    const thumbContent = `<img src="${t.thumbnail_url || ''}" width="52" height="52" alt="" data-spotify="${t.spotify_url || ''}" onerror="retryThumbnail(this)">`;
+    const thumbContent = `<img src="${esc(t.thumbnail_url || '')}" width="52" height="52" alt="" data-spotify="${esc(t.spotify_url || '')}" onerror="retryThumbnail(this)">`;
     let rankHtml;
     if (hasGenreFilter) {
       const fpCls = filterPos === 1 ? "rank-1" : filterPos === 2 ? "rank-2" : filterPos === 3 ? "rank-3" : "";
@@ -571,12 +653,13 @@ function render() {
       rankHtml = `<div class="rank-num ${gpCls}">${globalPos}</div>`;
     }
 
+    const safeSpotifyUrl = esc(t.spotify_url || '');
     const spButtons = t.spotify_url
-      ? `<a class="sp-link" href="${t.spotify_url}" target="_blank" rel="noopener">
+      ? `<a class="sp-link" href="${safeSpotifyUrl}" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
           Ouvir
         </a>
-        <button class="copy-btn" onclick="copyLink('${t.spotify_url}', this)" title="Copiar link">${copyIconSvg}</button>`
+        <button class="copy-btn" onclick="copyLink('${safeSpotifyUrl}', this)" title="Copiar link">${copyIconSvg}</button>`
       : "";
 
     const bothTag    = t.in_both ? `<span class="tag-both">✦ nas duas</span>` : "";
@@ -598,9 +681,9 @@ function render() {
     const hasOverride    = t.spotify_id && trackOverrides[t.spotify_id] != null;
     const overrideBtn    = t.spotify_id
       ? `<button class="genre-override-btn${hasOverride ? " has-override" : ""}"
-           data-spotify-id="${t.spotify_id}"
-           data-current-genre="${effectiveGenre}"
-           title="${hasOverride ? "Gênero manual: " + effectiveGenre : "Definir gênero manualmente"}"
+           data-spotify-id="${esc(t.spotify_id)}"
+           data-current-genre="${esc(effectiveGenre)}"
+           title="${hasOverride ? "Gênero manual: " + esc(effectiveGenre) : "Definir gênero manualmente"}"
            onclick="openGenreDropdown(this, event)">⋯</button>`
       : "";
 
@@ -609,8 +692,8 @@ function render() {
       ${rankHtml}
       <div class="track-thumb">${thumbContent}</div>
       <div class="track-info">
-        <div class="track-title">${t.title}</div>
-        <div class="track-artist">${(t.artists && t.artists.length > 1) ? t.artists.join(", ") : (t.artist || "")}</div>
+        <div class="track-title">${esc(t.title)}</div>
+        <div class="track-artist">${esc((t.artists && t.artists.length > 1) ? t.artists.join(", ") : (t.artist || ""))}</div>
         <div class="track-tags">${trendBadge}${bothTag}${spButtons}</div>
       </div>
       <div class="track-meta">
@@ -655,7 +738,7 @@ async function loadArtistGenres() {
         return;
       }
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Fallback: erro ao carregar gêneros do Supabase:", e); }
 
   try {
     const res = await fetch("data/genres.json");
@@ -664,13 +747,7 @@ async function loadArtistGenres() {
     for (const [name, genres] of Object.entries(data.artist_genres || {})) {
       artistGenresMap[name.toLowerCase()] = Array.isArray(genres) ? genres : [genres];
     }
-  } catch (_) {}
-}
-
-function refreshGenreFilters() {
-  const container = document.getElementById("genre-filters");
-  container.innerHTML = "";
-  buildGenreFilters();
+  } catch (e) { console.warn("Fallback: erro ao carregar genres.json:", e); }
 }
 
 // ── Genre Override UI ───────────────────────────────────────────────────────
@@ -725,6 +802,7 @@ function openGenreDropdown(btn, event) {
   dropdown.style.left = left + "px";
   dropdown.style.top  = top  + "px";
 }
+window.openGenreDropdown = openGenreDropdown;
 
 document.addEventListener("click", () => {
   if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
@@ -764,7 +842,7 @@ async function loadGenres() {
   try {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/genres?select=id,name&order=name`, { headers: SB_HEADERS });
     if (r.ok) allGenres = await r.json();
-  } catch (_) {}
+  } catch (e) { console.warn("Erro ao carregar gêneros:", e); }
 }
 
 async function loadTrackOverrides() {
@@ -774,29 +852,188 @@ async function loadTrackOverrides() {
       const rows = await r.json();
       for (const row of rows) trackOverrides[row.spotify_id] = row.genre_name;
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Erro ao carregar overrides:", e); }
 }
 
-async function loadRanking() {
+// ── Semanas + Calendário estilo Spotify ─────────────────────────────────────
+let allWeeks = [];       // [{id, week_label, week_end_date, generated_at}]
+let selectedWeekId = null;
+let calViewDate = new Date();  // mês exibido no calendário
+
+const MONTHS_PT = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+                   "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const DAYS_PT = ["Do","Se","Te","Qu","Qu","Se","Sá"];
+
+async function loadWeeks() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ranking_weeks?select=id,week_label,week_end_date,generated_at&order=generated_at.desc`,
+      { headers: SB_HEADERS }
+    );
+    if (res.ok) {
+      allWeeks = await res.json();
+      if (allWeeks.length > 0) {
+        selectedWeekId = allWeeks[0].id;
+        updatePickerLabel();
+        // Posicionar calendário no mês da semana mais recente
+        const d = allWeeks[0].week_end_date
+          ? new Date(allWeeks[0].week_end_date + "T00:00:00")
+          : new Date();
+        calViewDate = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+        document.getElementById("week-picker-btn").disabled = false;
+      }
+    }
+  } catch (e) { console.warn("Erro ao carregar semanas:", e); }
+}
+
+function updatePickerLabel() {
+  const w = allWeeks.find(w => w.id === selectedWeekId);
+  const label = document.getElementById("week-picker-label");
+  if (w) {
+    if (w.week_end_date) {
+      const d = new Date(w.week_end_date + "T00:00:00");
+      label.textContent = `Semana de ${d.getDate()} de ${MONTHS_PT[d.getMonth()].substring(0,3)}`;
+    } else {
+      label.textContent = w.week_label;
+    }
+  }
+}
+
+function getWeekDates(weekEndStr) {
+  if (!weekEndStr) return [];
+  const end = new Date(weekEndStr + "T00:00:00");
+  const dates = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(end);
+    d.setDate(end.getDate() - i);
+    dates.push(d.toISOString().slice(0, 10));
+  }
+  return dates;
+}
+
+function renderCalendar() {
+  const container = document.getElementById("cal-months");
+  const weekDatesMap = {};  // "YYYY-MM-DD" -> weekId
+  const weekEndDates = new Set();
+
+  for (const w of allWeeks) {
+    if (!w.week_end_date) continue;
+    weekEndDates.add(w.week_end_date);
+    for (const d of getWeekDates(w.week_end_date)) {
+      weekDatesMap[d] = w.id;
+    }
+  }
+
+  // Semana selecionada
+  const selWeek = allWeeks.find(w => w.id === selectedWeekId);
+  const selDates = selWeek?.week_end_date ? new Set(getWeekDates(selWeek.week_end_date)) : new Set();
+  const selEnd = selWeek?.week_end_date || "";
+  const selStart = selDates.size ? [...selDates].sort()[0] : "";
+
+  const today = new Date();
+  let html = "";
+
+  for (let m = 0; m < 2; m++) {
+    const viewMonth = new Date(calViewDate.getFullYear(), calViewDate.getMonth() + m, 1);
+    const year = viewMonth.getFullYear();
+    const month = viewMonth.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDow = viewMonth.getDay();  // 0=Sun
+
+    html += `<div>
+      <div class="cal-month-title">${MONTHS_PT[month]} ${year}</div>
+      <div class="cal-grid">`;
+
+    for (const d of DAYS_PT) html += `<div class="cal-dow">${d}</div>`;
+    for (let i = 0; i < firstDow; i++) html += `<div class="cal-day empty"></div>`;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const isFuture = new Date(dateStr + "T00:00:00") > today;
+      const wId = weekDatesMap[dateStr];
+      const isInSel = selDates.has(dateStr);
+      const isSelected = dateStr === selEnd;
+      const isWeekStart = dateStr === selStart;
+      const isWeekEnd = dateStr === selEnd && isInSel;
+
+      let cls = "cal-day";
+      if (isFuture) cls += " future";
+      if (wId) cls += " has-data";
+      if (isInSel && !isSelected) cls += " in-week";
+      if (isSelected) cls += " selected";
+      if (isWeekStart) cls += " week-start";
+      if (isWeekEnd && !isSelected) cls += " week-end";
+
+      html += `<div class="${cls}" data-date="${dateStr}" ${wId ? `data-week-id="${wId}"` : ""}>${day}</div>`;
+    }
+
+    html += `</div></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function toggleCalendar() {
+  const cal = document.getElementById("week-calendar");
+  const btn = document.getElementById("week-picker-btn");
+  const isOpen = cal.classList.toggle("open");
+  btn.classList.toggle("open", isOpen);
+  if (isOpen) renderCalendar();
+}
+
+// ── Calendar event listeners
+document.getElementById("week-picker-btn").addEventListener("click", e => {
+  e.stopPropagation();
+  toggleCalendar();
+});
+
+document.getElementById("cal-prev").addEventListener("click", e => {
+  e.stopPropagation();
+  calViewDate.setMonth(calViewDate.getMonth() - 1);
+  renderCalendar();
+});
+
+document.getElementById("cal-next").addEventListener("click", e => {
+  e.stopPropagation();
+  calViewDate.setMonth(calViewDate.getMonth() + 1);
+  renderCalendar();
+});
+
+document.getElementById("cal-months").addEventListener("click", e => {
+  const day = e.target.closest(".cal-day.has-data");
+  if (!day) return;
+  const weekId = parseInt(day.dataset.weekId, 10);
+  if (weekId && weekId !== selectedWeekId) {
+    selectedWeekId = weekId;
+    updatePickerLabel();
+    renderCalendar();
+    loadRankingByWeek(weekId);
+  }
+  toggleCalendar();
+});
+
+document.addEventListener("click", e => {
+  const cal = document.getElementById("week-calendar");
+  const btn = document.getElementById("week-picker-btn");
+  if (cal.classList.contains("open") && !cal.contains(e.target) && !btn.contains(e.target)) {
+    cal.classList.remove("open");
+    btn.classList.remove("open");
+  }
+});
+
+async function loadRankingByWeek(weekId) {
   const list = document.getElementById("track-list");
-  const artistGenresPromise = loadArtistGenres();
+  list.innerHTML = '<div class="empty">Carregando ranking...</div>';
 
   try {
-    await Promise.all([loadGenres(), loadTrackOverrides()]);
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/latest_ranking?select=*&order=rank`, { headers: SB_HEADERS });
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ranking_tracks?week_id=eq.${weekId}&select=*&order=rank`,
+      { headers: SB_HEADERS }
+    );
     if (res.ok) {
       const tracks = await res.json();
       if (tracks && tracks.length > 0) {
         allTracks = tracks;
-        const weekRes = await fetch(
-          `${SUPABASE_URL}/rest/v1/ranking_weeks?select=week_label&order=generated_at.desc&limit=1`,
-          { headers: SB_HEADERS }
-        );
-        if (weekRes.ok) {
-          const weeks = await weekRes.json();
-          document.getElementById("week-badge").textContent = weeks[0]?.week_label || "";
-        }
-        await Promise.allSettled([artistGenresPromise]);
         enrichTrackGenres(allTracks);
         buildGenreFilters();
         render();
@@ -804,25 +1041,55 @@ async function loadRanking() {
         return;
       }
     }
-  } catch (_) {}
+  } catch (e) { console.warn("Erro ao carregar ranking da semana:", e); }
+  list.innerHTML = '<div class="empty">Nenhum dado para esta semana.</div>';
+}
+
+async function loadRanking() {
+  const list = document.getElementById("track-list");
+  const artistGenresPromise = loadArtistGenres();
+
+  try {
+    await Promise.all([loadGenres(), loadTrackOverrides(), loadWeeks()]);
+    if (allWeeks.length > 0) {
+      const latestWeekId = allWeeks[0].id;
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/ranking_tracks?week_id=eq.${latestWeekId}&select=*&order=rank`,
+        { headers: SB_HEADERS }
+      );
+      if (res.ok) {
+        const tracks = await res.json();
+        if (tracks && tracks.length > 0) {
+          allTracks = tracks;
+          await Promise.allSettled([artistGenresPromise]);
+          enrichTrackGenres(allTracks);
+          buildGenreFilters();
+          render();
+          loadMissingThumbnails();
+          return;
+        }
+      }
+    }
+  } catch (e) { console.warn("Fallback: erro ao carregar ranking do Supabase:", e); }
 
   try {
     const res = await fetch("data/ranking.json");
     if (!res.ok) throw new Error("Arquivo não encontrado");
     const data = await res.json();
     allTracks = data.tracks || [];
-    document.getElementById("week-badge").textContent = data.week_label || "";
+    document.getElementById("week-picker-label").textContent = data.week_label || "";
     await Promise.allSettled([artistGenresPromise]);
     enrichTrackGenres(allTracks);
     buildGenreFilters();
     render();
     loadMissingThumbnails();
   } catch (e) {
-    list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${e.message}</small></div>`;
+    list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${esc(e.message)}</small></div>`;
   }
 }
 
 // ── Event listeners ─────────────────────────────────────────────────────────
+
 document.getElementById("filters").addEventListener("click", e => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
