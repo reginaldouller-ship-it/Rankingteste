@@ -114,6 +114,9 @@
 - [ ] Testar botão "Sync Playlists" no site publicado
 - [ ] Testar alteração de gênero multi-seleção + sync + verificar playlist no Spotify
 
+### Discografia de Artistas
+- [ ] **BUG**: Discografia puxa músicas que não são do artista (ex: Felipe Amorim pos 9 "Dois Gumes", pos 32 "Tiffany") — vem de álbuns `appears_on`/compilações onde o artista não participa em todas as faixas. Filtrar para incluir apenas tracks onde o artista está listado como performer.
+
 ### Melhorias Futuras
 - [ ] Verificar RLS no Supabase para todas as tabelas acessiveis via anon key
 - [ ] Otimizar thumbnail loading com batching (Promise.allSettled em grupos de 5)
