@@ -114,8 +114,13 @@
 - [ ] Testar botão "Sync Playlists" no site publicado
 - [ ] Testar alteração de gênero multi-seleção + sync + verificar playlist no Spotify
 
-### Discografia de Artistas
+### Discografia de Artistas (07/04/2026)
 - [x] **BUG corrigido**: Discografia puxava músicas de álbuns `appears_on` onde o artista não era performer — filtro adicionado na Edge Function `sync-artist-discography` (v4): só inclui tracks onde `artistId` está no array `artists` da faixa.
+- [x] **BUG corrigido**: Timeout de 150s (status 546) — Edge Function v8 busca tracks de álbuns em paralelo (5 concurrent com Promise.allSettled) em vez de sequencial.
+- [x] Badge **FEAT** exibido nas músicas onde o artista é participante, não o artista principal.
+- [x] Lista de todos os artistas da faixa exibida abaixo do nome da música na discografia.
+- [x] Colunas `track_artists` (text[]) e `is_featured` (boolean) adicionadas à tabela `artist_tracks`.
+- [ ] Testar fluxo completo: sincronizar artista → verificar badge FEAT e participantes corretos.
 
 ### Melhorias Futuras
 - [ ] Verificar RLS no Supabase para todas as tabelas acessiveis via anon key
