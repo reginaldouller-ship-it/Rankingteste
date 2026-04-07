@@ -53,26 +53,35 @@ def load_ranking_with_genres():
         if row.get("name") and row.get("genres"):
             artist_genres[row["name"].lower()] = row["genres"]
 
-    # 4. Buscar track overrides
-    overrides_rows = sb_get("track_overrides_with_genres?select=spotify_id,genre_name")
+    # 4. Buscar track overrides (agora retorna array de gêneros)
+    overrides_rows = sb_get("track_overrides_with_genres?select=spotify_id,genre_names")
     track_overrides = {}
     for row in overrides_rows:
-        if row.get("spotify_id") and row.get("genre_name"):
-            track_overrides[row["spotify_id"]] = row["genre_name"]
+        if row.get("spotify_id") and row.get("genre_names"):
+            track_overrides[row["spotify_id"]] = row["genre_names"]
 
-    # 5. Resolver gênero de cada track
+    # 5. Resolver gêneros de cada track (multi-gênero)
     for t in tracks:
         # Track override tem prioridade
         if t.get("spotify_id") and t["spotify_id"] in track_overrides:
-            t["genre"] = track_overrides[t["spotify_id"]]
+            t["_genres"] = track_overrides[t["spotify_id"]]
+            t["genre"] = t["_genres"][0]
             continue
 
-        # Gênero do artista
-        artist_name = (t.get("artist") or "").lower()
-        if artist_name in artist_genres and artist_genres[artist_name]:
-            t["genre"] = artist_genres[artist_name][0]
-        elif not t.get("genre"):
-            t["genre"] = "outros"
+        # Gêneros dos artistas (union de todos)
+        artists = t.get("artists") or [t.get("artist", "")]
+        genre_set = set()
+        for a in artists:
+            a_genres = artist_genres.get(a.lower(), [])
+            genre_set.update(a_genres)
+
+        if genre_set:
+            t["_genres"] = sorted(genre_set)
+            t["genre"] = t["_genres"][0]
+        else:
+            t["_genres"] = [t.get("genre") or "outros"]
+            if not t.get("genre"):
+                t["genre"] = "outros"
 
     return tracks
 

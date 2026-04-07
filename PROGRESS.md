@@ -96,11 +96,23 @@
 - [ ] Verificar que GitHub Actions roda o scraper na proxima sexta-feira
 - [ ] Confirmar que o deploy no GitHub Pages funciona com os novos arquivos (config.js, styles.css, genres-app.js)
 
+### Multi-Gênero + Playlist Links (07/04/2026)
+- [x] Migração DB: PK `track_overrides` alterada de `(spotify_id)` para `(spotify_id, genre_id)`
+- [x] Nova RPC `toggle_track_override` — adiciona/remove gênero sem substituir os existentes
+- [x] View `track_overrides_with_genres` agora retorna `genre_names` (array)
+- [x] Dropdown de override com checkboxes multi-seleção (toggle individual)
+- [x] `getEffectiveGenres()` retorna array de gêneros (override ou artista)
+- [x] `enrichTrackGenres()` coleta gêneros de TODOS os artistas (union)
+- [x] Tracks com artista multi-gênero aparecem em todos os filtros correspondentes
+- [x] Backend `sync_all_playlists` coloca track em múltiplas playlists de gênero
+- [x] Seção "Playlists no Spotify" na home com links diretos para cada playlist
+- [x] Playlist "Mais Tocadas" usa multi-gênero para inclusão
+
 ### Playlists Spotify
-- [ ] Criar GitHub PAT (fine-grained) com permissão `actions:write` no repo Rankingteste
-- [ ] Salvar PAT como secret `GITHUB_PAT` no Supabase (Dashboard → Edge Functions → Secrets)
+- [x] Criar GitHub PAT (fine-grained) com permissão `actions:write` no repo Rankingteste
+- [x] Salvar PAT como secret `GITHUB_PAT` no Supabase (Dashboard → Edge Functions → Secrets)
 - [ ] Testar botão "Sync Playlists" no site publicado
-- [ ] Testar alteração de gênero + sync + verificar playlist no Spotify
+- [ ] Testar alteração de gênero multi-seleção + sync + verificar playlist no Spotify
 
 ### Melhorias Futuras
 - [ ] Verificar RLS no Supabase para todas as tabelas acessiveis via anon key

@@ -221,14 +221,15 @@ def sync_all_playlists(token, ranking_tracks):
     user_id = _get_user_id(token)
     print(f"  👤 Usuário: {user_id}")
 
-    # Agrupar tracks por gênero (case-insensitive key para matching)
+    # Agrupar tracks por gênero (multi-gênero: track aparece em todas as playlists)
     genres = {}
     for track in ranking_tracks:
-        genre = track.get("genre", "outros")
-        genre_key = genre.lower().strip()
-        if genre_key not in genres:
-            genres[genre_key] = {"display_name": genre, "tracks": []}
-        genres[genre_key]["tracks"].append(track)
+        track_genres = track.get("_genres") or [track.get("genre", "outros")]
+        for genre in track_genres:
+            genre_key = genre.lower().strip()
+            if genre_key not in genres:
+                genres[genre_key] = {"display_name": genre, "tracks": []}
+            genres[genre_key]["tracks"].append(track)
 
     # Sincronizar playlist por gênero
     total_synced = 0
@@ -251,7 +252,8 @@ def sync_all_playlists(token, ranking_tracks):
     # Playlist especial "Mais Tocadas"
     mais_tocadas_tracks = [
         t for t in ranking_tracks
-        if t.get("genre", "").lower().strip() in MAIS_TOCADAS_GENRES
+        if any(g.lower().strip() in MAIS_TOCADAS_GENRES
+               for g in (t.get("_genres") or [t.get("genre", "")]))
     ]
     # Já vem ordenado pelo rank geral
     mais_tocadas_tracks.sort(key=lambda t: t.get("rank", 9999))

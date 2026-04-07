@@ -63,9 +63,9 @@ def _sb_load_genres_config(sb):
     res = sb.table("artists_with_genres").select("name,genres").execute()
     artist_genres = {row["name"]: row["genres"] for row in res.data}
 
-    # Overrides por track (via view com join já resolvido)
+    # Overrides por track (view agora retorna array de genre_names)
     ov_res = sb.table("track_overrides_with_genres").select("*").execute()
-    track_overrides = {row["spotify_id"]: row["genre_name"] for row in ov_res.data}
+    track_overrides = {row["spotify_id"]: row["genre_names"] for row in ov_res.data}
 
     # Lista de gêneros
     g_res = sb.table("genres").select("name").order("name").execute()
@@ -437,47 +437,40 @@ def load_genres_config(sb=None):
         return {"genres": [], "artist_genres": {}, "track_overrides": {}}
 
 
-def resolve_genre(entry, artist_genres_map, track_overrides, api_artist_genres):
-    """Cadeia de prioridade para resolução de gênero:
-    1. Override manual por track (spotify_id)
-    2. Gênero manual do artista (1-2: principal; 3+: maioria)
+def resolve_genres(entry, artist_genres_map, track_overrides, api_artist_genres):
+    """Resolve gêneros de um track (retorna lista).
+    Cadeia de prioridade:
+    1. Override manual por track (spotify_id) — retorna lista de gêneros
+    2. Gêneros dos artistas (union de todos)
     3. Gênero da API Spotify (artist_ids)
     4. guess_genre() por palavras-chave
     """
     spotify_id = entry.get("spotify_id", "")
     if spotify_id and spotify_id in track_overrides:
-        return track_overrides[spotify_id]
+        ov = track_overrides[spotify_id]
+        return ov if isinstance(ov, list) else [ov]
 
     artists = [a for a in (entry.get("artists") or [entry.get("artist", "")]) if a]
 
-    if artists:
-        if len(artists) <= 2:
-            genres_primary = artist_genres_map.get(artists[0], [])
-            if genres_primary:
-                return genres_primary[0]
-        else:
-            defined = []
-            for a in artists:
-                g = artist_genres_map.get(a, [])
-                if g:
-                    defined.append(g[0])
-            if defined:
-                counts = Counter(defined)
-                max_count = max(counts.values())
-                candidates = [g for g, c in counts.items() if c == max_count]
-                if len(candidates) == 1:
-                    return candidates[0]
-                primary_genres = artist_genres_map.get(artists[0], [])
-                if primary_genres and primary_genres[0] in candidates:
-                    return primary_genres[0]
-                return candidates[0]
+    # Collect genres from all artists
+    genre_set = set()
+    for a in artists:
+        a_genres = artist_genres_map.get(a, [])
+        genre_set.update(a_genres)
+    if genre_set:
+        return sorted(genre_set)
 
     for aid in entry.get("_api_artist_ids", []):
         g = api_artist_genres.get(aid)
         if g:
-            return g
+            return [g]
 
-    return guess_genre(entry.get("artist", ""), entry.get("title", ""))
+    return [guess_genre(entry.get("artist", ""), entry.get("title", ""))]
+
+
+def resolve_genre(entry, artist_genres_map, track_overrides, api_artist_genres):
+    """Backward compat — returns first genre."""
+    return resolve_genres(entry, artist_genres_map, track_overrides, api_artist_genres)[0]
 
 
 def normalize_artist_name(name):
@@ -786,12 +779,14 @@ def run():
           f"{len(genres_config['track_overrides'])} overrides)...")
     enriched_genre = 0
     for e in ranking:
-        e["genre"] = resolve_genre(
+        genres_list = resolve_genres(
             e,
             genres_config["artist_genres"],
             genres_config["track_overrides"],
             api_artist_genres,
         )
+        e["_genres"] = genres_list
+        e["genre"] = genres_list[0]
         if e["genre"] != "outros":
             enriched_genre += 1
     print(f"  ✅ {enriched_genre} tracks classificados")

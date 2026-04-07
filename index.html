@@ -370,6 +370,62 @@
     .genre-dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
     .genre-dropdown-remove { color: #ef4444; }
     .genre-dropdown-remove:hover { background: rgba(239,68,68,0.1); }
+    .genre-dropdown-check {
+      display: inline-block; width: 14px; text-align: center;
+      margin-right: 2px; font-size: 12px;
+    }
+
+    /* ── PLAYLIST LINKS ── */
+    .playlist-links-wrap {
+      max-width: 860px;
+      margin: 1rem auto 0;
+      padding: 0 1rem;
+    }
+    .playlist-links-toggle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+    .playlist-links-toggle:hover { color: var(--text); }
+    .playlist-links-toggle svg { width: 14px; height: 14px; fill: var(--sp); }
+    .playlist-links-toggle .chevron { width: 10px; height: 10px; fill: var(--muted); transition: transform 0.2s; }
+    .playlist-links-toggle.open .chevron { transform: rotate(180deg); }
+    .playlist-links {
+      display: none;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .playlist-links.open { display: flex; }
+    .playlist-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--sp);
+      background: rgba(29,185,84,0.08);
+      border: 1px solid rgba(29,185,84,0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .playlist-link:hover { background: rgba(29,185,84,0.18); border-color: rgba(29,185,84,0.4); }
+    .playlist-link svg { width: 12px; height: 12px; fill: var(--sp); }
+    .playlist-link.special { color: var(--gold); background: rgba(255,215,0,0.08); border-color: rgba(255,215,0,0.2); }
+    .playlist-link.special:hover { background: rgba(255,215,0,0.18); border-color: rgba(255,215,0,0.4); }
+    .playlist-link.special svg { fill: var(--gold); }
 
     .track-thumb {
       width: 52px; height: 52px;
@@ -510,6 +566,15 @@
 
 <div class="genre-filters" id="genre-filters"></div>
 
+<div class="playlist-links-wrap">
+  <button class="playlist-links-toggle" id="playlist-toggle">
+    <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+    Playlists no Spotify
+    <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+  </button>
+  <div class="playlist-links" id="playlist-links"></div>
+</div>
+
 <main>
   <div class="track-list" id="track-list">
     <div class="empty">Carregando ranking...</div>
@@ -533,7 +598,7 @@ let allGenres      = [];        // [{id, name}] — fonte oficial
 let artistGenresMap = {};       // { "nome artista lowercase": ["genero1", "genero2"] }
 let currentFilter  = "all";
 let currentGenres  = new Set(); // multi-seleção; vazio = todos
-let trackOverrides = {};        // { spotify_id: genre_name }
+let trackOverrides = {};        // { spotify_id: ["genre1", "genre2", ...] }
 const thumbnailCache = new Map();
 
 function emoji(i) { return EMOJIS[i % EMOJIS.length]; }
@@ -594,21 +659,17 @@ function filterByPlatform(tracks) {
   return tracks;
 }
 
-function getEffectiveGenre(t) {
-  if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined)
-    return trackOverrides[t.spotify_id] || "outros";
-  return t.genre || "outros";
+function getEffectiveGenres(t) {
+  if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined) {
+    const ov = trackOverrides[t.spotify_id];
+    return ov.length > 0 ? ov : ["outros"];
+  }
+  return t._genres || [t.genre || "outros"];
 }
 
 function applyGenreFilter(tracks) {
   if (currentGenres.size === 0) return tracks;
-  return tracks.filter(t => {
-    if (t.spotify_id && trackOverrides[t.spotify_id] !== undefined) {
-      return currentGenres.has(trackOverrides[t.spotify_id] || "outros");
-    }
-    const genres = t._genres || [t.genre || "outros"];
-    return genres.some(g => currentGenres.has(g));
-  });
+  return tracks.filter(t => getEffectiveGenres(t).some(g => currentGenres.has(g)));
 }
 
 function buildGenreFilters() {
@@ -622,10 +683,7 @@ function buildGenreFilters() {
   container.innerHTML = "";
 
   const platformFiltered = filterByPlatform(allTracks);
-  const platformGenres = new Set(
-    platformFiltered.flatMap(t => t._genres || [t.genre || "outros"])
-  );
-  const presentGenres    = new Set(platformFiltered.map(t => getEffectiveGenre(t)));
+  const presentGenres    = new Set(platformFiltered.flatMap(t => getEffectiveGenres(t)));
   const knownNames       = allGenres.map(g => g.name);
   const extraGenres      = [...presentGenres].filter(g => !knownNames.includes(g));
   const genreNames       = [...knownNames, ...extraGenres];
@@ -705,13 +763,12 @@ function render() {
     const ytRow = t.streams_youtube
       ? `<div class="plat-row"><span class="plat-dot" style="background:var(--yt)"></span>#${t.pos_youtube ?? "—"} · ${fmt(t.streams_youtube)}</div>` : "";
 
-    const effectiveGenre = getEffectiveGenre(t);
-    const hasOverride    = t.spotify_id && trackOverrides[t.spotify_id] != null;
-    const overrideBtn    = t.spotify_id
+    const effectiveGenres = getEffectiveGenres(t);
+    const hasOverride     = t.spotify_id && trackOverrides[t.spotify_id] != null;
+    const overrideBtn     = t.spotify_id
       ? `<button class="genre-override-btn${hasOverride ? " has-override" : ""}"
            data-spotify-id="${esc(t.spotify_id)}"
-           data-current-genre="${esc(effectiveGenre)}"
-           title="${hasOverride ? "Gênero manual: " + esc(effectiveGenre) : "Definir gênero manualmente"}"
+           title="${hasOverride ? "Gêneros manuais: " + effectiveGenres.map(g => esc(g)).join(", ") : "Definir gênero manualmente"}"
            onclick="openGenreDropdown(this, event)">⋯</button>`
       : "";
 
@@ -736,16 +793,16 @@ function render() {
 
 function enrichTrackGenres(tracks) {
   for (const t of tracks) {
-    const artistCount = t.artists ? t.artists.length : 1;
-    if (artistCount === 1) {
-      const name = (t.artist || "").toLowerCase();
-      const mapped = artistGenresMap[name];
-      if (mapped && mapped.length > 0) {
-        t._genres = mapped;
-        continue;
-      }
+    const artists = t.artists && t.artists.length > 0
+      ? t.artists
+      : [t.artist || ""];
+    // Collect genres from all artists (union, deduplicated)
+    const genreSet = new Set();
+    for (const a of artists) {
+      const mapped = artistGenresMap[a.toLowerCase()];
+      if (mapped) mapped.forEach(g => genreSet.add(g));
     }
-    t._genres = [t.genre || "outros"];
+    t._genres = genreSet.size > 0 ? [...genreSet].sort() : [t.genre || "outros"];
   }
 }
 
@@ -786,36 +843,37 @@ function openGenreDropdown(btn, event) {
   if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
 
   const spotifyId    = btn.dataset.spotifyId;
-  const currentGenre = btn.dataset.currentGenre;
+  const currentOv    = trackOverrides[spotifyId] || [];
   const dropdown     = document.createElement("div");
   dropdown.className = "genre-dropdown open";
 
   const title = document.createElement("div");
   title.className   = "genre-dropdown-title";
-  title.textContent = "Gênero da música";
+  title.textContent = "Gêneros da música (multi-seleção)";
   dropdown.appendChild(title);
 
   for (const g of allGenres) {
+    const isChecked = currentOv.includes(g.name);
     const item = document.createElement("button");
-    item.className   = "genre-dropdown-item" + (g.name === currentGenre ? " current" : "");
-    item.textContent = (g.name === currentGenre ? "✓ " : "") + g.name;
-    item.addEventListener("click", async () => {
-      dropdown.remove(); activeDropdown = null;
-      await setTrackGenre(spotifyId, g.name, btn);
+    item.className   = "genre-dropdown-item" + (isChecked ? " current" : "");
+    item.innerHTML    = `<span class="genre-dropdown-check">${isChecked ? "✓" : ""}</span>${esc(g.name)}`;
+    item.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      await toggleTrackGenre(spotifyId, g.name, btn, item);
     });
     dropdown.appendChild(item);
   }
 
-  if (trackOverrides[spotifyId] != null) {
+  if (currentOv.length > 0) {
     const div = document.createElement("div");
     div.className = "genre-dropdown-divider";
     dropdown.appendChild(div);
     const removeItem = document.createElement("button");
     removeItem.className   = "genre-dropdown-item genre-dropdown-remove";
-    removeItem.textContent = "✕ Remover gênero manual";
+    removeItem.textContent = "✕ Remover todos os gêneros manuais";
     removeItem.addEventListener("click", async () => {
       dropdown.remove(); activeDropdown = null;
-      await removeTrackGenre(spotifyId, btn);
+      await removeAllTrackGenres(spotifyId, btn);
     });
     dropdown.appendChild(removeItem);
   }
@@ -836,22 +894,42 @@ document.addEventListener("click", () => {
   if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
 });
 
-async function setTrackGenre(spotifyId, genreName, btn) {
-  btn.disabled = true;
+async function toggleTrackGenre(spotifyId, genreName, overrideBtn, dropdownItem) {
+  dropdownItem.style.opacity = "0.5";
   try {
-    await sbRpc("set_track_override", { p_spotify_id: spotifyId, p_genre_name: genreName });
-    trackOverrides[spotifyId] = genreName;
-    btn.dataset.currentGenre  = genreName;
-    btn.classList.add("has-override");
-    btn.title = "Gênero manual: " + genreName;
+    const result = await sbRpc("toggle_track_override", { p_spotify_id: spotifyId, p_genre_name: genreName });
+    const action = (typeof result === "string") ? result : result?.[0] || "added";
+
+    // Update local state
+    let ov = trackOverrides[spotifyId] || [];
+    if (action === "removed") {
+      ov = ov.filter(g => g !== genreName);
+    } else {
+      if (!ov.includes(genreName)) ov = [...ov, genreName].sort();
+    }
+    if (ov.length > 0) {
+      trackOverrides[spotifyId] = ov;
+      overrideBtn.classList.add("has-override");
+      overrideBtn.title = "Gêneros manuais: " + ov.join(", ");
+    } else {
+      delete trackOverrides[spotifyId];
+      overrideBtn.classList.remove("has-override");
+      overrideBtn.title = "Definir gênero manualmente";
+    }
+
+    // Update checkbox in dropdown
+    const isNowChecked = ov.includes(genreName);
+    dropdownItem.className = "genre-dropdown-item" + (isNowChecked ? " current" : "");
+    dropdownItem.querySelector(".genre-dropdown-check").textContent = isNowChecked ? "✓" : "";
+
     buildGenreFilters();
     render();
   } catch (e) {
-    alert("Erro ao salvar gênero: " + e.message);
-  } finally { btn.disabled = false; }
+    alert("Erro ao alterar gênero: " + e.message);
+  } finally { dropdownItem.style.opacity = "1"; }
 }
 
-async function removeTrackGenre(spotifyId, btn) {
+async function removeAllTrackGenres(spotifyId, btn) {
   btn.disabled = true;
   try {
     await sbRpc("remove_track_override", { p_spotify_id: spotifyId });
@@ -861,7 +939,7 @@ async function removeTrackGenre(spotifyId, btn) {
     buildGenreFilters();
     render();
   } catch (e) {
-    alert("Erro ao remover gênero: " + e.message);
+    alert("Erro ao remover gêneros: " + e.message);
   } finally { btn.disabled = false; }
 }
 
@@ -875,10 +953,13 @@ async function loadGenres() {
 
 async function loadTrackOverrides() {
   try {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/track_overrides_with_genres?select=spotify_id,genre_name`, { headers: SB_HEADERS });
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/track_overrides_with_genres?select=spotify_id,genre_names`, { headers: SB_HEADERS });
     if (r.ok) {
       const rows = await r.json();
-      for (const row of rows) trackOverrides[row.spotify_id] = row.genre_name;
+      for (const row of rows) {
+        if (row.genre_names && row.genre_names.length > 0)
+          trackOverrides[row.spotify_id] = row.genre_names;
+      }
     }
   } catch (e) { console.warn("Erro ao carregar overrides:", e); }
 }
@@ -1115,6 +1196,48 @@ async function loadRanking() {
     list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${esc(e.message)}</small></div>`;
   }
 }
+
+// ── Playlist Links ─────────────────────────────────────────────────────────
+const PLAYLIST_IDS = {
+  "Brega Funk": "3hO4bxbMML4XVGoSLvguCH",
+  "Forró/Piseiro": "42XvQpLuypmKeLVIzI8zrB",
+  "Funk": "1OAMmORYbpxeLOU3srTdwz",
+  "Gospel": "39Qx10Z7Cnmzs1tyF5gKvn",
+  "Internacional": "2sbRrFEgKqCLFXiNdRN5wv",
+  "MPB": "4z4VgO1tJBTY0aWmeTZjuu",
+  "Pagode": "21g0pQ30BYCslgerLnVwbg",
+  "Phonk": "0XIAAkUCJdLzgkj9m6ulfB",
+  "Pop": "7q84Ys2VdZyoKhBtcX6baO",
+  "Rap": "0NNjPWHDcqwhCGbGGEFW9N",
+  "Reggae": "2579S0EpHlUUXtRhQhLUHv",
+  "Sertanejo": "2BbHaXj2AspRnMlrvshObE",
+  "Trap": "46xNTb451ekd55fZ7z8VJA",
+  "outros": "2PvArn0a9CkT241zpWxmcR",
+  "Mais Tocadas": "4XjdQxJWuZwpitMkTCV4Ze",
+};
+
+function renderPlaylistLinks() {
+  const container = document.getElementById("playlist-links");
+  const spIcon = `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`;
+
+  // "Mais Tocadas" first (special), then genres alphabetically
+  const special = "Mais Tocadas";
+  const genres = Object.keys(PLAYLIST_IDS).filter(g => g !== special).sort();
+
+  let html = `<a class="playlist-link special" href="https://open.spotify.com/playlist/${PLAYLIST_IDS[special]}" target="_blank" rel="noopener">${spIcon} ${esc(special)}</a>`;
+  for (const g of genres) {
+    html += `<a class="playlist-link" href="https://open.spotify.com/playlist/${PLAYLIST_IDS[g]}" target="_blank" rel="noopener">${spIcon} ${esc(g)}</a>`;
+  }
+  container.innerHTML = html;
+}
+
+document.getElementById("playlist-toggle").addEventListener("click", () => {
+  const toggle = document.getElementById("playlist-toggle");
+  const links  = document.getElementById("playlist-links");
+  toggle.classList.toggle("open");
+  links.classList.toggle("open");
+  if (links.classList.contains("open") && !links.innerHTML) renderPlaylistLinks();
+});
 
 // ── Event listeners ─────────────────────────────────────────────────────────
 
