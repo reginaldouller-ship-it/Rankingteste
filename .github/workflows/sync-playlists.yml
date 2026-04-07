@@ -1,0 +1,39 @@
+name: Sincronizar Playlists Spotify
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-playlists:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install requests beautifulsoup4
+
+      - name: Sincronizar playlists
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python sync_playlists_runner.py
+
+      - name: Commit playlist_ids.json (se alterado)
+        run: |
+          git config user.name "Ranking Bot"
+          git config user.email "bot@ranking-brasil.com"
+          git add data/playlist_ids.json
+          git diff --staged --quiet || git commit -m "🎶 Playlists sincronizadas — $(date '+%d/%m/%Y %H:%M')"
+          git push origin main || true

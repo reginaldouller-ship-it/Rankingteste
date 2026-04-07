@@ -157,6 +157,30 @@
         grid-template-columns: 1fr;
       }
     }
+    /* ── SYNC PLAYLISTS BUTTON ── */
+    .btn-sync-playlists {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(29,185,84,0.12);
+      color: var(--sp);
+      border: 1px solid rgba(29,185,84,0.3);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-sync-playlists:hover { background: rgba(29,185,84,0.22); border-color: rgba(29,185,84,0.5); }
+    .btn-sync-playlists:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-sync-playlists.syncing svg { animation: spin 1s linear infinite; }
+    .btn-sync-playlists.success { background: rgba(29,185,84,0.25); border-color: var(--sp); }
+    .btn-sync-playlists.error { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); color: #ef4444; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
     .platform-pills { display: flex; gap: 8px; }
     .pill {
       display: flex;
@@ -470,6 +494,10 @@
       <div class="pill"><span class="dot" style="background:var(--yt)"></span>YouTube</div>
     </div>
     <a href="genres.html" class="btn-manage-genres">Gerenciar Gêneros</a>
+    <button class="btn-sync-playlists" id="btn-sync-playlists" title="Sincronizar playlists Spotify com os gêneros atuais">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+      <span id="sync-label">Sync Playlists</span>
+    </button>
   </div>
 </header>
 
@@ -1111,6 +1139,45 @@ document.getElementById("genre-filters").addEventListener("click", e => {
   buildGenreFilters();
   render();
   loadMissingThumbnails();
+});
+
+// ── Sync Playlists via Supabase Edge Function → GitHub Actions ─────────────
+document.getElementById("btn-sync-playlists").addEventListener("click", async () => {
+  const btn = document.getElementById("btn-sync-playlists");
+  const label = document.getElementById("sync-label");
+  if (btn.disabled) return;
+
+  btn.disabled = true;
+  btn.className = "btn-sync-playlists syncing";
+  label.textContent = "Sincronizando...";
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/trigger-playlist-sync`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${SB_HEADERS.apikey}`,
+      },
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      btn.className = "btn-sync-playlists success";
+      label.textContent = "Workflow disparado!";
+    } else {
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+  } catch (e) {
+    btn.className = "btn-sync-playlists error";
+    label.textContent = "Erro!";
+    console.error("Sync error:", e);
+  }
+
+  setTimeout(() => {
+    btn.className = "btn-sync-playlists";
+    label.textContent = "Sync Playlists";
+    btn.disabled = false;
+  }, 4000);
 });
 
 loadRanking();

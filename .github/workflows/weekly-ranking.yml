@@ -27,6 +27,7 @@ jobs:
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python scraper.py
@@ -38,14 +39,16 @@ jobs:
           # Salvar arquivos gerados pelo scraper antes de sincronizar com o remote
           cp data/ranking.json /tmp/ranking.json
           cp data/ranking_history.json /tmp/ranking_history.json 2>/dev/null || true
+          cp data/playlist_ids.json /tmp/playlist_ids.json 2>/dev/null || true
           # Sincronizar com o estado mais recente do remote (evita conflitos)
           git fetch origin main
           git reset --hard origin/main
           # Restaurar arquivos gerados
           cp /tmp/ranking.json data/ranking.json
           cp /tmp/ranking_history.json data/ranking_history.json 2>/dev/null || true
+          cp /tmp/playlist_ids.json data/playlist_ids.json 2>/dev/null || true
           # Commitar e fazer push
-          git add data/ranking.json data/ranking_history.json
+          git add data/ranking.json data/ranking_history.json data/playlist_ids.json
           git diff --staged --quiet || git commit -m "🎵 Ranking atualizado — $(date '+%d/%m/%Y')"
           git push origin main
 

@@ -26,8 +26,10 @@ SPOTIFY_CLIENT_ID     = os.environ.get("SPOTIFY_CLIENT_ID", "")
 SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "")
 SUPABASE_URL          = os.environ.get("SUPABASE_URL", "")
 SUPABASE_SERVICE_KEY  = os.environ.get("SUPABASE_SERVICE_KEY", "")
+SPOTIFY_REFRESH_TOKEN = os.environ.get("SPOTIFY_REFRESH_TOKEN", "")
 
 _token_cache = {"token": None, "expires_at": 0}
+_user_token_cache = {"token": None, "expires_at": 0}
 
 # Regex para split de múltiplos artistas em títulos do YouTube
 # Faz split em: vírgula, "feat.", "ft."
@@ -191,6 +193,35 @@ def get_spotify_token():
         return token
     except Exception as e:
         print(f"❌ Falha ao obter token Spotify: {e}")
+        return None
+
+
+def get_spotify_user_token(refresh_token=None):
+    """Obtém access_token via refresh_token (OAuth user scope, para playlists)."""
+    refresh_token = refresh_token or SPOTIFY_REFRESH_TOKEN
+    if _user_token_cache["token"] and time.time() < _user_token_cache["expires_at"]:
+        return _user_token_cache["token"]
+    if not refresh_token or not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
+        return None
+    try:
+        r = requests.post(
+            "https://accounts.spotify.com/api/token",
+            data={
+                "grant_type": "refresh_token",
+                "refresh_token": refresh_token,
+            },
+            auth=(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET),
+            timeout=10,
+        )
+        r.raise_for_status()
+        data = r.json()
+        token = data["access_token"]
+        _user_token_cache["token"] = token
+        _user_token_cache["expires_at"] = time.time() + data.get("expires_in", 3600) - 60
+        print(f"🔑 Token Spotify (user) obtido (expira em {data.get('expires_in', 3600)}s)")
+        return token
+    except Exception as e:
+        print(f"❌ Falha ao obter token Spotify (user): {e}")
         return None
 
 
@@ -801,6 +832,15 @@ def run():
     print(f"\n✅ data/ranking.json gerado — {len(ranking)} músicas")
     if ranking:
         print(f"🥇 #1: {ranking[0]['artist']} — {ranking[0]['title']} ({ranking[0]['total_streams']:,} streams)")
+
+    # Sincronizar playlists Spotify
+    if SPOTIFY_REFRESH_TOKEN:
+        user_token = get_spotify_user_token()
+        if user_token:
+            from spotify_playlists import sync_all_playlists
+            sync_all_playlists(user_token, ranking)
+    else:
+        print("⚠️  SPOTIFY_REFRESH_TOKEN não configurado — playlists não atualizadas")
 
 
 if __name__ == "__main__":
