@@ -322,6 +322,16 @@
     .rank-gold { color: var(--gold); }
     .rank-silver { color: var(--silver); }
     .rank-bronze { color: var(--bronze); }
+    .track-name-cell { display: flex; align-items: center; gap: 6px; }
+    .feat-badge {
+      flex-shrink: 0;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+      padding: 2px 5px; border-radius: 3px;
+      background: var(--sp); color: #000;
+      opacity: 0.85;
+    }
+    .track-artists { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .row-featured td { opacity: 0.8; }
 
     @media (max-width: 680px) {
       .layout { height: auto; flex-direction: column; }
