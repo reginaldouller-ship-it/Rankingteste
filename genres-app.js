@@ -480,8 +480,12 @@ document.getElementById("btn-sync-artist").addEventListener("click", async () =>
     if (!res.ok) {
       if (data.retry_after && data.retry_after > 0) {
         resetDelay = Math.max(data.retry_after * 1000, 5000);
+        const secs = data.retry_after;
+        const waitText = secs >= 3600 ? `${Math.floor(secs / 3600)}h ${Math.floor((secs % 3600) / 60)}min`
+          : secs >= 60 ? `${Math.floor(secs / 60)}min ${secs % 60}s`
+          : `${secs}s`;
         label.textContent = "Rate limit!";
-        body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${data.retry_after}s</strong> antes de tentar novamente.</div>`;
+        body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${waitText}</strong> antes de tentar novamente.</div>`;
       } else {
         throw new Error(data.error || `HTTP ${res.status}`);
       }
