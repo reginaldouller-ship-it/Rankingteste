@@ -1,4 +1,4 @@
-import { sbGet, sbPost, sbPatch, sbDelete, sbRpc, esc } from './config.js';
+import { SUPABASE_URL, SB_HEADERS, sbGet, sbPost, sbPatch, sbDelete, sbRpc, esc } from './config.js';
 
 // ── Estado ─────────────────────────────────────────────────────────────────────
 let allArtists    = [];
@@ -194,7 +194,7 @@ function renderTable() {
 
     const mainRow = `
       <tr>
-        <td class="td-artist">${esc(a.artist)}</td>
+        <td class="td-artist"><a class="td-artist-link" data-action="open-artist" data-artist="${esc(a.artist)}">${esc(a.artist)}</a></td>
         <td class="td-count">${a.track_count}</td>
         <td class="td-genres">${genresCurrent}</td>
         <td class="td-actions">
@@ -331,6 +331,225 @@ document.getElementById("search-input").addEventListener("input", e => {
   searchTerm    = e.target.value;
   editingArtist = null;
   renderTable();
+});
+
+// ── Artist Detail Panel ──────────────────────────────────────────────────────
+let currentArtistDetail = null;
+let rateLimitTimer = null;
+
+function formatWaitTime(secs) {
+  if (secs >= 3600) return `${Math.floor(secs / 3600)}h ${Math.floor((secs % 3600) / 60)}min`;
+  if (secs >= 60) return `${Math.floor(secs / 60)}min ${secs % 60}s`;
+  return `${secs}s`;
+}
+
+function checkRateLimitCooldown() {
+  const btn = document.getElementById("btn-sync-artist");
+  const label = document.getElementById("sync-artist-label");
+  if (rateLimitTimer) { clearInterval(rateLimitTimer); rateLimitTimer = null; }
+
+  const expiresAt = parseInt(localStorage.getItem("spotify_rate_limit_expires") || "0");
+  const remaining = Math.ceil((expiresAt - Date.now()) / 1000);
+  if (remaining <= 0) {
+    localStorage.removeItem("spotify_rate_limit_expires");
+    btn.disabled = false;
+    btn.classList.remove("syncing");
+    label.textContent = "Sincronizar";
+    return false;
+  }
+
+  btn.disabled = true;
+  label.textContent = `Rate limit (${formatWaitTime(remaining)})`;
+
+  rateLimitTimer = setInterval(() => {
+    const left = Math.ceil((expiresAt - Date.now()) / 1000);
+    if (left <= 0) {
+      clearInterval(rateLimitTimer);
+      rateLimitTimer = null;
+      localStorage.removeItem("spotify_rate_limit_expires");
+      btn.disabled = false;
+      btn.classList.remove("syncing");
+      label.textContent = "Sincronizar";
+      return;
+    }
+    label.textContent = `Rate limit (${formatWaitTime(left)})`;
+  }, 30000);
+
+  return true;
+}
+
+const spIconSvg = `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`;
+
+async function openArtistDetail(artistName) {
+  currentArtistDetail = artistName;
+  const overlay = document.getElementById("artist-detail-overlay");
+  overlay.classList.add("open");
+  document.getElementById("artist-detail-title").textContent = artistName;
+  document.getElementById("artist-detail-count").textContent = "";
+  document.getElementById("artist-detail-body").innerHTML = '<div class="state-msg">Carregando discografia...</div>';
+  await loadArtistTracks(artistName);
+  checkRateLimitCooldown();
+}
+
+function closeArtistDetail() {
+  currentArtistDetail = null;
+  if (rateLimitTimer) { clearInterval(rateLimitTimer); rateLimitTimer = null; }
+  document.getElementById("artist-detail-overlay").classList.remove("open");
+}
+
+async function loadArtistTracks(artistName) {
+  const body = document.getElementById("artist-detail-body");
+  const countEl = document.getElementById("artist-detail-count");
+  try {
+    const tracks = await sbGet(
+      `artist_tracks?artist_name=eq.${encodeURIComponent(artistName)}&select=*&order=popularity.desc`
+    );
+    if (!tracks || tracks.length === 0) {
+      body.innerHTML = '<div class="state-msg">Nenhuma discografia sincronizada.<br>Clique em "Sincronizar" para buscar.</div>';
+      countEl.textContent = "";
+      return;
+    }
+    countEl.textContent = `${tracks.length} músicas`;
+    renderArtistTracks(tracks);
+  } catch (e) {
+    body.innerHTML = `<div class="state-msg">Erro: ${esc(e.message)}</div>`;
+  }
+}
+
+function formatDuration(ms) {
+  if (!ms) return "";
+  const m = Math.floor(ms / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function formatDate(d) {
+  if (!d) return "";
+  if (d.length === 4) return d;
+  if (d.length === 7) return d.split("-").reverse().slice(0, 2).join("/");
+  const parts = d.split("-");
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+function copyToClipboard(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✓";
+    setTimeout(() => { btn.textContent = orig; }, 1200);
+  });
+}
+
+function renderArtistTracks(tracks) {
+  const body = document.getElementById("artist-detail-body");
+  const rows = tracks.map((t, i) => {
+    const rank = i + 1;
+    const rankCls = rank === 1 ? "rank-gold" : rank === 2 ? "rank-silver" : rank === 3 ? "rank-bronze" : "";
+    const popWidth = Math.max(2, t.popularity * 0.6);
+    const spLink = t.spotify_url
+      ? `<span class="copy-cell"><a class="sp-link-small" href="${esc(t.spotify_url)}" target="_blank" rel="noopener">${spIconSvg} Ouvir</a><button class="btn-copy-link" data-url="${esc(t.spotify_url)}" title="Copiar link">📋</button></span>`
+      : "";
+
+    const featBadge = t.is_featured
+      ? `<span class="feat-badge">FEAT</span>`
+      : "";
+
+    const artists = Array.isArray(t.track_artists) && t.track_artists.length > 1
+      ? `<div class="track-artists">${esc(t.track_artists.join(", "))}</div>`
+      : "";
+
+    return `<tr${t.is_featured ? ' class="row-featured"' : ""}>
+      <td class="col-rank ${rankCls}">${rank}</td>
+      <td><div class="track-name-cell">${featBadge}${esc(t.track_name)}</div>${artists}</td>
+      <td style="color:var(--muted);font-size:12px">${esc(t.album_name || "")}</td>
+      <td class="col-date">${formatDate(t.release_date)}</td>
+      <td class="col-pop"><span class="pop-bar" style="width:${popWidth}px"></span><span class="pop-num">${t.popularity}</span></td>
+      <td>${spLink}</td>
+    </tr>`;
+  }).join("");
+
+  body.innerHTML = `<table class="artist-tracks-table">
+    <thead><tr><th>#</th><th>Música</th><th>Álbum</th><th>Lançamento</th><th>Popularidade</th><th>Spotify</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// Open artist from table click
+artistTbody.addEventListener("click", e => {
+  const link = e.target.closest("[data-action='open-artist']");
+  if (link) {
+    e.preventDefault();
+    openArtistDetail(link.dataset.artist);
+    return;
+  }
+});
+
+// Close overlay
+document.getElementById("btn-close-detail").addEventListener("click", closeArtistDetail);
+document.getElementById("artist-detail-overlay").addEventListener("click", e => {
+  if (e.target === e.currentTarget) closeArtistDetail();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && currentArtistDetail) closeArtistDetail();
+});
+
+// Copy link in artist detail
+document.getElementById("artist-detail-body").addEventListener("click", e => {
+  const btn = e.target.closest(".btn-copy-link");
+  if (btn) copyToClipboard(btn.dataset.url, btn);
+});
+
+// Sync artist discography
+document.getElementById("btn-sync-artist").addEventListener("click", async () => {
+  if (!currentArtistDetail) return;
+  const btn = document.getElementById("btn-sync-artist");
+  const label = document.getElementById("sync-artist-label");
+  const body = document.getElementById("artist-detail-body");
+
+  btn.disabled = true;
+  btn.classList.add("syncing");
+  label.textContent = "Buscando...";
+
+  let resetDelay = 3000;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/sync-artist-discography`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${SB_HEADERS.apikey}`,
+      },
+      body: JSON.stringify({ artist_name: currentArtistDetail }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      if (data.retry_after && data.retry_after > 0) {
+        localStorage.setItem("spotify_rate_limit_expires", String(Date.now() + data.retry_after * 1000));
+        resetDelay = Math.max(data.retry_after * 1000, 5000);
+        label.textContent = "Rate limit!";
+        body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${formatWaitTime(data.retry_after)}</strong> antes de tentar novamente.</div>`;
+        checkRateLimitCooldown();
+      } else {
+        throw new Error(data.error || `HTTP ${res.status}`);
+      }
+    } else {
+      let statusMsg = `${data.total_tracks} músicas!`;
+      if (data.rate_limit_count > 0) {
+        statusMsg += ` (${data.rate_limit_count} rate limit${data.rate_limit_count > 1 ? 's' : ''}, retry: ${data.retry_after}s)`;
+      }
+      label.textContent = statusMsg;
+      document.getElementById("artist-detail-count").textContent = `${data.total_tracks} músicas`;
+      await loadArtistTracks(currentArtistDetail);
+    }
+  } catch (e) {
+    label.textContent = "Erro!";
+    body.innerHTML = `<div class="state-msg">Erro ao sincronizar: ${esc(e.message)}</div>`;
+  }
+
+  setTimeout(() => {
+    btn.classList.remove("syncing");
+    label.textContent = "Sincronizar";
+    btn.disabled = false;
+  }, resetDelay);
 });
 
 // ── Init ──────────────────────────────────────────────────────────────────────

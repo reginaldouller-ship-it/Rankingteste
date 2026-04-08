@@ -21,7 +21,7 @@ import requests
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "")
 CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "")
 REDIRECT_URI = "https://reginaldouller-ship-it.github.io/Rankingteste/callback"
-SCOPES = "playlist-modify-public playlist-read-private playlist-read-collaborative"
+SCOPES = "playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative"
 
 
 def main():
