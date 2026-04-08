@@ -114,6 +114,17 @@
 - [ ] Testar botão "Sync Playlists" no site publicado
 - [ ] Testar alteração de gênero multi-seleção + sync + verificar playlist no Spotify
 
+### Code Review + Otimizações Spotify API (08/04/2026)
+- [x] **FIX: Crashes NoneType** — `sync_discography.py` e `scraper.py` agora verificam retorno `None` de `spotify_get`/`_spotify_get` antes de usar `.json()` ou `.get()`
+- [x] **FIX: Concorrência Edge Function** — `rateLimitCount` e `lastRetryAfter` movidos de variáveis globais para `RequestState` por request, evitando estado compartilhado entre requests concorrentes
+- [x] **FIX: Escopo OAuth** — Adicionado `playlist-modify-private` ao `SCOPES` em `spotify_auth.py` para suportar playlists privadas. Refresh token re-gerado.
+- [x] **OTIMIZAÇÃO: Batch de álbuns** — `sync_discography.py` e Edge Function agora usam `GET /v1/albums?ids=` (até 20 álbuns por request) em vez de buscar tracks álbum por álbum. Reduz ~80% das chamadas API para artistas com muitos álbuns.
+- [x] **OTIMIZAÇÃO: ALBUMS_PER_PAGE** — Edge Function aumentado de 15 para 50, reduzindo paginação desnecessária.
+- [x] **OTIMIZAÇÃO: Resiliência rate limit** — `spotify_get` no sync semanal aumentado para 5 retries, aceita Retry-After até 120s. Delay adaptativo entre artistas (5s após rate limit, 1s normal).
+- [x] **FEAT: Retry-After no frontend** — Quando a API retorna 429, exibe tempo de espera formatado (h/min/s) na tela de sync do artista.
+- [x] **FEAT: Timer persistente** — Rate limit salvo no `localStorage` com timestamp de expiração. Ao reabrir a página/painel, mostra tempo restante no botão sem sobrescrever a discografia já carregada.
+- [x] Edge Function `sync-artist-discography` atualizada para v23
+
 ### Discografia de Artistas (07/04/2026)
 - [x] **BUG corrigido**: Discografia puxava músicas de álbuns `appears_on` onde o artista não era performer — filtro adicionado na Edge Function `sync-artist-discography` (v4): só inclui tracks onde `artistId` está no array `artists` da faixa.
 - [x] **BUG corrigido**: Timeout de 150s (status 546) — Edge Function v8 busca tracks de álbuns em paralelo (5 concurrent com Promise.allSettled) em vez de sequencial.
@@ -140,6 +151,7 @@ Rankingteste-main/
   config.js            — Config Supabase compartilhada (URL, keys, helpers)
   styles.css           — CSS compartilhado (variaveis, reset, logo)
   scraper.py           — Scraper Spotify + YouTube (kworb.net)
+  sync_discography.py  — Sync semanal de discografia de todos os artistas
   spotify_playlists.py — Sync de playlists Spotify por genero
   spotify_auth.py      — OAuth flow para obter refresh_token
   sync_playlists_runner.py — Runner standalone de sync (le ranking do Supabase)
@@ -170,6 +182,7 @@ Rankingteste-main/
 
 ### Supabase Edge Functions
 
-| Funcao | Descricao |
-|--------|-----------|
-| trigger-playlist-sync | Proxy seguro para disparar workflow sync-playlists.yml via GitHub API |
+| Funcao | Versao | Descricao |
+|--------|--------|-----------|
+| trigger-playlist-sync | v4 | Proxy seguro para disparar workflow sync-playlists.yml via GitHub API |
+| sync-artist-discography | v23 | Sync discografia de artista com batch de álbuns, rate limit handling e retry_after no response |
