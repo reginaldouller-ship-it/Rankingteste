@@ -259,8 +259,12 @@ def main():
         print("ℹ️  Nenhum artista cadastrado. Nada a fazer.")
         return
 
-    print(f"\n📀 Atualizando discografia de {len(artists)} artistas...")
-    token = get_spotify_token()
+    BLOCK_SIZE = 100
+    BLOCK_DELAY = 600  # 10 minutos entre blocos
+    total = len(artists)
+    num_blocks = (total + BLOCK_SIZE - 1) // BLOCK_SIZE
+
+    print(f"\n📀 Atualizando discografia de {total} artistas em {num_blocks} blocos de {BLOCK_SIZE}...")
 
     global _request_count, _rate_limit_hits
     _request_count = 0
@@ -269,40 +273,57 @@ def main():
     failed = 0
     skipped = 0
 
-    for i, a in enumerate(artists):
-        try:
-            spotify_id = a.get("spotify_id")
+    for block in range(num_blocks):
+        start = block * BLOCK_SIZE
+        end = min(start + BLOCK_SIZE, total)
+        block_artists = artists[start:end]
 
-            # If no spotify_id, search by name
-            if not spotify_id:
-                print(f"  🔍 [{i+1}/{len(artists)}] Buscando ID do Spotify para {a['name']}...")
-                spotify_id = search_artist_id(a["name"], token)
+        # Pausa entre blocos (não antes do primeiro)
+        if block > 0:
+            print(f"\n  ⏸️  Pausa de {BLOCK_DELAY // 60} minutos entre blocos para evitar rate limit...")
+            time.sleep(BLOCK_DELAY)
+
+        # Renovar token a cada bloco (pode ter expirado nos 10 min)
+        token = get_spotify_token()
+
+        print(f"\n  📦 Bloco {block+1}/{num_blocks} (artistas {start+1}-{end}/{total})")
+
+        for j, a in enumerate(block_artists):
+            i = start + j
+            try:
+                spotify_id = a.get("spotify_id")
+
+                # If no spotify_id, search by name
                 if not spotify_id:
-                    print(f"  ⚠️  {a['name']}: não encontrado no Spotify, pulando")
-                    skipped += 1
-                    time.sleep(0.5)
-                    continue
+                    print(f"  🔍 [{i+1}/{total}] Buscando ID do Spotify para {a['name']}...")
+                    spotify_id = search_artist_id(a["name"], token)
+                    if not spotify_id:
+                        print(f"  ⚠️  {a['name']}: não encontrado no Spotify, pulando")
+                        skipped += 1
+                        time.sleep(0.5)
+                        continue
 
-            prev_hits = _rate_limit_hits
-            count = sync_artist(a["name"], spotify_id, token)
-            print(f"  ✅ [{i+1}/{len(artists)}] {a['name']}: {count} tracks (reqs: {_request_count}, limits: {_rate_limit_hits})")
-            synced += 1
+                prev_hits = _rate_limit_hits
+                count = sync_artist(a["name"], spotify_id, token)
+                print(f"  ✅ [{i+1}/{total}] {a['name']}: {count} tracks (reqs: {_request_count}, limits: {_rate_limit_hits})")
+                synced += 1
 
-            # Delay adaptativo entre artistas
-            if _rate_limit_hits > prev_hits:
-                # Acabou de tomar rate limit — esperar mais
-                wait = 5
-                print(f"    ⏳ Backoff após rate limit: {wait}s...")
-                time.sleep(wait)
-            else:
-                time.sleep(1)
+                # Delay adaptativo entre artistas
+                if _rate_limit_hits > prev_hits:
+                    wait = 5
+                    print(f"    ⏳ Backoff após rate limit: {wait}s...")
+                    time.sleep(wait)
+                else:
+                    time.sleep(1)
 
-        except Exception as e:
-            failed += 1
-            print(f"  ❌ [{i+1}/{len(artists)}] {a['name']}: {e}")
-            time.sleep(2)
+            except Exception as e:
+                failed += 1
+                print(f"  ❌ [{i+1}/{total}] {a['name']}: {e}")
+                time.sleep(2)
 
-    print(f"\n📀 {synced}/{len(artists)} artistas atualizados! ({failed} falhas, {skipped} não encontrados, {_request_count} requests, {_rate_limit_hits} rate limits)")
+        print(f"  📦 Bloco {block+1} concluído! (synced: {synced}, failed: {failed}, skipped: {skipped})")
+
+    print(f"\n📀 {synced}/{total} artistas atualizados! ({failed} falhas, {skipped} não encontrados, {_request_count} requests, {_rate_limit_hits} rate limits)")
 
 
 if __name__ == "__main__":
