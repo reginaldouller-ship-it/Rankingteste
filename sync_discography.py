@@ -86,12 +86,23 @@ def get_spotify_token():
     return data["access_token"]
 
 
-def spotify_get(url, token, max_retries=3):
+_request_count = 0
+_rate_limit_hits = 0
+
+
+def spotify_get(url, token, max_retries=5):
+    global _request_count, _rate_limit_hits
     for attempt in range(max_retries):
+        _request_count += 1
         r = requests.get(url, headers={"Authorization": f"Bearer {token}"}, timeout=10)
         if r.status_code == 429:
+            _rate_limit_hits += 1
             wait = int(r.headers.get("Retry-After", 2 ** (attempt + 1)))
-            print(f"    ⏳ Rate limited, aguardando {wait}s...")
+            # Aceitar waits de até 120s, desistir se maior
+            if wait > 120:
+                print(f"    ❌ Rate limit muito longo ({wait}s), pulando...")
+                return None
+            print(f"    ⏳ Rate limit #{_rate_limit_hits} (req #{_request_count}), aguardando {wait}s...")
             time.sleep(wait)
             continue
         r.raise_for_status()
@@ -237,19 +248,37 @@ def main():
         return
 
     print(f"\n📀 Atualizando discografia de {len(artists)} artistas...")
+    print(f"   (estimativa: ~{len(artists) * 5} requests, ~{len(artists) * 3}s)")
     token = get_spotify_token()
 
+    global _request_count, _rate_limit_hits
+    _request_count = 0
+    _rate_limit_hits = 0
     synced = 0
-    for a in artists:
-        try:
-            count = sync_artist(a["name"], a["spotify_id"], token)
-            print(f"  ✅ {a['name']}: {count} tracks")
-            synced += 1
-            time.sleep(0.5)  # rate limit courtesy
-        except Exception as e:
-            print(f"  ❌ {a['name']}: {e}")
+    failed = 0
 
-    print(f"\n📀 {synced}/{len(artists)} artistas atualizados!")
+    for i, a in enumerate(artists):
+        try:
+            prev_hits = _rate_limit_hits
+            count = sync_artist(a["name"], a["spotify_id"], token)
+            print(f"  ✅ {a['name']}: {count} tracks (reqs: {_request_count}, limits: {_rate_limit_hits})")
+            synced += 1
+
+            # Delay adaptativo entre artistas
+            if _rate_limit_hits > prev_hits:
+                # Acabou de tomar rate limit — esperar mais
+                wait = 5
+                print(f"    ⏳ Backoff após rate limit: {wait}s...")
+                time.sleep(wait)
+            else:
+                time.sleep(1)
+
+        except Exception as e:
+            failed += 1
+            print(f"  ❌ {a['name']}: {e}")
+            time.sleep(2)
+
+    print(f"\n📀 {synced}/{len(artists)} artistas atualizados! ({failed} falhas, {_request_count} requests, {_rate_limit_hits} rate limits)")
 
 
 if __name__ == "__main__":
