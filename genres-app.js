@@ -335,6 +335,51 @@ document.getElementById("search-input").addEventListener("input", e => {
 
 // ── Artist Detail Panel ──────────────────────────────────────────────────────
 let currentArtistDetail = null;
+let rateLimitTimer = null;
+
+function formatWaitTime(secs) {
+  if (secs >= 3600) return `${Math.floor(secs / 3600)}h ${Math.floor((secs % 3600) / 60)}min`;
+  if (secs >= 60) return `${Math.floor(secs / 60)}min ${secs % 60}s`;
+  return `${secs}s`;
+}
+
+function checkRateLimitCooldown() {
+  const btn = document.getElementById("btn-sync-artist");
+  const label = document.getElementById("sync-artist-label");
+  const body = document.getElementById("artist-detail-body");
+  if (rateLimitTimer) { clearInterval(rateLimitTimer); rateLimitTimer = null; }
+
+  const expiresAt = parseInt(localStorage.getItem("spotify_rate_limit_expires") || "0");
+  const remaining = Math.ceil((expiresAt - Date.now()) / 1000);
+  if (remaining <= 0) {
+    localStorage.removeItem("spotify_rate_limit_expires");
+    btn.disabled = false;
+    btn.classList.remove("syncing");
+    label.textContent = "Sincronizar";
+    return false;
+  }
+
+  btn.disabled = true;
+  label.textContent = "Rate limit!";
+  body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${formatWaitTime(remaining)}</strong> antes de tentar novamente.</div>`;
+
+  rateLimitTimer = setInterval(() => {
+    const left = Math.ceil((expiresAt - Date.now()) / 1000);
+    if (left <= 0) {
+      clearInterval(rateLimitTimer);
+      rateLimitTimer = null;
+      localStorage.removeItem("spotify_rate_limit_expires");
+      btn.disabled = false;
+      btn.classList.remove("syncing");
+      label.textContent = "Sincronizar";
+      body.innerHTML = '<div class="state-msg">Rate limit expirado! Pode sincronizar agora.</div>';
+      return;
+    }
+    body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${formatWaitTime(left)}</strong> antes de tentar novamente.</div>`;
+  }, 30000);
+
+  return true;
+}
 
 const spIconSvg = `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`;
 
@@ -346,10 +391,12 @@ function openArtistDetail(artistName) {
   document.getElementById("artist-detail-count").textContent = "";
   document.getElementById("artist-detail-body").innerHTML = '<div class="state-msg">Carregando discografia...</div>';
   loadArtistTracks(artistName);
+  checkRateLimitCooldown();
 }
 
 function closeArtistDetail() {
   currentArtistDetail = null;
+  if (rateLimitTimer) { clearInterval(rateLimitTimer); rateLimitTimer = null; }
   document.getElementById("artist-detail-overlay").classList.remove("open");
 }
 
@@ -479,13 +526,11 @@ document.getElementById("btn-sync-artist").addEventListener("click", async () =>
 
     if (!res.ok) {
       if (data.retry_after && data.retry_after > 0) {
+        localStorage.setItem("spotify_rate_limit_expires", String(Date.now() + data.retry_after * 1000));
         resetDelay = Math.max(data.retry_after * 1000, 5000);
-        const secs = data.retry_after;
-        const waitText = secs >= 3600 ? `${Math.floor(secs / 3600)}h ${Math.floor((secs % 3600) / 60)}min`
-          : secs >= 60 ? `${Math.floor(secs / 60)}min ${secs % 60}s`
-          : `${secs}s`;
         label.textContent = "Rate limit!";
-        body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${waitText}</strong> antes de tentar novamente.</div>`;
+        body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${formatWaitTime(data.retry_after)}</strong> antes de tentar novamente.</div>`;
+        checkRateLimitCooldown();
       } else {
         throw new Error(data.error || `HTTP ${res.status}`);
       }
