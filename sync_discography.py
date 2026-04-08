@@ -114,7 +114,7 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
     """Fetch complete discography for an artist. Returns list of track dicts."""
     # 1. Get all albums
     albums = []
-    url = f"https://api.spotify.com/v1/artists/{spotify_artist_id}/albums?include_groups=album,single,appears_on,compilation&limit=50&market=BR"
+    url = f"https://api.spotify.com/v1/artists/{spotify_artist_id}/albums?include_groups=album,single,appears_on&limit=50&market=BR"
     while url:
         data = spotify_get(url, token)
         if not data:
