@@ -465,6 +465,7 @@ document.getElementById("btn-sync-artist").addEventListener("click", async () =>
   btn.classList.add("syncing");
   label.textContent = "Buscando...";
 
+  let resetDelay = 3000;
   try {
     const res = await fetch(`${SUPABASE_URL}/functions/v1/sync-artist-discography`, {
       method: "POST",
@@ -475,11 +476,24 @@ document.getElementById("btn-sync-artist").addEventListener("click", async () =>
       body: JSON.stringify({ artist_name: currentArtistDetail }),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
-    label.textContent = `${data.total_tracks} músicas!`;
-    document.getElementById("artist-detail-count").textContent = `${data.total_tracks} músicas`;
-    await loadArtistTracks(currentArtistDetail);
+    if (!res.ok) {
+      if (data.retry_after && data.retry_after > 0) {
+        resetDelay = Math.max(data.retry_after * 1000, 5000);
+        label.textContent = "Rate limit!";
+        body.innerHTML = `<div class="state-msg">Spotify rate limit atingido.<br>Aguarde <strong>${data.retry_after}s</strong> antes de tentar novamente.</div>`;
+      } else {
+        throw new Error(data.error || `HTTP ${res.status}`);
+      }
+    } else {
+      let statusMsg = `${data.total_tracks} músicas!`;
+      if (data.rate_limit_count > 0) {
+        statusMsg += ` (${data.rate_limit_count} rate limit${data.rate_limit_count > 1 ? 's' : ''}, retry: ${data.retry_after}s)`;
+      }
+      label.textContent = statusMsg;
+      document.getElementById("artist-detail-count").textContent = `${data.total_tracks} músicas`;
+      await loadArtistTracks(currentArtistDetail);
+    }
   } catch (e) {
     label.textContent = "Erro!";
     body.innerHTML = `<div class="state-msg">Erro ao sincronizar: ${esc(e.message)}</div>`;
@@ -489,7 +503,7 @@ document.getElementById("btn-sync-artist").addEventListener("click", async () =>
     btn.classList.remove("syncing");
     label.textContent = "Sincronizar";
     btn.disabled = false;
-  }, 3000);
+  }, resetDelay);
 });
 
 // ── Init ──────────────────────────────────────────────────────────────────────

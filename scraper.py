@@ -267,6 +267,8 @@ def enrich_with_spotify_api(ranking, token):
                 token,
                 {"ids": ",".join(batch), "market": "BR"},
             )
+            if not r:
+                continue
             for track in r.json().get("tracks", []):
                 if track:
                     images = track.get("album", {}).get("images", [])
@@ -294,6 +296,8 @@ def enrich_with_spotify_api(ranking, token):
                 token,
                 {"ids": ",".join(batch)},
             )
+            if not r:
+                continue
             for artist in r.json().get("artists", []):
                 if artist:
                     genres = artist.get("genres", [])

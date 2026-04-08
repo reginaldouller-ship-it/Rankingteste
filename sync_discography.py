@@ -106,28 +106,40 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
     url = f"https://api.spotify.com/v1/artists/{spotify_artist_id}/albums?include_groups=album,single,appears_on,compilation&limit=50&market=BR"
     while url:
         data = spotify_get(url, token)
+        if not data:
+            break
         albums.extend(data.get("items", []))
         url = data.get("next")
+        time.sleep(0.1)
 
-    # 2. Get tracks from each album
+    # 2. Get tracks via batch album endpoint (up to 20 albums per request)
     album_track_map = {}  # track_id -> {album_name, release_date}
     all_track_ids = []
-    for album in albums:
-        url = f"https://api.spotify.com/v1/albums/{album['id']}/tracks?limit=50&market=BR"
-        while url:
-            data = spotify_get(url, token)
-            for t in data.get("items", []):
-                # Só inclui faixas onde o artista é performer
+    for i in range(0, len(albums), 20):
+        batch_albums = albums[i:i + 20]
+        batch_ids = [a["id"] for a in batch_albums]
+        data = spotify_get(
+            f"https://api.spotify.com/v1/albums?ids={','.join(batch_ids)}&market=BR",
+            token,
+        )
+        if not data:
+            break
+        for album_full in data.get("albums", []):
+            if not album_full:
+                continue
+            album_name = album_full["name"]
+            release_date = album_full.get("release_date", "")
+            for t in album_full.get("tracks", {}).get("items", []):
                 track_artist_ids = [a["id"] for a in t.get("artists", [])]
                 if spotify_artist_id not in track_artist_ids:
                     continue
                 if t["id"] not in album_track_map:
                     album_track_map[t["id"]] = {
-                        "album_name": album["name"],
-                        "release_date": album.get("release_date", ""),
+                        "album_name": album_name,
+                        "release_date": release_date,
                     }
                     all_track_ids.append(t["id"])
-            url = data.get("next")
+        time.sleep(0.15)
 
     # 3. Fetch popularity in batches of 50
     pop_map = {}
@@ -137,9 +149,12 @@ def fetch_artist_discography(artist_name, spotify_artist_id, token):
             f"https://api.spotify.com/v1/tracks?ids={','.join(batch)}&market=BR",
             token,
         )
+        if not data:
+            break
         for t in data.get("tracks", []):
             if t:
                 pop_map[t["id"]] = t
+        time.sleep(0.1)
 
     # 4. Deduplicate by name+duration (keep highest popularity)
     name_map = {}
