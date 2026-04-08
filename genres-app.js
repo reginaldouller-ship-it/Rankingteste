@@ -404,9 +404,18 @@ function renderArtistTracks(tracks) {
     const spLink = t.spotify_url
       ? `<span class="copy-cell"><a class="sp-link-small" href="${esc(t.spotify_url)}" target="_blank" rel="noopener">${spIconSvg} Ouvir</a><button class="btn-copy-link" data-url="${esc(t.spotify_url)}" title="Copiar link">📋</button></span>`
       : "";
-    return `<tr>
+
+    const featBadge = t.is_featured
+      ? `<span class="feat-badge">FEAT</span>`
+      : "";
+
+    const artists = Array.isArray(t.track_artists) && t.track_artists.length > 1
+      ? `<div class="track-artists">${esc(t.track_artists.join(", "))}</div>`
+      : "";
+
+    return `<tr${t.is_featured ? ' class="row-featured"' : ""}>
       <td class="col-rank ${rankCls}">${rank}</td>
-      <td>${esc(t.track_name)}</td>
+      <td><div class="track-name-cell">${featBadge}${esc(t.track_name)}</div>${artists}</td>
       <td style="color:var(--muted);font-size:12px">${esc(t.album_name || "")}</td>
       <td class="col-date">${formatDate(t.release_date)}</td>
       <td class="col-pop"><span class="pop-bar" style="width:${popWidth}px"></span><span class="pop-num">${t.popularity}</span></td>
