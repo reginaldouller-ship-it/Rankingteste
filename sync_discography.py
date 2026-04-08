@@ -110,6 +110,20 @@ def spotify_get(url, token, max_retries=5):
     return None
 
 
+def search_artist_id(name, token):
+    """Search Spotify for an artist by name and return their ID."""
+    url = f"https://api.spotify.com/v1/search?q={requests.utils.quote(name)}&type=artist&limit=5&market=BR"
+    data = spotify_get(url, token)
+    if not data:
+        return None
+    items = data.get("artists", {}).get("items", [])
+    # Prefer exact match
+    for item in items:
+        if item["name"].lower() == name.lower():
+            return item["id"]
+    return items[0]["id"] if items else None
+
+
 def fetch_artist_discography(artist_name, spotify_artist_id, token):
     """Fetch complete discography for an artist. Returns list of track dicts."""
     # 1. Get all albums
@@ -238,17 +252,14 @@ def main():
         print("❌ Variáveis de ambiente obrigatórias não configuradas")
         sys.exit(1)
 
-    # Get all artists that have been synced at least once
-    artists = sb_get(
-        "artists?select=name,spotify_id&discography_synced_at=not.is.null&spotify_id=not.is.null"
-    )
+    # Get all artists
+    artists = sb_get("artists?select=name,spotify_id")
 
     if not artists:
-        print("ℹ️  Nenhum artista com discografia sincronizada. Nada a fazer.")
+        print("ℹ️  Nenhum artista cadastrado. Nada a fazer.")
         return
 
     print(f"\n📀 Atualizando discografia de {len(artists)} artistas...")
-    print(f"   (estimativa: ~{len(artists) * 5} requests, ~{len(artists) * 3}s)")
     token = get_spotify_token()
 
     global _request_count, _rate_limit_hits
@@ -256,12 +267,25 @@ def main():
     _rate_limit_hits = 0
     synced = 0
     failed = 0
+    skipped = 0
 
     for i, a in enumerate(artists):
         try:
+            spotify_id = a.get("spotify_id")
+
+            # If no spotify_id, search by name
+            if not spotify_id:
+                print(f"  🔍 [{i+1}/{len(artists)}] Buscando ID do Spotify para {a['name']}...")
+                spotify_id = search_artist_id(a["name"], token)
+                if not spotify_id:
+                    print(f"  ⚠️  {a['name']}: não encontrado no Spotify, pulando")
+                    skipped += 1
+                    time.sleep(0.5)
+                    continue
+
             prev_hits = _rate_limit_hits
-            count = sync_artist(a["name"], a["spotify_id"], token)
-            print(f"  ✅ {a['name']}: {count} tracks (reqs: {_request_count}, limits: {_rate_limit_hits})")
+            count = sync_artist(a["name"], spotify_id, token)
+            print(f"  ✅ [{i+1}/{len(artists)}] {a['name']}: {count} tracks (reqs: {_request_count}, limits: {_rate_limit_hits})")
             synced += 1
 
             # Delay adaptativo entre artistas
@@ -275,10 +299,10 @@ def main():
 
         except Exception as e:
             failed += 1
-            print(f"  ❌ {a['name']}: {e}")
+            print(f"  ❌ [{i+1}/{len(artists)}] {a['name']}: {e}")
             time.sleep(2)
 
-    print(f"\n📀 {synced}/{len(artists)} artistas atualizados! ({failed} falhas, {_request_count} requests, {_rate_limit_hits} rate limits)")
+    print(f"\n📀 {synced}/{len(artists)} artistas atualizados! ({failed} falhas, {skipped} não encontrados, {_request_count} requests, {_rate_limit_hits} rate limits)")
 
 
 if __name__ == "__main__":
