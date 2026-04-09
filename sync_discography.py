@@ -88,19 +88,24 @@ def get_spotify_token():
 
 _request_count = 0
 _rate_limit_hits = 0
+_hard_limited = False  # Sinal de ban temporário (Retry-After > 300s)
+
+RATE_LIMIT_THRESHOLD = 300  # Segundos — acima disso consideramos ban temporário
 
 
 def spotify_get(url, token, max_retries=5):
-    global _request_count, _rate_limit_hits
+    global _request_count, _rate_limit_hits, _hard_limited
+    if _hard_limited:
+        return None
     for attempt in range(max_retries):
         _request_count += 1
         r = requests.get(url, headers={"Authorization": f"Bearer {token}"}, timeout=10)
         if r.status_code == 429:
             _rate_limit_hits += 1
             wait = int(r.headers.get("Retry-After", 2 ** (attempt + 1)))
-            # Aceitar waits de até 120s, desistir se maior
-            if wait > 120:
-                print(f"    ❌ Rate limit muito longo ({wait}s), pulando...")
+            if wait > RATE_LIMIT_THRESHOLD:
+                print(f"    ❌ Rate limit longo ({wait}s = {wait//3600}h{(wait%3600)//60}min) — abortando bloco")
+                _hard_limited = True
                 return None
             print(f"    ⏳ Rate limit #{_rate_limit_hits} (req #{_request_count}), aguardando {wait}s...")
             time.sleep(wait)
@@ -262,20 +267,27 @@ def main():
         return
 
     missing_count = len(artists_missing)
-    BLOCK_SIZE = 100
-    BLOCK_DELAY = 600  # 10 minutos entre blocos
+    BLOCK_SIZE = 50
+    BLOCK_DELAY = 1800  # 30 minutos entre blocos
+    ARTIST_DELAY = 2    # 2s entre artistas (normal)
+    ARTIST_DELAY_AFTER_LIMIT = 15  # 15s após rate limit leve
+    MAX_REQUESTS_PER_BLOCK = 2500  # Limite de requests por bloco para evitar ban
+
     total = len(artists)
     num_blocks = (total + BLOCK_SIZE - 1) // BLOCK_SIZE
 
     print(f"\n📀 Atualizando discografia de {total} artistas em {num_blocks} blocos de {BLOCK_SIZE}...")
     print(f"   ➡️  {missing_count} sem dados (prioridade) + {total - missing_count} para atualizar")
+    print(f"   ⏱️  Delay: {ARTIST_DELAY}s entre artistas, {BLOCK_DELAY//60}min entre blocos")
 
-    global _request_count, _rate_limit_hits
+    global _request_count, _rate_limit_hits, _hard_limited
     _request_count = 0
     _rate_limit_hits = 0
+    _hard_limited = False
     synced = 0
     failed = 0
     skipped = 0
+    aborted = False
 
     for block in range(num_blocks):
         start = block * BLOCK_SIZE
@@ -284,20 +296,38 @@ def main():
 
         # Pausa entre blocos (não antes do primeiro)
         if block > 0:
-            print(f"\n  ⏸️  Pausa de {BLOCK_DELAY // 60} minutos entre blocos para evitar rate limit...")
+            print(f"\n  ⏸️  Pausa de {BLOCK_DELAY // 60} minutos entre blocos...")
             time.sleep(BLOCK_DELAY)
 
-        # Renovar token a cada bloco (pode ter expirado nos 10 min)
+        # Reset hard limit flag no início de cada bloco (nova chance após pausa)
+        _hard_limited = False
+        block_start_reqs = _request_count
+
+        # Renovar token a cada bloco
         token = get_spotify_token()
 
         print(f"\n  📦 Bloco {block+1}/{num_blocks} (artistas {start+1}-{end}/{total})")
 
         for j, a in enumerate(block_artists):
             i = start + j
+
+            # Abortar bloco se recebeu ban temporário
+            if _hard_limited:
+                print(f"  ⛔ [{i+1}/{total}] {a['name']}: pulando (ban temporário detectado)")
+                skipped += 1
+                continue
+
+            # Abortar bloco se atingiu limite de requests
+            block_reqs = _request_count - block_start_reqs
+            if block_reqs >= MAX_REQUESTS_PER_BLOCK:
+                print(f"  ⚠️  Limite de {MAX_REQUESTS_PER_BLOCK} requests no bloco atingido, pausando restante")
+                _hard_limited = True
+                skipped += 1
+                continue
+
             try:
                 spotify_id = a.get("spotify_id")
 
-                # If no spotify_id, search by name
                 if not spotify_id:
                     print(f"  🔍 [{i+1}/{total}] Buscando ID do Spotify para {a['name']}...")
                     spotify_id = search_artist_id(a["name"], token)
@@ -309,25 +339,36 @@ def main():
 
                 prev_hits = _rate_limit_hits
                 count = sync_artist(a["name"], spotify_id, token)
+
+                if _hard_limited:
+                    print(f"  ⛔ [{i+1}/{total}] {a['name']}: abortado por ban temporário")
+                    skipped += 1
+                    continue
+
                 print(f"  ✅ [{i+1}/{total}] {a['name']}: {count} tracks (reqs: {_request_count}, limits: {_rate_limit_hits})")
                 synced += 1
 
                 # Delay adaptativo entre artistas
                 if _rate_limit_hits > prev_hits:
-                    wait = 5
-                    print(f"    ⏳ Backoff após rate limit: {wait}s...")
-                    time.sleep(wait)
+                    print(f"    ⏳ Backoff após rate limit: {ARTIST_DELAY_AFTER_LIMIT}s...")
+                    time.sleep(ARTIST_DELAY_AFTER_LIMIT)
                 else:
-                    time.sleep(1)
+                    time.sleep(ARTIST_DELAY)
 
             except Exception as e:
                 failed += 1
                 print(f"  ❌ [{i+1}/{total}] {a['name']}: {e}")
-                time.sleep(2)
+                time.sleep(3)
 
-        print(f"  📦 Bloco {block+1} concluído! (synced: {synced}, failed: {failed}, skipped: {skipped})")
+        block_reqs = _request_count - block_start_reqs
+        print(f"  📦 Bloco {block+1} concluído! (synced: {synced}, failed: {failed}, skipped: {skipped}, reqs_bloco: {block_reqs})")
 
-    print(f"\n📀 {synced}/{total} artistas atualizados! ({failed} falhas, {skipped} não encontrados, {_request_count} requests, {_rate_limit_hits} rate limits)")
+        # Se abortou por ban, verificar se vale continuar com próximo bloco
+        if _hard_limited and block < num_blocks - 1:
+            remaining = total - end
+            print(f"  ℹ️  Ban temporário no bloco {block+1}. Próximo bloco em {BLOCK_DELAY//60}min ({remaining} artistas restantes).")
+
+    print(f"\n📀 {synced}/{total} artistas atualizados! ({failed} falhas, {skipped} pulados, {_request_count} requests, {_rate_limit_hits} rate limits)")
 
 
 if __name__ == "__main__":
