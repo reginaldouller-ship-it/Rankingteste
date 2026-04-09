@@ -446,7 +446,7 @@ function renderArtistTracks(tracks) {
     const rankCls = rank === 1 ? "rank-gold" : rank === 2 ? "rank-silver" : rank === 3 ? "rank-bronze" : "";
     const popWidth = Math.max(2, t.popularity * 0.6);
     const spLink = t.spotify_url
-      ? `<span class="copy-cell"><a class="sp-link-small" href="${esc(t.spotify_url)}" target="_blank" rel="noopener">${spIconSvg} Ouvir</a><button class="btn-copy-link" data-url="${esc(t.spotify_url)}" title="Copiar link">📋</button></span>`
+      ? `<span class="copy-cell"><button class="btn-copy-link" data-url="${esc(t.spotify_url)}" title="Copiar link">📋 <span class="copy-label">Copiar</span></button></span>`
       : "";
 
     const featBadge = t.is_featured
@@ -457,9 +457,13 @@ function renderArtistTracks(tracks) {
       ? `<div class="track-artists">${esc(t.track_artists.join(", "))}</div>`
       : "";
 
+    const trackNameHtml = t.spotify_url
+      ? `<a class="track-name-link" href="${esc(t.spotify_url)}" target="_blank" rel="noopener">${esc(t.track_name)}</a>`
+      : esc(t.track_name);
+
     return `<tr${t.is_featured ? ' class="row-featured"' : ""}>
       <td class="col-rank ${rankCls}">${rank}</td>
-      <td><div class="track-name-cell">${featBadge}${esc(t.track_name)}</div>${artists}</td>
+      <td><div class="track-name-cell">${featBadge}${trackNameHtml}</div>${artists}</td>
       <td style="color:var(--muted);font-size:12px">${esc(t.album_name || "")}</td>
       <td class="col-date">${formatDate(t.release_date)}</td>
       <td class="col-pop"><span class="pop-bar" style="width:${popWidth}px"></span><span class="pop-num">${t.popularity}</span></td>
@@ -468,7 +472,7 @@ function renderArtistTracks(tracks) {
   }).join("");
 
   body.innerHTML = `<table class="artist-tracks-table">
-    <thead><tr><th>#</th><th>Música</th><th>Álbum</th><th>Lançamento</th><th>Popularidade</th><th>Spotify</th></tr></thead>
+    <thead><tr><th>#</th><th>Música</th><th>Álbum</th><th>Lançamento</th><th>Popularidade</th><th>Link</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
 }
