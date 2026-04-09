@@ -446,7 +446,7 @@ function renderArtistTracks(tracks) {
     const rankCls = rank === 1 ? "rank-gold" : rank === 2 ? "rank-silver" : rank === 3 ? "rank-bronze" : "";
     const popWidth = Math.max(2, t.popularity * 0.6);
     const spLink = t.spotify_url
-      ? `<span class="copy-cell"><button class="btn-copy-link" data-url="${esc(t.spotify_url)}" title="Copiar link">📋 <span class="copy-label">Copiar</span></button></span>`
+      ? `<button class="btn-copy-link" data-url="${esc(t.spotify_url)}" title="Copiar link">📋</button>`
       : "";
 
     const featBadge = t.is_featured
