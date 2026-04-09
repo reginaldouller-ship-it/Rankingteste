@@ -252,19 +252,23 @@ def main():
         print("❌ Variáveis de ambiente obrigatórias não configuradas")
         sys.exit(1)
 
-    # Get all artists
-    artists = sb_get("artists?select=name,spotify_id")
+    # Prioridade: artistas SEM dados primeiro, depois os já sincronizados (mais antigos primeiro)
+    artists_missing = sb_get("artists?select=name,spotify_id&discography_synced_at=is.null&order=name")
+    artists_existing = sb_get("artists?select=name,spotify_id&discography_synced_at=not.is.null&order=discography_synced_at.asc")
+    artists = artists_missing + artists_existing
 
     if not artists:
         print("ℹ️  Nenhum artista cadastrado. Nada a fazer.")
         return
 
+    missing_count = len(artists_missing)
     BLOCK_SIZE = 100
     BLOCK_DELAY = 600  # 10 minutos entre blocos
     total = len(artists)
     num_blocks = (total + BLOCK_SIZE - 1) // BLOCK_SIZE
 
     print(f"\n📀 Atualizando discografia de {total} artistas em {num_blocks} blocos de {BLOCK_SIZE}...")
+    print(f"   ➡️  {missing_count} sem dados (prioridade) + {total - missing_count} para atualizar")
 
     global _request_count, _rate_limit_hits
     _request_count = 0
