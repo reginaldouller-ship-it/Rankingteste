@@ -1,6 +1,8 @@
 name: Sync Discografia
 
 on:
+  schedule:
+    - cron: "0 6 * * *"  # 3h Brasília (UTC-3)
   workflow_dispatch:
 
 permissions:
@@ -9,7 +11,7 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
