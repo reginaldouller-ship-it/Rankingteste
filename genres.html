@@ -125,6 +125,9 @@
     }
     .btn-create-genre:hover { opacity: 0.85; }
     .btn-create-genre:disabled { opacity: 0.4; cursor: default; }
+    .toolbar-sep {
+      width: 1px; height: 24px; background: var(--border2); flex-shrink: 0;
+    }
 
     /* ── Filter bar ── */
     .filter-bar {
@@ -266,6 +269,19 @@
     .artist-detail-count {
       font-size: 12px; color: var(--muted); white-space: nowrap;
     }
+    .artist-detail-synced {
+      font-size: 11px; color: var(--muted); white-space: nowrap; opacity: 0.7;
+    }
+    .btn-toggle-dupes {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border2);
+      padding: 4px 10px; border-radius: 6px;
+      font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .btn-toggle-dupes:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+    .btn-toggle-dupes.active { background: var(--accent); border-color: var(--accent); color: #fff; }
     .btn-sync-artist {
       display: inline-flex; align-items: center; gap: 5px;
       background: rgba(29,185,84,0.12); color: var(--sp);
@@ -367,11 +383,15 @@
       <button onclick="dismissError()">✕</button>
     </div>
 
-    <!-- Criar Gênero — topo esquerdo -->
+    <!-- Toolbar: Criar Gênero + Adicionar Artista -->
     <div class="toolbar">
       <span class="toolbar-label">Criar gênero:</span>
       <input type="text" class="toolbar-input" id="new-genre-input" placeholder="Nome do gênero..." maxlength="40" autocomplete="off" />
       <button class="btn-create-genre" id="btn-add-genre" disabled>+ Criar</button>
+      <span class="toolbar-sep"></span>
+      <span class="toolbar-label">Adicionar artista:</span>
+      <input type="text" class="toolbar-input" id="new-artist-input" placeholder="Nome do artista..." maxlength="100" autocomplete="off" />
+      <button class="btn-create-genre" id="btn-add-artist" disabled>+ Adicionar</button>
     </div>
 
     <div class="filter-bar">
@@ -405,7 +425,9 @@
     <div class="artist-detail-header">
       <div class="artist-detail-title" id="artist-detail-title"></div>
       <div class="artist-detail-meta">
+        <span class="artist-detail-synced" id="artist-detail-synced"></span>
         <span class="artist-detail-count" id="artist-detail-count"></span>
+        <button class="btn-toggle-dupes" id="btn-toggle-dupes" title="Ocultar/mostrar duplicadas">Ocultar duplicadas</button>
         <button class="btn-sync-artist" id="btn-sync-artist">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
           <span id="sync-artist-label">Sincronizar</span>

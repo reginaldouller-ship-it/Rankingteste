@@ -316,6 +316,32 @@ async function addGenre() {
   finally { btnAddGenre.disabled = !newGenreInput.value.trim(); }
 }
 
+// ── Adicionar artista manualmente ─────────────────────────────────────────────
+const newArtistInput = document.getElementById("new-artist-input");
+const btnAddArtist   = document.getElementById("btn-add-artist");
+
+newArtistInput.addEventListener("input",   () => { btnAddArtist.disabled = !newArtistInput.value.trim(); });
+newArtistInput.addEventListener("keydown", e  => { if (e.key === "Enter" && !btnAddArtist.disabled) addManualArtist(); });
+btnAddArtist.addEventListener("click", addManualArtist);
+
+async function addManualArtist() {
+  const name = newArtistInput.value.trim();
+  if (!name) return;
+  if (allArtists.find(a => a.artist.toLowerCase() === name.toLowerCase())) {
+    showError(`Artista "${name}" já existe.`);
+    return;
+  }
+  btnAddArtist.disabled = true;
+  try {
+    await sbPost("artists", { name });
+    allArtists.push({ artist: name, track_count: 0, genres: [] });
+    allArtists.sort((a, b) => a.artist.localeCompare(b.artist));
+    newArtistInput.value = "";
+    renderTable();
+  } catch (e) { showError(`Erro ao adicionar artista: ${e.message}`); }
+  finally { btnAddArtist.disabled = !newArtistInput.value.trim(); }
+}
+
 // ── Filtros ────────────────────────────────────────────────────────────────────
 document.querySelector(".filter-toggle").addEventListener("click", e => {
   const btn = e.target.closest(".ftoggle-btn");
@@ -335,6 +361,8 @@ document.getElementById("search-input").addEventListener("input", e => {
 
 // ── Artist Detail Panel ──────────────────────────────────────────────────────
 let currentArtistDetail = null;
+let currentArtistTracks = [];
+let hideDuplicates = false;
 let rateLimitTimer = null;
 
 function formatWaitTime(secs) {
@@ -382,11 +410,29 @@ const spIconSvg = `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 
 
 async function openArtistDetail(artistName) {
   currentArtistDetail = artistName;
+  currentArtistTracks = [];
+  hideDuplicates = false;
   const overlay = document.getElementById("artist-detail-overlay");
   overlay.classList.add("open");
   document.getElementById("artist-detail-title").textContent = artistName;
   document.getElementById("artist-detail-count").textContent = "";
+  document.getElementById("artist-detail-synced").textContent = "";
+  document.getElementById("btn-toggle-dupes").classList.remove("active");
+  document.getElementById("btn-toggle-dupes").textContent = "Ocultar duplicadas";
   document.getElementById("artist-detail-body").innerHTML = '<div class="state-msg">Carregando discografia...</div>';
+
+  // Buscar data de última atualização
+  try {
+    const info = await sbGet(`artists?name=eq.${encodeURIComponent(artistName)}&select=discography_synced_at&limit=1`);
+    const syncedEl = document.getElementById("artist-detail-synced");
+    if (info.length && info[0].discography_synced_at) {
+      const d = new Date(info[0].discography_synced_at);
+      syncedEl.textContent = `Atualizado: ${d.toLocaleDateString("pt-BR")} às ${d.toLocaleTimeString("pt-BR", {hour:"2-digit",minute:"2-digit"})}`;
+    } else {
+      syncedEl.textContent = "Aguardando primeira sincronização";
+    }
+  } catch {}
+
   await loadArtistTracks(artistName);
   checkRateLimitCooldown();
 }
@@ -409,11 +455,33 @@ async function loadArtistTracks(artistName) {
       countEl.textContent = "";
       return;
     }
-    countEl.textContent = `${tracks.length} músicas`;
-    renderArtistTracks(tracks);
+    currentArtistTracks = tracks;
+    renderFilteredTracks();
   } catch (e) {
     body.innerHTML = `<div class="state-msg">Erro: ${esc(e.message)}</div>`;
   }
+}
+
+function deduplicateTracks(tracks) {
+  const map = new Map();
+  for (const t of tracks) {
+    const key = t.track_name.toLowerCase().trim() + "|" + Math.round((t.duration_ms || 0) / 2000);
+    const existing = map.get(key);
+    if (!existing || t.popularity > existing.popularity) {
+      map.set(key, t);
+    }
+  }
+  return [...map.values()].sort((a, b) => b.popularity - a.popularity);
+}
+
+function renderFilteredTracks() {
+  const countEl = document.getElementById("artist-detail-count");
+  const tracks = hideDuplicates ? deduplicateTracks(currentArtistTracks) : currentArtistTracks;
+  const totalLabel = hideDuplicates
+    ? `${tracks.length} músicas (${currentArtistTracks.length} total)`
+    : `${tracks.length} músicas`;
+  countEl.textContent = totalLabel;
+  renderArtistTracks(tracks);
 }
 
 function formatDuration(ms) {
@@ -494,6 +562,15 @@ document.getElementById("artist-detail-overlay").addEventListener("click", e => 
 });
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && currentArtistDetail) closeArtistDetail();
+});
+
+// Toggle duplicadas
+document.getElementById("btn-toggle-dupes").addEventListener("click", () => {
+  hideDuplicates = !hideDuplicates;
+  const btn = document.getElementById("btn-toggle-dupes");
+  btn.classList.toggle("active", hideDuplicates);
+  btn.textContent = hideDuplicates ? "Mostrar todas" : "Ocultar duplicadas";
+  if (currentArtistTracks.length) renderFilteredTracks();
 });
 
 // Copy link in artist detail
