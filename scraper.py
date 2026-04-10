@@ -368,11 +368,12 @@ def search_spotify_track(artist, title, token):
                 {"q": q, "type": "track", "market": "BR", "limit": 5},
             )
             items = r.json().get("tracks", {}).get("items", [])
-            for track in items:
-                if not _artist_matches(artist, track):
-                    continue
-                spotify_id = track["id"]
-                images = track.get("album", {}).get("images", [])
+            # Filtrar por artista e pegar a versão mais popular
+            matching = [t for t in items if _artist_matches(artist, t)]
+            if matching:
+                best = max(matching, key=lambda t: t.get("popularity", 0))
+                spotify_id = best["id"]
+                images = best.get("album", {}).get("images", [])
                 thumbnail = images[0]["url"] if images else ""
                 return spotify_id, f"https://open.spotify.com/track/{spotify_id}", thumbnail
         except Exception as e:
